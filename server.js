@@ -1,21 +1,17 @@
-const express = require('express')
+const app = require('./app');
+const http = require('http');
+const config = require('./config/env/development');
+const mongoose = require('mongoose');
 
-var command = require('./api/routes/command-tips');
+/**
+ * Get port from environment and store in Express.
+ */
 
-var app = express();
+const port = process.env.PORT || '3000';
+app.set('port', port);
 
-const port = process.env.PORT || 3000;
+mongoose.connect(config.db).connection;
 
-app.use('/tips', command);
-
-app.use((req, res, next) => {
-    const error = new Error("not found");
-    error.setStatus(404);
-    next(error);
-});
-
-app.use((error, req, res, next) => {
-
-});
-
-app.listen(port, () => console.log('Command tips listening on port 3000!'))
+http.createServer(app).listen(app.get('port'), function(){            
+    console.log('Express server listening on port ' + app.get('port')); 
+}); 

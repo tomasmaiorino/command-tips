@@ -1,17 +1,20 @@
-var mongoose = require('mongoose');
-var userSchema = require('./user');
-
+const User = require('./user');
    
-    function createUser(user) {    
-        const User = mongoose.model('user', userSchema);
-        let userModel = new User(user);
-        userModel.save()
-         .then( (doc) => {
-          return doc;
+function createUser(user) {
+    console.log('creating user ' + user);
+
+    const userModel = new User({user});
+    console.log('user model ' + userModel);
+
+    userModel
+        .save()
+        .then( doc => {
+            console.log('doc found ' + doc);
+            return doc;
         })
-        .error((error) => {
+        .catch( error => {
             console.log('has error ' + error);            
-        })
-    }
+        });
+}
 
 module.exports = {createUser};

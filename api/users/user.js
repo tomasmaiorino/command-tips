@@ -1,11 +1,10 @@
-var mongoose = require('mongoose');
-  var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-  var user = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    username:  String,
-    email: String,
-    password:   String,
+const userSchema = mongoose.Schema({
+//    _id: mongoose.Schema.Types.ObjectId,
+    username: {type: String, required: [true, 'The username is required.']},
+    email: {type: String, required: [true, 'The email is required.']},
+    password: {type: String, required: [true, 'The password is required.']},
     createdDate: { type: Date, default: Date.now },
     comments: [{ body: String, date: Date }],
     lastUpdate: { type: Date, default: Date.now },
@@ -15,3 +14,5 @@ var mongoose = require('mongoose');
       commandsCounter:  {type: Number, default: 0}
     }
   });
+
+  module.exports = mongoose.model('User', userSchema);

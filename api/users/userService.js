@@ -17,4 +17,16 @@ function createUser(user) {
         });
 }
 
-module.exports = {createUser};
+function findUserByEmail(email) {
+    return new Promise((resolve, reject) => {
+        User.find({email: email})
+        .then(user => {
+            resolve(user);
+        })
+        .catch(error => {
+            reject(error);
+        });    
+  
+    })
+}
+module.exports = {createUser, findUserByEmail};

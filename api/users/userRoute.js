@@ -4,6 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const User = require('./user');
 const mongoose = require('mongoose');
+const UserService = require('./userService');
 
 router.get('/:userId', (req, res, next) => {
     const userId = req.params.userId;
@@ -40,7 +41,7 @@ router.get('/:userId', (req, res, next) => {
 
  router.post('/',(req, res, next) => {
 
-    console.log('receiving request to create an user ->');
+    console.log('Receiving request to create an user ->');
 
     const user = {
         username: req.body.username,
@@ -52,25 +53,29 @@ router.get('/:userId', (req, res, next) => {
     const error = userModel.validateSync();
 
     if (error) {
+        console.debug('Invalid user given ' + user + ' .');
         res.status(400).json({
             'errors': error.errors
         })
     }
 
-    console.log('user to be created ' + user);
+    console.log('User to be created ' + user);
 
-    User.find({email: user.email})
+    UserService.findUserByEmail(user.email)
         .then(user => {
             if (user) {
                 res.status(400).json({
                     'message': 'Email already exist'
-                })
+                });
             }
-        })
+        }, error => {
+            res.status(500).json({'error': error});
+        });
+        /*
         .catch(error => {
             res.status(500).json({'error': error});
         });    
-    
+    */
     userModel
     .save()
     .then( doc => {

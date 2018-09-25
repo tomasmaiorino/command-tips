@@ -65,27 +65,29 @@ router.get('/:userId', (req, res, next) => {
 
     UserService.findUserByEmail(user.email)
         .then(data => {
+            console.log('user found ' + data);
             if (data) {
-                console.log('user found ' + data);
                 res.status(400).json({
                     'message': 'Email already exist'
                 });
             } else {
                 console.log('User not found.');
-                res.status(200).json({
-                    'message': 'User not found'
+                res.status(200).json({});
+                /*
+                userModel
+                .save()
+                .then( doc => {
+                    res.status(200).json({
+                        '_id': doc._id,
+                        'username': doc.username,
+                        'email': doc.email
+                    });
                 });
+                */
             }
-        }, error => {
-            console.log('user router ' + error);
-            console.log('error from error ' + error);
-            // res.status(500).json({'error': error});
-        })
-        .catch(error => {
+        }).catch(error => {
             console.log('error catch' + error);
-        });
-
-        
+        });       
 
 /*
     userModel

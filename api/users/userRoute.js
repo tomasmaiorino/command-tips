@@ -57,27 +57,32 @@ router.post('/', (req, res, next) => {
         console.debug('Invalid user given ' + user + ' .');
         res.status(400).json({
             'errors': error.errors
-        })
+        });
     } else {
-
         console.log('User to be created ' + user);
-
         UserService.findUserByEmail(user.email)
             .then(data => {
-                if (data.length > 0) {
+                if (data) {
                     console.log('user found ' + data);
                     res.status(400).json({
                         'message': 'Email already exist'
                     });
                 } else {
-                    console.log('User not found.');
-                    res.status(200).json({
-                        'message': 'User not found'
+                    UserService.save(user)
+                    .then(user => {
+                        res.status(200).json({
+                            user
+                        });
+                    })
+                    .catch(error => {
+                        console.log('error catch' + error);
+                        res.status(500).json({'error': error});
                     });
                 }
             }).catch(error => {
                 console.log('error catch' + error);
-            });
+                res.status(500).json({'error': error});
+        });
     }
 });
 

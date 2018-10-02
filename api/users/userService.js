@@ -1,26 +1,31 @@
 const User = require('./user');
 
-function createUser(user) {
-    const userModel = new User({ user });
-    userModel
+function save(user) {
+    console.log('user to be created ' + JSON.stringify(user));
+    return new Promise((resolve, reject) => {
+        const userModel = new User({ user });
+        console.log('user model to be created ' + JSON.stringify(userModel));
+        userModel
         .save()
         .then(doc => {
-            return doc;
+            resolve(doc)
         })
         .catch(error => {
-            console.error(error);
+            reject(error);
         });
+    });
 }
 
 function findUserByEmail(email) {
     return new Promise((resolve, reject) => {
-        User.find({ email: email })
+        User.findOne({ email: email })
             .then(user => {
                 resolve(user);
             })
             .catch(error => {
                 reject(error);
             });
+
     });
 }
-module.exports = { createUser, findUserByEmail };
+module.exports = { save, findUserByEmail };

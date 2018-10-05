@@ -15,7 +15,6 @@ router.get('/:userId', (req, res, next) => {
         User.findById(req.params.userId)
             .exec()
             .then(user => {
-
                 if (user) {
                     res.status(200).json(
                         {
@@ -45,6 +44,7 @@ router.post('/', (req, res, next) => {
     console.log('Receiving request to create an user ->');
 
     const user = {
+        _id: mongoose.Types.ObjectId(),
         username: req.body.username,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10)
@@ -55,39 +55,29 @@ router.post('/', (req, res, next) => {
 
     if (error) {
         console.debug('Invalid user given ' + user + ' .');
-        res.status(400).json({
+        return res.status(400).json({
             'errors': error.errors
         });
     } else {
-        console.log('User to be created ' + user);
+        //console.log('User to be created ' + user);
         UserService.findUserByEmail(user.email)
             .then(data => {
                 if (data) {
-                    console.log('user found ' + data);
-                    res.status(400).json({
+                    //console.log('user found ' + data);
+                    return res.status(400).json({
                         'message': 'Email already exist'
                     });
                 } else {
-                    UserService.save(user)
-                    .then(user => {
-                        res.status(200).json({
-                            user
-                        });
-                    })
-                    .catch(error => {
-                        console.log('error catch' + error);
-                        res.status(500).json({'error': error});
-                    });
+                    return UserService.save(user);
                 }
+            }).then(result => {
+                res.status(201).json({
+                    result
+                });
             }).catch(error => {
                 console.log('error catch' + error);
                 res.status(500).json({'error': error});
         });
     }
 });
-
-function configureResponse(model) {
-
-}
-
 module.exports = router;

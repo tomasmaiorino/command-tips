@@ -1,10 +1,11 @@
+const mongoose = require('mongoose');
 const User = require('./user');
 
 function save(user) {
-    console.log('user to be created ' + JSON.stringify(user));
+    
     return new Promise((resolve, reject) => {
-        const userModel = new User({ user });
-        console.log('user model to be created ' + JSON.stringify(userModel));
+        const userModel = new User(user);        
+        //console.log('user model to be created ' + userModel);        
         userModel
         .save()
         .then(doc => {
@@ -14,6 +15,7 @@ function save(user) {
             reject(error);
         });
     });
+
 }
 
 function findUserByEmail(email) {

@@ -38,46 +38,41 @@ router.get('/:userId', (req, res, next) => {
         });
     }
 });
-
 router.post('/', (req, res, next) => {
-
-    console.log('Receiving request to create an user ->');
-
-    const user = {
-        _id: mongoose.Types.ObjectId(),
-        username: req.body.username,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 10)
-    }
-
-    const userModel = new User(user);
-    const error = userModel.validateSync();
-
-    if (error) {
-        console.debug('Invalid user given ' + user + ' .');
-        return res.status(400).json({
-            'errors': error.errors
+    User.findOne({email: req.body.email})
+    .then(data => {
+        if (data) {
+            return res.status(400).json({
+                message: 'Email already exist'
+            });
+        }
+        const user = new User({
+            _id: mongoose.Types.ObjectId(),
+            username: req.body.username,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 10)
         });
-    } else {
-        //console.log('User to be created ' + user);
-        UserService.findUserByEmail(user.email)
-            .then(data => {
-                if (data) {
-                    //console.log('user found ' + data);
-                    return res.status(400).json({
-                        'message': 'Email already exist'
-                    });
-                } else {
-                    return UserService.save(user);
-                }
-            }).then(result => {
-                res.status(201).json({
-                    result
+
+        const error = user.validateSync();
+        if (error) {
+            console.log('Invalid user given ' + user + ' .');
+            return res.status(400).json({
+                'errors': error.errors
+            });
+        }
+
+        UserService.save(user)
+            .then(saved => {
+                return res.status(200).json({
+                    '_id': saved._id,
+                    'username': saved.username,
+                    'email': saved.email
                 });
-            }).catch(error => {
-                console.log('error catch' + error);
-                res.status(500).json({'error': error});
-        });
-    }
+            });
+    })
+    .catch(error => {
+        console.log('error catch' + error);
+        res.status(500).json({'error': error});
+    });
 });
 module.exports = router;

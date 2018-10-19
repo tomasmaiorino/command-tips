@@ -8,36 +8,64 @@ const UserService = require('./userService');
 
 router.get('/:userId', (req, res, next) => {
     const userId = req.params.userId;
-
     console.log('Looking for the user ' + userId + '.');
+    User.findById(req.params.userId)
+        .exec()
+        .then(user => {
+            if (user) {
+                res.status(200).json(
+                    {
+                    'user': user
+                    }
+                );
+            } else {
+                res.status(404);
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                'error': error
+            })
+        });
+});
 
-    if (mongoose.Types.ObjectId.isValid(userId)) {
-        User.findById(req.params.userId)
-            .exec()
-            .then(user => {
-                if (user) {
-                    res.status(200).json(
-                        {
-                            '_id': user._id,
-                            'username': user.username,
-                            'email': user.email
-                        }
-                    );
-                } else {
-                    res.status(404);
-                }
+
+router.put('/:userId', (req, res, next) => {
+    const userId = req.params.userId;
+    console.log('Updating user ' + userId + '.');
+    User.findById(req.params.userId)
+        .exec()
+        .then(user => {
+            if (!user) {
+                return res.status(400).json({
+                    'message': 'User not found.'
+                });
+            }
+            const newUser = {
+                username: req.body.username,
+                email: req.body.email
+            };
+
+            User.findOneAndUpdate({_id:req.params.userId},
+                {$set: newUser}, {new:true})
+            .then(updatedUser => {
+                return res.status(200).json({
+                    'user': updatedUser
+                });
             })
             .catch(error => {
-                res.status(500).json({
+                return res.status(500).json({
                     'error': error
                 })
             });
-    } else {
-        res.status(500).json({
-            'message': 'Invalid id'
+        })
+        .catch(error => {
+            return res.status(500).json({
+                'error': error
+            })
         });
-    }
 });
+
 router.post('/', (req, res, next) => {
     User.findOne({email: req.body.email})
     .then(data => {
@@ -63,10 +91,8 @@ router.post('/', (req, res, next) => {
 
         UserService.save(user)
             .then(saved => {
-                return res.status(200).json({
-                    '_id': saved._id,
-                    'username': saved.username,
-                    'email': saved.email
+                return res.status(201).json({
+                    'user': user
                 });
             });
     })
@@ -75,4 +101,5 @@ router.post('/', (req, res, next) => {
         res.status(500).json({'error': error});
     });
 });
+
 module.exports = router;

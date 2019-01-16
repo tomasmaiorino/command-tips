@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 let timestampPlugin = require('../plugins/timestamp')
 
 const userSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
   username: { type: String, required: [true, 'The username is required.'] },
   email: { type: String, unique: true, required: [true, 'The email is required.'] },
   password: { type: String, required: [true, 'The password is required.'] },

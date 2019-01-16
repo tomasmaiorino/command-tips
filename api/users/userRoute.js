@@ -5,10 +5,14 @@ const bodyParser = require('body-parser');
 const User = require('./user');
 const mongoose = require('mongoose');
 const UserService = require('./userService');
+const Command = require('../commands/command');
 
 router.get('/:userId', (req, res, next) => {
+    
     const userId = req.params.userId;
+    
     console.log('Looking for the user ' + userId + '.');
+
     User.findById(req.params.userId)
         .exec()
         .then(user => {
@@ -66,16 +70,45 @@ router.put('/:userId', (req, res, next) => {
         });
 });
 
+//curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X GET http://localhost:3000/users/5c3f1d1b1fe49b35a0c7a968/tips
+
+router.get('/:userId/tips', (req, res, next) => {
+    
+    const userId = req.params.userId;
+    
+    console.log('Looking for the commands from the user ' + userId + '.');
+
+    Command.find({user_id: userId})
+        .exec()
+        .then(commands => {
+            if (commands) {
+                res.status(200).json(
+                    {
+                        commands
+                    }
+                );
+            } else {
+                res.status(404);
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                'error': error
+            })
+        });
+});
+
+//curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/users -d "{\"username\":\"test\", \"password\": \"1233\", \"email\": \"teste@test.com\"}"
 router.post('/', (req, res, next) => {
     User.findOne({email: req.body.email})
     .then(data => {
+
         if (data) {
             return res.status(400).json({
                 message: 'Email already exist'
             });
         }
         const user = new User({
-            _id: mongoose.Types.ObjectId(),
             username: req.body.username,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 10)

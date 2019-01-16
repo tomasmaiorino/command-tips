@@ -8,10 +8,15 @@ const mongoose = require('mongoose');
  */
 
 const port = process.env.PORT || '3000';
+
 app.set('port', port);
 
-mongoose.connect(config.db,{ useNewUrlParser: true}).connection;
+mongoose
+    .connect(config.db,{ useNewUrlParser: true})
+    .then(() => {
+        console.log('Database connected.');
+    });
 
 http.createServer(app).listen(app.get('port'), function(){            
-    console.log('Express server listening on port ' + app.get('port')); 
+    console.log('Listening on port ' + app.get('port')); 
 }); 

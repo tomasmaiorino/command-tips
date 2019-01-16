@@ -1,0 +1,16 @@
+
+***********************************************************
+						WINDOWS
+***********************************************************
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d {\"title\": \"FIND A TASK BY PID\",\"command\": \"tasklist -fi \"pid eq 2856\"\",\"description\": \"Find a task by id\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\"}
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"KILLING A TASK USING A FIND RESULT\",\"command\": \"taskkill /F /FI 'PID eq 2856'\",\"description\": \"Kill a task through a find result.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"KILLING A TASK BY PID\",\"command\": \"taskkill /F /PID <process-id>\",\"description\": \"Kill a linux process using pid.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"RENAMING EITHER A FILE OR DIRECTORE\",\"command\": \"ren <previous-name> <new-name>\",\"description\": \"Renaming a file or directory.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS RENAMING\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"FIND A PROCCESS BY PORT\",\"command\": \"netstat -ano | grep <process-id>\",\"description\": \"Finding a process by port.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS FINDING NETSTAT\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"PRINTING ON THE COMMAND A FILE CONTENT\",\"command\": \"type <file-name>\",\"description\": \"Printing on the command screen the file's content.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS PRINTING\"}"
+
+
+--------------------------------------------
+
+--------------------------------------------
+$ netstat -ano | grep 5556

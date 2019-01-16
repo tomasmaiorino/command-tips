@@ -1,4 +1,3 @@
-
 ***********************************************************
 						WINDOWS
 ***********************************************************
@@ -8,7 +7,18 @@ curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST 
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"RENAMING EITHER A FILE OR DIRECTORE\",\"command\": \"ren <previous-name> <new-name>\",\"description\": \"Renaming a file or directory.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS RENAMING\"}"
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"FIND A PROCCESS BY PORT\",\"command\": \"netstat -ano | grep <process-id>\",\"description\": \"Finding a process by port.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS FINDING NETSTAT\"}"
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"PRINTING ON THE COMMAND A FILE CONTENT\",\"command\": \"type <file-name>\",\"description\": \"Printing on the command screen the file's content.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS PRINTING\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"FINDING A FILE OR DIRECTORY\",\"command\": \"dir <file-name> /S\",\"description\": \"Finding a file or director recursively.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS FINDING\"}"
 
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PATCH http://localhost:3000/tips/5c3fa39b9331ba0d02cdca2f -d "{\"increment\": true, \"attribute\":\"helpfull\"}"
+
+
+***********************************************************
+						GIT
+***********************************************************
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"List different files from two git branches\",\"command\": \"git diff --name-status <branch-name>\",\"description\": \"Linging different files from two git branches.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"GIT LISTING\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"Compare files from different branches\",\"command\": \"git diff <different-branch> -- <file-name>\",\"description\": \"Compare different a file from two different branches.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"GIT COMPARE DIFF\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"Show different files between two commits\",\"command\": \"git diff HEAD <commit-hash> --raw\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"GIT COMPARE DIFF\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"Remove untracked files.\",\"command\": \"git clean -f -d\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"GIT\"}"
 
 --------------------------------------------
 

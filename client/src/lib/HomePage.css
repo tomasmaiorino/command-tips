@@ -1,0 +1,12 @@
+main {
+    margin-top: 100px;
+}
+.search{
+    color: black;
+}
+.customRow {
+    visibility: visible; animation-name: fadeIn;
+}
+.pointer {
+    cursor: pointer;
+}

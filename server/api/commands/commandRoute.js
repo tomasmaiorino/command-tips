@@ -4,6 +4,8 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const User = require('../users/user');
 const Command = require('./command');
+const TagService = require('../tags/tagService')
+const Tag = require('../tags/tag');
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
@@ -15,6 +17,31 @@ router.get('/', (req, res, next) => {
 //curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X GET http://localhost:3000/tips/5c3f1f833de0b83a31915f05
 
 //curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X GET http://localhost:3000/tips/users/
+
+router.get('/tags/:tagValue', (req, res, next) => {
+
+    const tagValue = req.params.tagValue;
+
+    Command.find({ "tags": { $regex: tagValue, $options: 'i' } })
+        .exec()
+        .then(commands => {
+            if (commands) {
+                res.status(200).json(
+                    {
+                        commands
+                    }
+                );
+            } else {
+                res.status(404);
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                'error': error
+            })
+        });
+
+});
 
 
 router.get('/:commandId', (req, res, next) => {
@@ -48,7 +75,7 @@ router.get('/search/:query', (req, res, next) => {
 
     const query = req.params.query;
 
-    console.log('Looking for the command with the query [' + query + '].');
+    console.debug('Looking for the command with the query [' + query + '].');
 
     Command.find({
         $or: [
@@ -159,6 +186,38 @@ router.post('/', (req, res, next) => {
                         });
                     }
 
+                    if (command.tags) {
+                        Tag.find()
+                            .exec()
+                            .then(tags => {
+                                if (tags) {
+                                    console.log(' tags ' + tags.length);
+                                    let tagsInformed = command.tags.split(" ");
+                                    tags.map(t1 => {
+                                        if (tagsInformed.length > 0) {
+                                            console.log('tag found value ' + t1.value);
+                                            const tagIndex = tagsInformed.indexOf(t1.value.toUpperCase());
+                                            console.log('index found ' + tagIndex);
+                                            if (tagIndex !== -1) {
+                                                console.log('removing tag: ' + t1);
+                                                tagsInformed.splice(tagIndex, 1);
+                                            }
+                                        }
+                                    });
+                                    if (tagsInformed.length > 0) {
+                                        console.log('tagInformed length ' + tagsInformed.length);
+                                        tagsInformed.map(t2 => {
+                                            console.log('tag being created: ' + t2);
+                                            new Tag({ value: t2 }).save();
+                                        });
+                                    }
+                                }
+                            })
+                            .catch(error => {
+                                console.log('Error trying to create a tag ' + error);
+                            });
+                    }
+
                     command.save()
                         .then(saved => {
                             return res.status(201).json({
@@ -166,6 +225,7 @@ router.post('/', (req, res, next) => {
                             });
                         })
                         .catch(error => {
+                            console.log('Error creation command ' + error + ' .');
                             res.status(500).json({
                                 'error': error
                             })
@@ -173,6 +233,7 @@ router.post('/', (req, res, next) => {
                 }
             })
             .catch(error => {
+                console.log('General error creation command ' + error + ' .');
                 res.status(500).json({
                     'error': error
                 })

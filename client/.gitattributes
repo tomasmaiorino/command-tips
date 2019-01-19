@@ -1,0 +1,2 @@
+*.js linguist-language=Javascript
+assets/* linguist-vendored

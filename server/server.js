@@ -1,6 +1,6 @@
 const app = require('./app');
 const http = require('http');
-const config = require('./config/env/development');
+const config = require('./config/config');
 const mongoose = require('mongoose');
 
 /**
@@ -12,7 +12,7 @@ const port = process.env.PORT || '8080';
 app.set('port', port);
 
 mongoose
-    .connect(config.db,{ useNewUrlParser: true})
+    .connect(config.db.url,{ useNewUrlParser: true})
     .then(() => {
         console.log('Database connected.');
     });

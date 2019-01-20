@@ -37,7 +37,7 @@ module.exports = merge(baseConfig, {
         [
             new CleanWebpackPlugin('dist', {}),
             new CopyWebpackPlugin([
-                { from: 'assets', to: 'assets/', toType: 'dir', ignore: ['*.html', '.js', '.css'] }
+                { from: 'assets', to: 'assets/', toType: 'dir', ignore: ['*.html', '.js', '.css', 'font', 'webfonts'] }
             ], { debug: 'debug' }),
             new ExtractTextPlugin('styles.css')]
 });

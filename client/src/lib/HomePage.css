@@ -10,3 +10,7 @@ main {
 .pointer {
     cursor: pointer;
 }
+ 
+.form-li-pointer li {
+    cursor: pointer;
+}

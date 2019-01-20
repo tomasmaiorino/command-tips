@@ -39,6 +39,5 @@ module.exports = merge(baseConfig, {
             new CopyWebpackPlugin([
                 { from: 'assets', to: 'assets/', toType: 'dir', ignore: ['*.html', '.js', '.css'] }
             ], { debug: 'debug' }),
-            new ExtractTextPlugin('styles.css')
-        ]
+            new ExtractTextPlugin('styles.css')]
 });

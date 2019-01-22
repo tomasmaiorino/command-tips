@@ -14,7 +14,7 @@ const dev = {
 const prod = {
   db: {
 //    url: 'mongodb://localhost:27017/command-tips'
-    url: '' + process.env.MONGODB_URI
+    url: process.env.MONGODB_URI.toString()
   }
 };
 

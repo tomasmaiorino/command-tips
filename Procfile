@@ -1,1 +1,1 @@
-web: npm --prefix server start
+web: NODE_ENV=prod npm --prefix server start

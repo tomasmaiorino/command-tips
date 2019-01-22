@@ -12,11 +12,9 @@ const dev = {
   }
 };
 const prod = {
-  app: {
-    port: parseInt(process.env.TEST_APP_PORT) || 3000
-  },
   db: {
-    url: 'mongodb://localhost:27017/command-tips'
+//    url: 'mongodb://localhost:27017/command-tips'
+    url: process.env.MONGO_URI
   }
 };
 

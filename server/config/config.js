@@ -3,7 +3,7 @@
 // config.js
 const env = process.env.NODE_ENV || 'dev'// 'dev' or 'test'
 
-const dev = {
+let envValues = {
   app: {
     port: parseInt(process.env.DEV_APP_PORT) || 3000
   },
@@ -11,19 +11,22 @@ const dev = {
     url: 'mongodb://localhost:27017/command-tips'
   }
 };
-const prod = {
-  db: {
-//    url: 'mongodb://localhost:27017/command-tips'
-    url: process.env.MONGODB_URI.toString()
-  }
-};
+if (process.env.NODE_ENV === 'prod') {
+  envValues = {
+    db: {
+  //    url: 'mongodb://localhost:27017/command-tips'
+      url: process.env.MONGODB_URI || process.env.MONGODB_URI.toString()
+    }
+  };
+}
 
-const config = {
-  dev,
-  prod
-};
+// const config = {
+//   dev,
+//   prod
+// };
 
-module.exports = config[env];
+//module.exports = config[env];
+module.exports = envValues;
 
 
 // /**

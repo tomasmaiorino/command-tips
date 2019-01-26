@@ -74,7 +74,14 @@ const doSearchCommand = inputValue => {
 }
 
 // Use your imagination to render suggestions.
-const renderSuggestion = suggestion => <div>{suggestion.title}</div>;
+const renderSuggestion = suggestion => {
+  let tags = '';
+  if (suggestion.tags !== undefined) {
+    tags = suggestion.tags.indexOf(" ") !== -1 ? suggestion.tags.split(" ")[0] : suggestion.tags;
+  }
+  return (<div>{suggestion.title} {tags && <span className="ml-3 badge badge-pill badge-default pointer">{tags}</span>}</div>);
+}
+
 
 class SearchCommand extends React.Component {
   constructor(props) {

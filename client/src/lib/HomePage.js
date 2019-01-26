@@ -3,8 +3,9 @@ import './HomePage.css';
 import './SearchCommand';
 import SearchCommand from "./SearchCommand";
 import SearchResults from './SearchResults';
-const uuidv1 = require('uuid/v1');
+import Load from './Load';
 
+const uuidv1 = require('uuid/v1');
 const SEARCH_COMMANDS_BY_TAG = "/api/tips/tags/";
 const SEARCH_TAG_CONTENT_URL = "/api/tags/";
 
@@ -62,13 +63,18 @@ class HomePage extends React.Component {
           <div className="row">
             <h3 className="ml-3">Check this tags to search.</h3>
           </div>
-
+          {!this.state.searchResults && 
+            <Load />
+          }
           <div className="row">
             {this.state.tags && this.state.tags.map(t => {
               return (<span key={uuidv1()} className="ml-3 mt-2 badge badge-pill badge-default pointer" onClick={() => this.doCheckTags(t.value)}>{t.value}</span>)
             })}
           </div>
           <hr className="mb-5" />
+          {!this.state.searchResults && 
+            <Load />
+          }          
           <SearchResults results={this.state.searchResults} />
         </div>
       </main>

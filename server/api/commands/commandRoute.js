@@ -199,7 +199,7 @@ router.post('/', (req, res, next) => {
                                             const tagIndex = tagsInformed.indexOf(t1.value.toUpperCase());
                                             console.log('index found ' + tagIndex);
                                             if (tagIndex !== -1) {
-                                                console.log('removing tag: ' + t1);
+                                                console.debug('removing tag: ' + t1);
                                                 tagsInformed.splice(tagIndex, 1);
                                             }
                                         }

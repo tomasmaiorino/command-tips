@@ -44,8 +44,8 @@ class SearchResult extends React.Component {
                             <strong>{v.title}</strong>
                         </h3>
                         <p className="grey-text">{v.full_description}</p>
-                        <p>
-                            <strong>$ {v.command}</strong>
+                        <p>                            
+                            $ <strong dangerouslySetInnerHTML={{ __html: v.command }}/>
                         </p>
                         <CopyToClipboard text={v.command}
                             onCopy={() => this.setState({ copied: 'Copied' })}>

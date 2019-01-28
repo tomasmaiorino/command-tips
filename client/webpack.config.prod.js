@@ -8,6 +8,11 @@ const baseConfig = require('./webpack.config.base.js');
 
 module.exports = merge(baseConfig, {
     mode: 'production',
+    output: {
+        path: path.join(__dirname, './../server/dist'),
+        filename: '[name].js',
+        publicPath: '/'
+    },
     module: {
         rules: [
             {
@@ -35,7 +40,14 @@ module.exports = merge(baseConfig, {
     },
     plugins:
         [
-            new CleanWebpackPlugin('dist', {}),
+            //      new CleanWebpackPlugin('../server/dist', {}),
+            new CleanWebpackPlugin(['server/dist'], { root: path.resolve(__dirname , '..'), verbose: true }),
+
+            // new CleanWebpackPlugin('dist', {
+            //     root: process.cwd(),
+            //     verbose: true,
+            //     dry: false
+            // }),
             new CopyWebpackPlugin([
                 { from: 'assets', to: 'assets/', toType: 'dir', ignore: ['*.html', '.js', '.css', 'font', 'webfonts'] }
             ], { debug: 'debug' }),

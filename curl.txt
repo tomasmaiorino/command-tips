@@ -9,8 +9,9 @@ curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST 
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"PRINTING ON THE COMMAND A FILE CONTENT\",\"command\": \"type <file-name>\",\"description\": \"Printing on the command screen the file's content.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS PRINTING\"}"
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/tips -d "{\"title\": \"FINDING A FILE OR DIRECTORY\",\"command\": \"dir <file-name> /S\",\"description\": \"Finding a file or director recursively.\",\"links\": \"\",\"userId\": \"5c3f1d1b1fe49b35a0c7a968\", \"tags\":\"WINDOWS FINDING\"}"
 
-curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PATCH http://localhost:3000/tips/5c3fa39b9331ba0d02cdca2f -d "{\"increment\": true, \"attribute\":\"helpfull\"}"
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PATCH http://localhost:3000/tips/5c3f1d1b1fe49b35a0c7a968 -d "{\"increment\": true, \"attribute\":\"helpfull\"}"
 
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PATCH http://localhost:8080/api/tips/5c3f1d1b1fe49b35a0c7a968 -d "{\"false\": true, \"attribute\":\"command\", \"value\": \"docker rmi -f &#36;(docker images --all | grep -i &#34;&#60;none&#62;&#34; | awk '&#123;print &#36;3&#125;')\"}"
 
 ***********************************************************
 						GIT

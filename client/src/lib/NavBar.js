@@ -3,15 +3,11 @@ import React, { Component } from 'react';
 import './NavBar.css';
 import { BrowserRouter as Router, Link, NavLink, Redirect, Prompt } from 'react-router-dom';
 
-const pStyle = {
-
-};
-
 const NavBar = () => {
     return (
         <div>
             <header>
-                <nav className="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+                <nav className="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar override-bar">
                     <div className="container">
 
                         <a className="navbar-brand waves-effect" href="/">

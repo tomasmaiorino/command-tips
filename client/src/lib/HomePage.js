@@ -68,7 +68,7 @@ class HomePage extends React.Component {
           }
           <div className="row">
             {this.state.tags && this.state.tags.map(t => {
-              return (<span key={uuidv1()} className="ml-3 mt-2 badge badge-pill badge-default pointer" onClick={() => this.doCheckTags(t.value)}>{t.value}</span>)
+              return (<span key={uuidv1()} className="ml-3 mt-2 badge badge-warning pointer" onClick={() => this.doCheckTags(t.value)}>{t.value}</span>)
             })}
           </div>
           <hr className="mb-5" />

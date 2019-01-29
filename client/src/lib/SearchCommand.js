@@ -151,7 +151,7 @@ class SearchCommand extends React.Component {
       placeholder: "Search for the command that you may need. e.g: taskkill",
       value,
       onChange: this.onChange,
-      className: 'form-control search'
+      className: 'form-control search site-font'
     };
 
     //    console.log('input props '+ inputProps.value);

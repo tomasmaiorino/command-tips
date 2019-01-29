@@ -7606,24 +7606,20 @@ header,
     height: 100%;
 }
 
-#intro {
-    background: url('/assets/img/nav.jpg')no-repeat center center fixed !important;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
 .top-nav-collapse {
     background-color: #24355C;
-}
-.card-title {
-    margin-bottom: .75rem;
 }
 
 .pointer {
     cursor: pointer;
 }
-body {
+
+.site-font {
+    font-family: monospace !important
+}
+.action-button {
+    color: black !important
+}body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;

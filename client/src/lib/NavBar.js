@@ -15,7 +15,7 @@ const NavBar = () => {
                     <div className="container">
 
                         <a className="navbar-brand waves-effect" href="/">
-                            <strong className="blue-text">Command Tips</strong>
+                            <img src="assets/img/logo-header.png"/>
                         </a>
 
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

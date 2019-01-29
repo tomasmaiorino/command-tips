@@ -55,7 +55,7 @@ class HomePage extends React.Component {
     return (
       <main>
         <div className="container">
-          <div className="md-form mt-0 form-li-pointer">
+          <div className="md-form mt-0 form-li-pointer input-field">
             <SearchCommand
               processResult={this.doProcessResult.bind(this)} />
           </div>

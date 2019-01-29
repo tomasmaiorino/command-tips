@@ -2,7 +2,6 @@ import React from "react";
 import Autosuggest from "react-autosuggest";
 import theme from './SearchCommand.css';
 
-//const CARD_URL = "http://localhost:8080/api/v1/content-types?q=grammar";
 const SEARCH_CONTENT_URL = "/api/tips/search/";
 
 // Imagine you have a list of languages that you'd like to autosuggest.
@@ -50,10 +49,6 @@ const getSuggestions = value => {
   const inputLength = inputValue.length;
 
   return inputLength < 3 ? [] : doSearchCommand(inputValue);
-  /*commands.filter(
-        lang => lang.title.toLowerCase().slice(0, inputLength) === inputValue
-      );
-      */
 };
 
 // When suggestion is clicked, Autosuggest needs to populate the input
@@ -79,7 +74,7 @@ const renderSuggestion = suggestion => {
   if (suggestion.tags !== undefined) {
     tags = suggestion.tags.indexOf(" ") !== -1 ? suggestion.tags.split(" ")[0] : suggestion.tags;
   }
-  return (<div>{suggestion.title} {tags && <span className="ml-3 badge badge-pill badge-default pointer">{tags}</span>}</div>);
+  return (<div className="site-font">{suggestion.title} {tags && <span className="ml-3 badge badge badge-warning pointer site-font">{tags}</span>}</div>);
 }
 
 
@@ -151,7 +146,7 @@ class SearchCommand extends React.Component {
       placeholder: "Search for the command that you may need. e.g: taskkill",
       value,
       onChange: this.onChange,
-      className: 'form-control search site-font'
+      className: 'form-control search site-font input-field'
     };
 
     //    console.log('input props '+ inputProps.value);

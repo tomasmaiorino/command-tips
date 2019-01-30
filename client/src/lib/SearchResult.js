@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 const uuidv1 = require('uuid/v1');
 const INCREMENT_COMMAND_WORK = "/api/tips/";
+const HTML_TAGS_TO_REPLACE = [{'>':'&gt;'},{'<':'&lt;'}];
+
 
 class SearchResult extends React.Component {
     constructor(props) {
@@ -11,6 +13,17 @@ class SearchResult extends React.Component {
             worksCount: props.content.works,
             doesNotWorksCount: props.content.doesnt_work
         };
+        this.doReplaceString = this.doReplaceString.bind(this);
+    }
+
+    doReplaceString = value => {
+        HTML_TAGS_TO_REPLACE.map(k => {
+            Object.keys(k).forEach(e => {
+                value = value.replace(e, k[e]);
+//                console.log(con.replace(e, k[e]))
+            });
+        });
+        return value;
     }
 
     doIncrementWork = commandId => {
@@ -36,6 +49,7 @@ class SearchResult extends React.Component {
 
     render() {
         const v = this.props.content;
+        const command = this.doReplaceString(v.command);
         return (
             <div key={this.props.uuid}>
                 <div className="row wow fadeIn customRow">
@@ -45,7 +59,8 @@ class SearchResult extends React.Component {
                         </h3>
                         <p className="grey-text">{v.full_description}</p>
                         <p>                            
-                        <strong className="site-font">$&nbsp;</strong><strong className="site-font" dangerouslySetInnerHTML={{ __html: v.command.replace(/</, "&lt;").replace(/>/, "&gt;")}}/>
+                        <strong className="site-font">$&nbsp;</strong>
+                        <strong className="site-font" dangerouslySetInnerHTML={{ __html: command}}/>
                         </p>
                         <CopyToClipboard text={v.command}
                             onCopy={() => this.setState({ copied: 'Copied' })}>

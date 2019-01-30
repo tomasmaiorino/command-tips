@@ -7652,7 +7652,10 @@ header,
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-main {
+.override-bar {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}main {
     margin-top: 100px;
 }
 .search{

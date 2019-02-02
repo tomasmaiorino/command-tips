@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+const Entities = require('html-entities').AllHtmlEntities;
+const entities = new Entities();
+
 const uuidv1 = require('uuid/v1');
 const INCREMENT_COMMAND_WORK = "/api/tips/";
 const HTML_TAGS_TO_REPLACE = [{'>':'&gt;'},{'<':'&lt;'}];
-
 
 class SearchResult extends React.Component {
     constructor(props) {
@@ -20,7 +23,6 @@ class SearchResult extends React.Component {
         HTML_TAGS_TO_REPLACE.map(k => {
             Object.keys(k).forEach(e => {
                 value = value.replace(e, k[e]);
-//                console.log(con.replace(e, k[e]))
             });
         });
         return value;
@@ -50,8 +52,9 @@ class SearchResult extends React.Component {
     render() {
         const v = this.props.content;
         const command = this.doReplaceString(v.command);
+
         return (
-            <div key={this.props.uuid}>
+            <div>
                 <div className="row wow fadeIn customRow">
                     <div className="col-lg-12 col-xl-7 mb-4">
                         <h3 className="mb-3 font-weight-bold dark-grey-text site-font">
@@ -60,9 +63,9 @@ class SearchResult extends React.Component {
                         <p className="grey-text">{v.full_description}</p>
                         <p>                            
                         <strong className="site-font">$&nbsp;</strong>
-                        <strong className="site-font" dangerouslySetInnerHTML={{ __html: command}}/>
+                        <strong className="site-font">{entities.decode(command)}</strong>
                         </p>
-                        <CopyToClipboard text={v.command}
+                        <CopyToClipboard text={entities.decode(command)}
                             onCopy={() => this.setState({ copied: 'Copied' })}>
                             <a target="#" className="btn btn-dark btn-sm waves-effect waves-light">{this.state.copied}
                                 <i className="fas fa-play ml-2"></i>

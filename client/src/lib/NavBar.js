@@ -13,7 +13,7 @@ const NavBar = () => {
                         <a className="navbar-brand waves-effect" href="/">
                             <img src="assets/img/logo-header.png"/>
                         </a>
-
+                    {/*
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -21,13 +21,14 @@ const NavBar = () => {
 
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active">
+                                <li className="nav-item active nav-item-background">
                                     <a className="nav-link waves-effect" href="/">Home
                                         <span className="sr-only">(current)</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
+                    */}
                     </div>
                 </nav>
             </header>

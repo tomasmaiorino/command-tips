@@ -1,8 +1,7 @@
 import React from "react";
 import './HomePage.css';
-import './SearchCommand';
-import SearchCommand from "./SearchCommand";
-import SearchResults from './SearchResults';
+import SearchCommand from './search/SearchCommand';
+import SearchResults from './search/SearchResults';
 import Load from './Load';
 
 const uuidv1 = require('uuid/v1');

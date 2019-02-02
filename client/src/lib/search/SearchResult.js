@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import AlertMessages from './../util/AlertMessages';
+
 
 const Entities = require('html-entities').AllHtmlEntities;
 const entities = new Entities();
-
 const uuidv1 = require('uuid/v1');
 const INCREMENT_COMMAND_WORK = "/api/tips/";
 const HTML_TAGS_TO_REPLACE = [{'>':'&gt;'},{'<':'&lt;'}];
@@ -14,7 +15,8 @@ class SearchResult extends React.Component {
         this.state = {
             copied: 'Copy',
             worksCount: props.content.works,
-            doesNotWorksCount: props.content.doesnt_work
+            doesNotWorksCount: props.content.doesnt_work,
+            showErrorMessage: false
         };
         this.doReplaceString = this.doReplaceString.bind(this);
     }
@@ -29,8 +31,7 @@ class SearchResult extends React.Component {
     }
 
     doIncrementWork = commandId => {
-        fetch(INCREMENT_COMMAND_WORK + commandId,
-            {
+        fetch(INCREMENT_COMMAND_WORK + commandId, {
                 method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
@@ -48,6 +49,27 @@ class SearchResult extends React.Component {
                 console.error(error);
             });
     }
+
+    doIncrementDoesNotWork = commandId => {
+        fetch(INCREMENT_COMMAND_WORK + commandId, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ attribute: 'doesnt_work', increment: true })
+            }).then(result => result.json()).then((data) => {
+                if (data) {
+                    this.setState(
+                        { doesNotWorksCount: data.command.doesnt_work }
+                    )
+                }
+            }, (error) => {
+                this.setState({ isLoaded: false, error: error });
+                console.error(error);
+            });
+    }
+
 
     render() {
         const v = this.props.content;
@@ -82,10 +104,12 @@ class SearchResult extends React.Component {
                         onClick={() => this.doIncrementWork(v._id)}>
                         It works :) <span className="badge badge-dark ml-2">{this.state.worksCount}</span>
                     </button>
-                    <button type="button" className="btn btn-dark btn-sm">
-                        Does not works :( <span className="badge badge-dark ml-2">{v.doesnt_work}</span>
+                    <button type="button" className="btn btn-dark btn-sm"
+                        onClick={() => this.doIncrementDoesNotWork(v._id)}>
+                        Does not works :( <span className="badge badge-dark ml-2">{this.state.doesNotWorksCount}</span>
                     </button>
                 </div>
+                {this.state.showErrorMessage && <AlertMessages />}
                 <hr className="mb-5" />
             </div>
         );

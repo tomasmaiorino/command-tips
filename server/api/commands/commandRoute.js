@@ -6,6 +6,7 @@ const User = require('../users/user');
 const Command = require('./command');
 const TagService = require('../tags/tagService')
 const Tag = require('../tags/tag');
+const CommandController = require('./commandController');
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
@@ -22,8 +23,7 @@ router.get('/tags/:tagValue', (req, res, next) => {
 
     const tagValue = req.params.tagValue;
 
-    Command.find({ "tags": { $regex: tagValue, $options: 'i' } })
-        .exec()
+    CommandController.findByTag(tagValue)
         .then(commands => {
             if (commands) {
                 res.status(200).json(
@@ -40,18 +40,15 @@ router.get('/tags/:tagValue', (req, res, next) => {
                 'error': error
             })
         });
-
 });
 
 
 router.get('/:commandId', (req, res, next) => {
 
     const commandId = req.params.commandId;
-
     console.log('Looking for the command ' + commandId + '.');
 
-    Command.findById(commandId)
-        .exec()
+    CommandController.findById(commandId)
         .then(command => {
             if (command) {
                 res.status(200).json(
@@ -77,26 +74,22 @@ router.get('/search/:query', (req, res, next) => {
 
     console.debug('Looking for the command with the query [' + query + '].');
 
-    Command.find({
-        $or: [
-            { "full_description": { $regex: query, $options: 'i' } },
-            { "title": { $regex: query, $options: 'i' } },
-            { "command": { $regex: query, $options: 'i' } }]
+    CommandController.search(query)
+    .then(commands => {
+        if (commands) {
+            res.status(200).json(
+                {
+                    commands
+                }
+            );
+        }
     })
-        .exec((err, commands) => {
-            if (commands) {
-                //console.log('commands ' + commands);
-                res.status(200).json(
-                    {
-                        commands
-                    }
-                );
-            } else {
-                res.status(404);
-            }
+    .catch(error => {
+        res.status(500).json({
+            'error': error
         });
+    });
 });
-
 
 router.patch('/:commandId', (req, res, next) => {
 
@@ -152,95 +145,6 @@ router.patch('/:commandId', (req, res, next) => {
     });
 });
 
-router.post('/', (req, res, next) => {
-
-    console.log('looking for user ' + req.body.userId);
-
-    if (!mongoose.Types.ObjectId.isValid(req.body.userId)) {
-        res.status(400).json({
-            'message': 'Invalid user id.'
-        });
-    } else {
-        User.findOne({ _id: req.body.userId })
-            .then(user => {
-                if (!user) {
-                    res.status(400).json({
-                        'message': 'User not found.'
-                    });
-                } else {
-                    const description = req.body.description == null || undefined ? req.body.title : req.body.description;
-                    const command = new Command({
-                        title: req.body.title,
-                        command: req.body.command,
-                        full_description: description,
-                        helpfull_links: req.body.links,
-                        user_id: req.body.userId,
-                        tags: req.body.tags
-                    });
-
-                    const error = command.validateSync();
-                    if (error) {
-                        console.log('Invalid command given ' + command + ' .');
-                        return res.status(400).json({
-                            'errors': error.errors
-                        });
-                    }
-
-                    if (command.tags) {
-                        Tag.find()
-                            .exec()
-                            .then(tags => {
-                                if (tags) {
-                                    console.log(' tags ' + tags.length);
-                                    let tagsInformed = command.tags.split(" ");
-                                    tags.map(t1 => {
-                                        if (tagsInformed.length > 0) {
-                                            console.log('tag found value ' + t1.value);
-                                            const tagIndex = tagsInformed.indexOf(t1.value.toUpperCase());
-                                            console.log('index found ' + tagIndex);
-                                            if (tagIndex !== -1) {
-                                                console.debug('removing tag: ' + t1);
-                                                tagsInformed.splice(tagIndex, 1);
-                                            }
-                                        }
-                                    });
-                                    if (tagsInformed.length > 0) {
-                                        console.log('tagInformed length ' + tagsInformed.length);
-                                        tagsInformed.map(t2 => {
-                                            console.log('tag being created: ' + t2);
-                                            new Tag({ value: t2 }).save();
-                                        });
-                                    }
-                                }
-                            })
-                            .catch(error => {
-                                console.log('Error trying to create a tag ' + error);
-                            });
-                    }
-
-                    command.save()
-                        .then(saved => {
-                            return res.status(201).json({
-                                'command': command
-                            });
-                        })
-                        .catch(error => {
-                            console.log('Error creation command ' + error + ' .');
-                            res.status(500).json({
-                                'error': error
-                            })
-                        });
-                }
-            })
-            .catch(error => {
-                console.log('General error creation command ' + error + ' .');
-                res.status(500).json({
-                    'error': error
-                })
-            });
-    }
-});
-
 router.get('/:id', (req, res, next) => {
 
     const commandId = req.params.id;
@@ -251,5 +155,108 @@ router.get('/:id', (req, res, next) => {
     });
 
 });
+
+doValidateRequest = (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.body.userId)) {
+        res.status(400).json({
+            'message': 'Invalid user id.'
+        });
+    } else {
+       next();
+    }
+}
+
+checkValidUser = (req, res, next) => {
+    User.findOne({ _id: req.body.userId })
+    .then(user => {
+        if(!user) {
+            res.status(400).json({
+                'message': 'User not found.'
+            });
+        } else {
+            next();
+        }
+    })
+    .catch(error => {
+        res.status(500).json({
+            'error': error
+        });
+    });
+}
+
+router.post('/',(req, res, next) => {
+        doValidateRequest(req, res, next);
+    }, (req, res, next) => {
+       checkValidUser(req, res, next);
+    }, (req, res) => {
+
+        const description = req.body.description == null || undefined ? req.body.title : req.body.description;
+        const command = new Command({
+            title: req.body.title,
+            command: req.body.command,
+            full_description: description,
+            helpfull_links: req.body.links,
+            user_id: req.body.userId,
+            tags: req.body.tags
+        });
+
+        const error = command.validateSync();
+
+        if (error) {
+            console.log('Invalid command given [' + command + '].');
+            return res.status(400).json({
+                'errors': error.errors
+            });
+        }
+
+        if (command.tags) {
+            processingTags(command.tags);
+        }
+
+        command.save()
+            .then(saved => {
+                return res.status(201).json({
+                    'command': command
+                });
+            })
+            .catch(error => {
+                console.log('Error creation command [' + error + '].');
+                res.status(500).json({
+                    'error': error
+                });
+            });
+    });
+
+processingTags = (paramTags) => {
+    Tag.find()
+    .exec()
+    .then(tags => {
+        if (tags) {
+            console.debug(' tags ' + tags.length);
+            let tagsInformed = paramTags.split(" ");
+            tags.map(t1 => {
+                if (tagsInformed.length > 0) {
+                    console.debug('tag found value ' + t1.value);
+                    const tagIndex = tagsInformed.indexOf(t1.value.toUpperCase());
+                    console.debug('index found ' + tagIndex);
+                    if (tagIndex !== -1) {
+                        console.debug('removing tag: ' + t1);
+                        tagsInformed.splice(tagIndex, 1);
+                    }
+                }
+            });
+            if (tagsInformed.length > 0) {
+                console.debug('tagInformed length ' + tagsInformed.length);
+                tagsInformed.map(t2 => {
+                    console.debug('tag being created: ' + t2);
+                    new Tag({ value: t2 }).save();
+                });
+            }
+        }
+    })
+    .catch(error => {
+        console.log('Error trying to create a tag [' + error + '].');
+    });
+}
 
 module.exports = router;

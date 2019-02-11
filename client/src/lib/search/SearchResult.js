@@ -83,10 +83,12 @@ class SearchResult extends React.Component {
                             <strong className="site-font">{v.title}</strong>
                         </h3>
                         <p className="grey-text">{v.full_description}</p>
-                        <p>                            
-                        <strong className="site-font">$&nbsp;</strong>
-                        <strong className="site-font">{entities.decode(command)}</strong>
-                        </p>
+                        {entities.decode(command).split("<br>").map(t =>
+                            <p key={uuidv1()}>
+                            <strong className="site-font">$&nbsp;</strong>
+                            <strong className="site-font">{t}</strong>
+                            </p>
+                        )}
                         <CopyToClipboard text={entities.decode(command)}
                             onCopy={() => this.setState({ copied: 'Copied' })}>
                             <a target="#" className="btn btn-dark btn-sm waves-effect waves-light">{this.state.copied}

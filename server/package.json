@@ -23,9 +23,12 @@
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "mocha": "^5.2.0",
     "mongoose": "^5.2.12"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "chai": "^4.2.0",
+    "nodemon": "^1.18.9",
+    "sinon": "^7.2.3"
   }
 }

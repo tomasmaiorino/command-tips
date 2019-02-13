@@ -34,12 +34,12 @@ npm install
 ###### Running unit tests.
 Access the follwing folder: server/tests
 ```$
-mocha *.js
+mocha server/tests/
 ```  
 ###### Running integration tests.
-Access the follwing folder: server/tests/it
+Access the follwing folder: server/tests
 ```$
-mocha *.js
+mocha server/tests/
 ```  
 # Frontend.
 ### Configuring client application.

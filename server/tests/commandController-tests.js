@@ -14,7 +14,7 @@ const COMMAND_OBJECT_MOCK = {
     'helpfull_links': '', 'user_id': '5c3f1d1b1fe49b35a0c7a968',
     'tags': 'DOCKER', 'updatedAt': '', 'createdAt': '', '__v': 0
 }
-
+const TAG_TO_SEARCH = 'NODE';
 
 describe("Finding command by id.", function () {
 
@@ -31,10 +31,23 @@ describe("Finding command by id.", function () {
         sinon.assert.calledOnce(findById);
     });
 
+
+    it("Should invoke find command with command id.", function () {
+        // Set up
+        findById = sinon.spy(command, "findById");
+
+        // Do test
+        commandController.findById(COMMAND_ID);
+
+        // Assertions
+        assert(findById.calledWith(COMMAND_ID));
+    });
+    
+
     it("Success call should return command object.", function (done) {
         // Set up
         findById = sinon.stub(command, 'findById').returns({
-            exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)            
+            exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)
         });
 
         // Do test
@@ -69,6 +82,75 @@ describe("Finding command by id.", function () {
 
     afterEach(() => {
         findById.restore();
+    });
+
+});
+
+describe("Finding command by tag.", function () {
+
+    let findByTag;
+
+    it.skip("Should invoke find command with tag.", function () {
+        // Set up
+        findByTag = sinon.spy(command, "find");
+
+        // Do test
+        commandController.findByTag(COMMAND_ID);
+
+        // Assertions
+        assert(findByTag.calledWith({ "tags": { $regex: TAG_TO_SEARCH, $options: 'i' } }));
+    });
+    
+
+    it("Should invoke find command by tag.", function () {
+        // Set up
+        findByTag = sinon.spy(command, "find");
+
+        // Do test
+        commandController.findByTag(TAG_TO_SEARCH);
+
+        // Assertions
+        sinon.assert.calledOnce(findByTag);
+    });
+
+    it("Success call should return command object.", function (done) {
+        // Set up
+        findByTag = sinon.stub(command, 'find').returns({
+            exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)
+        });
+
+        // Do test
+        commandController.findByTag(TAG_TO_SEARCH).then(data => {
+
+            // Assertions
+            sinon.assert.match(data, COMMAND_OBJECT_MOCK);
+
+        }).catch(responseError => {
+
+            assert.ok(false, "should not thrown an error.");
+
+        }).then(() => done(), error => done(error));
+    });
+
+    it("Error during find should return error.", function (done) {
+        // Set up
+        const error = new Error();
+        findByTag = sinon.stub(command, 'find').returns({
+            exec: sinon.stub().rejects(error)
+        });
+
+        // Do test
+        commandController.findByTag(TAG_TO_SEARCH).then(data => {
+            assert.ok(false, "should thrown an error.");
+
+        }).catch(responseError => {
+            // Assertions
+            sinon.assert.match(responseError, error);
+        }).then(() => done(), error => done(error));
+    });
+
+    afterEach(() => {
+        findByTag.restore();
     });
 
 });

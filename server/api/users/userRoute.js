@@ -6,6 +6,8 @@ const User = require('./user');
 const mongoose = require('mongoose');
 const UserService = require('./userService');
 const Command = require('../commands/command');
+const UserController = require('./userController');
+
 
 router.get('/:userId', (req, res, next) => {
     
@@ -13,8 +15,7 @@ router.get('/:userId', (req, res, next) => {
     
     console.log('Looking for the user ' + userId + '.');
 
-    User.findById(req.params.userId)
-        .exec()
+    UserController.findById(req.params.userId)
         .then(user => {
             if (user) {
                 res.status(200).json(

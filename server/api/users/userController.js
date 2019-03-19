@@ -1,24 +1,24 @@
-const Command = require('./command');
+const User = require('./user');
 
-function findById(commandId) {
+function findById(userId) {
     return new Promise((resolve, reject) => {
-        Command.findById(commandId)
+        User.findById(userId)
             .exec()
-            .then(command => {
-                resolve(command);
+            .then(user => {
+                resolve(user);
             })
             .catch(error => {
                 reject(error);
         });
     });
 }
-
+/*
 function findByTag(tagValue) {
     return new Promise((resolve, reject) => {
-        Command.find({ "tags": { $regex: tagValue, $options: 'i' } })
+        User.find({ "tags": { $regex: tagValue, $options: 'i' } })
             .exec()
-            .then(commands => {
-                resolve(commands);
+            .then(users => {
+                resolve(users);
             })
             .catch(error => {
                 reject(error);
@@ -29,20 +29,20 @@ function findByTag(tagValue) {
 function search(query) {
     //console.log('looking for ' + query);
     return new Promise((resolve, reject) => {
-        Command.find({
+        User.find({
             $or: [
                 { "full_description": { $regex: query, $options: 'i' } },
                 { "title": { $regex: query, $options: 'i' } },
-                { "command": { $regex: query, $options: 'i' } }]
+                { "user": { $regex: query, $options: 'i' } }]
         })
         .exec()
-        .then(commands => {
-            resolve(commands);
+        .then(users => {
+            resolve(users);
         })
         .catch(error =>{
             reject(error);
         })
     });
 }
-
-module.exports = { findById, findByTag, search };
+*/
+module.exports = { findById };

@@ -38,8 +38,7 @@ router.get('/:userId', (req, res, next) => {
 router.put('/:userId', (req, res, next) => {
     const userId = req.params.userId;
     console.log('Updating user ' + userId + '.');
-    User.findById(req.params.userId)
-        .exec()
+    UserController.findById(req.params.userId)
         .then(user => {
             if (!user) {
                 return res.status(400).json({
@@ -51,8 +50,7 @@ router.put('/:userId', (req, res, next) => {
                 email: req.body.email
             };
 
-            User.findOneAndUpdate({_id:req.params.userId},
-                {$set: newUser}, {new:true})
+            UserController.update(req.params.userId, newUser)
             .then(updatedUser => {
                 return res.status(200).json({
                     'user': updatedUser

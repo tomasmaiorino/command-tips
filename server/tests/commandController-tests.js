@@ -1,4 +1,5 @@
 const assert = require("assert");
+const expect = require('chai').expect;
 const sinon = require("sinon");
 let command = require('./../api/commands/command');
 let commandController = require('./../api/commands/commandController');
@@ -42,7 +43,7 @@ describe("Finding command by id.", function () {
         // Assertions
         assert(findById.calledWith(COMMAND_ID));
     });
-    
+
 
     it("Success call should return command object.", function (done) {
         // Set up
@@ -54,10 +55,10 @@ describe("Finding command by id.", function () {
         commandController.findById(COMMAND_ID).then(data => {
 
             // Assertions
-            sinon.assert.match(data, COMMAND_OBJECT_MOCK);
+            expect(data).to.deep.equal(COMMAND_OBJECT_MOCK);
 
         }).catch(responseError => {
-
+            console.log("error " + responseError);
             assert.ok(false, "should not thrown an error.");
 
         }).then(() => done(), error => done(error));
@@ -100,7 +101,7 @@ describe("Finding command by tag.", function () {
         // Assertions
         sinon.assert.calledWith(findByTag, { "tags": { $regex: TAG_TO_SEARCH, $options: 'i' } });
     });
-    
+
 
     it("Should invoke find command by tag.", function () {
         // Set up
@@ -123,7 +124,7 @@ describe("Finding command by tag.", function () {
         commandController.findByTag(TAG_TO_SEARCH).then(data => {
 
             // Assertions
-            sinon.assert.match(data, COMMAND_OBJECT_MOCK);
+            expect(data).to.deep.equal(COMMAND_OBJECT_MOCK);
 
         }).catch(responseError => {
 
@@ -213,11 +214,10 @@ describe("Search command.", function () {
         }).catch(responseError => {
             // Assertions
             sinon.assert.match(responseError, error);
-        }).then(() => done(), error => done(error));        
+        }).then(() => done(), error => done(error));
     });
 
     afterEach(() => {
         search.restore();
     });
-
 });

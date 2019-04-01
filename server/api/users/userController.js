@@ -12,6 +12,20 @@ function findById(userId) {
         });
     });
 }
+
+function update(userId, newUser) {
+    return new Promise((resolve, reject) => {
+        User.findOneAndUpdate({_id:userId},
+            {$set: newUser}, {new:true})
+        .then(updatedUser => {
+            resolve(updatedUser);
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
 /*
 function findByTag(tagValue) {
     return new Promise((resolve, reject) => {
@@ -45,4 +59,5 @@ function search(query) {
     });
 }
 */
-module.exports = { findById };
+
+module.exports = { findById, update };

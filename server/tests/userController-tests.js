@@ -2,6 +2,7 @@ const assert = require("assert");
 const expect = require('chai').expect;
 const sinon = require("sinon");
 let user = require('./../api/users/user');
+//let userModel = new User(user);
 let userController = require('./../api/users/userController');
 const USER_ID = '5c4f853e8f91855d711176f6';
 const USER_OBJECT_MOCK = {
@@ -15,8 +16,9 @@ const USER_OBJECT_MOCK = {
     'helpfull_links': '', 'user_id': '5c3f1d1b1fe49b35a0c7a968',
     'tags': 'DOCKER', 'updatedAt': '', 'createdAt': '', '__v': 0
 }
-const TAG_TO_SEARCH = 'NODE';
 const USER_TO_UPDATE = {};
+const USER_EMAIL = "user@mail.com";
+const USER_TO_SAVE = {};
 
 describe("Finding user by id.", function () {
 
@@ -85,6 +87,70 @@ describe("Finding user by id.", function () {
     afterEach(() => {
         findById.restore();
     });
+});
+
+describe("Finding user by email.", function () {
+
+  let findOne;
+
+  it("Should invoke find user one.", function () {
+      // Set up
+      findOne = sinon.spy(user, "findOne");
+
+      // Do test
+      userController.findOne(USER_EMAIL);
+
+      // Assertions
+      sinon.assert.calledOnce(findOne);
+  });
+
+
+  it("Should invoke find one user with user email.", function () {
+      // Set up
+      findOne = sinon.spy(user, "findOne");
+
+      // Do test
+      userController.findOne(USER_EMAIL);
+
+      // Assertions
+      assert(findOne.calledWith({email:USER_EMAIL}));
+  });
+
+
+  it("Success call should return user object.", function (done) {
+      // Set up
+      findOne = sinon.stub(user, 'findOne').resolves(USER_OBJECT_MOCK);
+
+      // Do test
+      userController.findOne(USER_EMAIL).then(data => {
+
+          // Assertions
+          expect(data).to.deep.equal(data);
+
+      }).catch(responseError => {
+          console.error('responseError ' + responseError);
+          assert.ok(false, "should not thrown an error.");
+
+      }).then(() => done(), error => done(error));
+  });
+
+  it("Error during find should return error.", function (done) {
+      // Set up
+      const error = new Error();
+      findOne = sinon.stub(user, 'findOne').rejects(error);
+
+      // Do test
+      userController.findOne(USER_EMAIL).then(data => {
+          assert.ok(false, "should thrown an error.");
+      }).catch(responseError => {
+          // Assertions
+          sinon.assert.match(responseError, error);
+      }).then(() => done(), error => done(error));
+  });
+
+  afterEach(() => {
+    findOne.restore();
+  });
 
 });
 
@@ -152,5 +218,71 @@ describe("Update user.", function () {
     afterEach(() => {
         findOneAndUpdate.restore();
     });
+
+});
+
+describe("Save user.", function () {
+
+  let save;
+
+  it("Should invoke save user.", function () {
+      // Set up
+      save = sinon.stub(user, 'create').resolves(USER_OBJECT_MOCK);
+
+      // Do test
+      userController.save(USER_TO_SAVE);
+
+      // Assertions
+      sinon.assert.calledOnce(save);
+  });
+
+  it("Should invoke save user with user.", function () {
+      // Set up
+      save = sinon.stub(user, 'create').resolves(USER_OBJECT_MOCK);
+
+      // Do test
+      userController.save(USER_TO_SAVE);
+
+      // Assertions
+      assert(save.calledWith(USER_TO_SAVE));
+
+  });
+
+  it("Success call should return created user.", function (done) {
+      // Set up
+      save = sinon.stub(user, 'create').resolves(USER_OBJECT_MOCK);
+
+      // Do test
+      userController.save(USER_TO_SAVE).then(data => {
+
+          // Assertions
+          expect(data).to.deep.equal(USER_OBJECT_MOCK);
+
+      }).catch(responseError => {
+          console.error('responseError ' + responseError);
+          assert.ok(false, "should not thrown an error.");
+
+      }).then(() => done(), error => done(error));
+  });
+
+  it("Error calling save should return error.", function (done) {
+    // Set up
+    const error = new Error();
+    save = sinon.stub(user, 'create').rejects(error);
+
+    // Do test
+    userController.save(USER_TO_SAVE).then(data => {
+        assert.ok(false, "should thrown an error.");
+
+    }).catch(responseError => {
+      // Assertions
+      sinon.assert.match(responseError, error);
+
+    }).then(() => done(), error => done(error));
+});
+
+  afterEach(() => {
+    save.restore();
+  });
 
 });

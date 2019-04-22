@@ -26,38 +26,30 @@ function update(userId, newUser) {
     });
 }
 
-/*
-function findByTag(tagValue) {
+function findOne(userEmail) {
+  console.debug("Looking for user by email: " + userEmail);
+  return new Promise((resolve, reject) => {
+    User.findOne({email:userEmail})
+      .then(user => {
+        resolve(user);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+function save(user) {
+  console.debug("Creating user: " + user);
     return new Promise((resolve, reject) => {
-        User.find({ "tags": { $regex: tagValue, $options: 'i' } })
-            .exec()
-            .then(users => {
-                resolve(users);
-            })
-            .catch(error => {
-                reject(error);
+        User.create(user)
+        .then(createdUser => {
+            resolve(createdUser)
+        })
+        .catch(error => {
+            reject(error);
         });
     });
 }
 
-function search(query) {
-    //console.log('looking for ' + query);
-    return new Promise((resolve, reject) => {
-        User.find({
-            $or: [
-                { "full_description": { $regex: query, $options: 'i' } },
-                { "title": { $regex: query, $options: 'i' } },
-                { "user": { $regex: query, $options: 'i' } }]
-        })
-        .exec()
-        .then(users => {
-            resolve(users);
-        })
-        .catch(error =>{
-            reject(error);
-        })
-    });
-}
-*/
-
-module.exports = { findById, update };
+module.exports = { findById, update, save, findOne };

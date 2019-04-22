@@ -10,9 +10,9 @@ const UserController = require('./userController');
 
 
 router.get('/:userId', (req, res, next) => {
-    
+
     const userId = req.params.userId;
-    
+
     console.log('Looking for the user ' + userId + '.');
 
     UserController.findById(req.params.userId)
@@ -72,9 +72,9 @@ router.put('/:userId', (req, res, next) => {
 //curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X GET http://localhost:3000/users/5c3f1d1b1fe49b35a0c7a968/tips
 
 router.get('/:userId/tips', (req, res, next) => {
-    
+
     const userId = req.params.userId;
-    
+
     console.log('Looking for the commands from the user ' + userId + '.');
 
     Command.find({user_id: userId})
@@ -99,7 +99,7 @@ router.get('/:userId/tips', (req, res, next) => {
 
 //curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/users -d "{\"username\":\"test\", \"password\": \"1233\", \"email\": \"teste@test.com\"}"
 router.post('/', (req, res, next) => {
-    User.findOne({email: req.body.email})
+  UserController.findOne(req.body.email)
     .then(data => {
 
         if (data) {
@@ -121,7 +121,7 @@ router.post('/', (req, res, next) => {
             });
         }
 
-        UserService.save(user)
+        UserController.save(user)
             .then(saved => {
                 return res.status(201).json({
                     'user': user

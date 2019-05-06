@@ -18,8 +18,13 @@ if (process.env.NODE_ENV === 'prod') {
       url: process.env.MONGODB_URI || process.env.MONGODB_URI.toString()
     }
   };
+} else if (process.env.NODE_ENV === 'test') {
+  envValues = {
+    db: {
+      url: 'mongodb://localhost:27017/command-tips-test'
+    }
+  }
 }
-
 // const config = {
 //   dev,
 //   prod

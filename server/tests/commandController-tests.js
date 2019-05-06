@@ -58,7 +58,7 @@ describe("Finding command by id.", function () {
             expect(data).to.deep.equal(COMMAND_OBJECT_MOCK);
 
         }).catch(responseError => {
-            console.log("error " + responseError);
+            console.error("error " + responseError);
             assert.ok(false, "should not thrown an error.");
 
         }).then(() => done(), error => done(error));

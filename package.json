@@ -1,7 +1,10 @@
 {
-    "name": "command-tips",
-    "version": "0.1.0",
-    "scripts": {
-      "postinstall": "npm install --prefix server"
-    }
+  "name": "command-tips",
+  "version": "0.1.0",
+  "scripts": {
+    "postinstall": "npm install --prefix server"
+  },
+  "devDependencies": {
+    "mockgoose": "^8.0.1"
   }
+}

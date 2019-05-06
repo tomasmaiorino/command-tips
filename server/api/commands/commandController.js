@@ -1,14 +1,18 @@
 const Command = require('./command');
 
 function findById(commandId) {
+  console.debug('controller -> Looking for the command  ' + commandId);
     return new Promise((resolve, reject) => {
+      console.debug('promisse -> Looking for the command  ' + commandId);
         Command.findById(commandId)
             .exec()
             .then(command => {
+              console.debug('resolving commnad  ' + command);
                 resolve(command);
             })
             .catch(error => {
-                reject(error);
+              command.error('error looking for command. ' + commandId);
+              reject(error);
         });
     });
 }

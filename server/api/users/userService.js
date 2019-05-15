@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const User = require('./user');
 
 function save(user) {
-    
+
     return new Promise((resolve, reject) => {
-        const userModel = new User(user);        
-        //console.log('user model to be created ' + userModel);        
+        const userModel = new User(user);
+        //console.log('user model to be created ' + userModel);
         userModel
         .save()
         .then(doc => {

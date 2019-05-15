@@ -6,15 +6,16 @@ const User = require('./user');
 const mongoose = require('mongoose');
 const UserService = require('./userService');
 const Command = require('../commands/command');
+const UserController = require('./userController');
+
 
 router.get('/:userId', (req, res, next) => {
-    
+
     const userId = req.params.userId;
-    
+
     console.log('Looking for the user ' + userId + '.');
 
-    User.findById(req.params.userId)
-        .exec()
+    UserController.findById(req.params.userId)
         .then(user => {
             if (user) {
                 res.status(200).json(
@@ -37,8 +38,7 @@ router.get('/:userId', (req, res, next) => {
 router.put('/:userId', (req, res, next) => {
     const userId = req.params.userId;
     console.log('Updating user ' + userId + '.');
-    User.findById(req.params.userId)
-        .exec()
+    UserController.findById(req.params.userId)
         .then(user => {
             if (!user) {
                 return res.status(400).json({
@@ -50,8 +50,7 @@ router.put('/:userId', (req, res, next) => {
                 email: req.body.email
             };
 
-            User.findOneAndUpdate({_id:req.params.userId},
-                {$set: newUser}, {new:true})
+            UserController.update(req.params.userId, newUser)
             .then(updatedUser => {
                 return res.status(200).json({
                     'user': updatedUser
@@ -73,9 +72,9 @@ router.put('/:userId', (req, res, next) => {
 //curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X GET http://localhost:3000/users/5c3f1d1b1fe49b35a0c7a968/tips
 
 router.get('/:userId/tips', (req, res, next) => {
-    
+
     const userId = req.params.userId;
-    
+
     console.log('Looking for the commands from the user ' + userId + '.');
 
     Command.find({user_id: userId})
@@ -100,7 +99,7 @@ router.get('/:userId/tips', (req, res, next) => {
 
 //curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/users -d "{\"username\":\"test\", \"password\": \"1233\", \"email\": \"teste@test.com\"}"
 router.post('/', (req, res, next) => {
-    User.findOne({email: req.body.email})
+  UserController.findOne(req.body.email)
     .then(data => {
 
         if (data) {
@@ -122,7 +121,7 @@ router.post('/', (req, res, next) => {
             });
         }
 
-        UserService.save(user)
+        UserController.save(user)
             .then(saved => {
                 return res.status(201).json({
                     'user': user

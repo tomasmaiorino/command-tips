@@ -1,14 +1,18 @@
 const Command = require('./command');
 
 function findById(commandId) {
+  console.debug('controller -> Looking for the command  ' + commandId);
     return new Promise((resolve, reject) => {
+      console.debug('promisse -> Looking for the command  ' + commandId);
         Command.findById(commandId)
             .exec()
             .then(command => {
+              console.debug('resolving commnad  ' + command);
                 resolve(command);
             })
             .catch(error => {
-                reject(error);
+              console.error('error looking for command. ' + commandId);
+              reject(error);
         });
     });
 }
@@ -35,12 +39,13 @@ function search(query) {
                 { "title": { $regex: query, $options: 'i' } },
                 { "command": { $regex: query, $options: 'i' } }]
         })
-        .exec((err, commands) => {
-            if (err) {
-                reject(err);
-            }
+        .exec()
+        .then(commands => {
             resolve(commands);
-        });
+        })
+        .catch(error =>{
+            reject(error);
+        })
     });
 }
 

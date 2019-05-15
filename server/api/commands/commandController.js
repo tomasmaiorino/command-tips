@@ -11,7 +11,7 @@ function findById(commandId) {
                 resolve(command);
             })
             .catch(error => {
-              command.error('error looking for command. ' + commandId);
+              console.error('error looking for command. ' + commandId);
               reject(error);
         });
     });

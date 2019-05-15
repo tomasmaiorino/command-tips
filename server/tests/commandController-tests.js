@@ -64,18 +64,20 @@ describe("Finding command by id.", function () {
         }).then(() => done(), error => done(error));
     });
 
-    it("Error during find should return error.", function (done) {
+    it("Error during find command by it should return error.", function (done) {
         // Set up
         const error = new Error();
         findById = sinon.stub(command, 'findById').returns({
             exec: sinon.stub().rejects(error)
-            // exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)
+            //exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)
         });
 
         // Do test
         commandController.findById(COMMAND_ID).then(data => {
+          console.log('data ' + data);
             assert.ok(false, "should thrown an error.");
         }).catch(responseError => {
+          console.log('responseError ' + responseError);
             // Assertions
             sinon.assert.match(responseError, error);
         }).then(() => done(), error => done(error));

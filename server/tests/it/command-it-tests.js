@@ -43,7 +43,7 @@ describe('Commands', () => {
       });
   });
 
-  describe('/GET commands by tag', () => {
+  describe('/GET IT - commands by tag', () => {
     it('it should find any commands', (done) => {
       chai.request(SERVER_APPLICATION_HOST)
           .get('/api/tips/tags/test')
@@ -57,7 +57,7 @@ describe('Commands', () => {
     });
   });
 
-  describe('/GET commands by id', () => {
+  describe('/GET IT - commands by id', () => {
     it('it should find any command', (done) => {
       chai.request(SERVER_APPLICATION_HOST)
           .get('/api/tips/5c4f853e8f91855d711176f6')
@@ -72,7 +72,7 @@ describe('Commands', () => {
     });
   });
 
-  describe('/POST create command', () => {
+  describe('/POST IT - create command', () => {
     it('it should return user not found error.', (done) => {
       chai.request(SERVER_APPLICATION_HOST)
           .post('/api/tips')
@@ -83,30 +83,31 @@ describe('Commands', () => {
             done();
           });
     });
+  });
 
-    it('it should create command.', (done) => {
+  describe('/POST IT - creating command', () => {
+    let userId = '';
+    let tempCommand = COMMAND_OBJECT_MOCK;
 
-      let tempCommand = SERVER_APPLICATION_HOST;
+      it('it should create command.', (done) => {
 
-      chai.request(SERVER_APPLICATION_HOST)
-        .post('/api/users')
-        .send(VALID_USER_MOCK)
-        .end((err, res) => {
-              res.should.have.status(201);
-              tempCommand.userId = res.body.property('_id');
-          done();
-        });
-
-      chai.request(SERVER_APPLICATION_HOST)
-          .post('/api/tips')
-          .send(tempCommand)
+        chai.request(SERVER_APPLICATION_HOST)
+          .post('/api/users')
+          .send(VALID_USER_MOCK)
           .end((err, res) => {
+                if(err) return done(err);
                 res.should.have.status(201);
-                res.body.should.have.property('message').to.be.a('string', 'User not found.');
+                tempCommand.userId = res.body.user._id;
+                chai.request(SERVER_APPLICATION_HOST)
+                  .post('/api/tips')
+                  .send(tempCommand)
+                  .end((err, res) => {
+                        res.should.have.status(201);
+                        res.body.should.have.property('message').to.be.a('string', 'User not found.');
+                    done();
+                  });
             done();
           });
-
     });
-
   });
 });

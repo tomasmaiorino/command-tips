@@ -1,4 +1,5 @@
 Command Tips is an application where the user can easily find those commands the they knows that exist, or even used already but it can't remember its syntax.
+Click [link here](https://intense-shore-54487.herokuapp.com/) to check the live application.
 This application contains within two applications:
 1 - server (node application) for the backend service.
 2 - cliente (react application) for the frontend.

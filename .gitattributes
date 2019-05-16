@@ -1,1 +1,1 @@
-server/dist/* linguist-vendored
+server/dist/* linguist-vendored=true

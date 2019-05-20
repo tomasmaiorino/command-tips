@@ -4,44 +4,6 @@ import theme from './SearchCommand.css';
 
 const SEARCH_CONTENT_URL = "/api/tips/search/";
 
-// Imagine you have a list of languages that you'd like to autosuggest.
-const commands = [
-  {
-    helpfull: 0,
-    unhelpfull: 0,
-    works: 0,
-    doesnt_work: 0,
-    comments_counts: 0,
-    active: true,
-    _id: "5c3f22b62936bc3c765739b8",
-    full_description: "Kill a task through a find result.",
-    helpfull_links: "",
-    tags: "GIT WINDOWS",
-    title: "KILLING A TASK USING A FIND RESULT",
-    command: "taskkill /F /FI 'PID eq 2856'",
-    user_id: "5c3f1d1b1fe49b35a0c7a968",
-    updatedAt: "2019-01-16T12:25:26.157Z",
-    createdAt: "2019-01-16T12:25:26.157Z",
-    __v: 0
-  },
-  {
-    helpfull: 0,
-    unhelpfull: 0,
-    works: 0,
-    doesnt_work: 0,
-    comments_counts: 0,
-    active: true,
-    _id: "5c3f73652ad7965f9af44dbe",
-    full_description: "Kill a linux process using pid.",
-    helpfull_links: "",
-    title: "KILLING A TASK BY PID",
-    command: "taskkill /F /PID <process-id>",
-    user_id: "5c3f1d1b1fe49b35a0c7a968",
-    updatedAt: "2019-01-16T18:09:41.776Z",
-    createdAt: "2019-01-16T18:09:41.776Z",
-    __v: 0
-  }
-];
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {

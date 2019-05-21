@@ -1,2 +1,2 @@
 **.js linguist-language=Javascript
-server/dist linguist-vendored=true
+server/dist/* linguist-vendored=true

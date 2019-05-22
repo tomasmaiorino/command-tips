@@ -1,3 +1,2 @@
 **.js linguist-language=Javascript
-#server/dist/* linguist-vendored
 server/dist/* linguist-generated=true

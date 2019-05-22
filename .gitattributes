@@ -3,3 +3,4 @@ server/dist/* linguist-generated=true
 client/assets/webfonts/* linguist-generated=true
 client/assets/css/modules/* linguist-vendored=true
 client/assets/css/*min.css linguist-vendored=true
+client/assets/js/modules/* linguist-vendored=true

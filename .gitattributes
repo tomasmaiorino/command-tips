@@ -1,2 +1,3 @@
 **.js linguist-language=Javascript
 server/dist/* linguist-generated=true
+client/assets/webfonts/* linguist-generated=true

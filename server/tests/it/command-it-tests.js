@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'test';
 const config = require('./../../config/config');
+let async = require('async');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let should = chai.should();
@@ -38,7 +39,7 @@ before((done) => {
 describe('Commands', () => {
 
   beforeEach((done) => {
-    Command.remove({}, (err) => {
+    Command.deleteMany({}, (err) => {
          done();
       });
   });
@@ -55,10 +56,8 @@ describe('Commands', () => {
             done();
           });
     });
-  });
 
-  describe('/GET IT - commands by id', () => {
-    it('it should find any command', (done) => {
+    it('it should find any command by tag', (done) => {
       chai.request(SERVER_APPLICATION_HOST)
           .get('/api/tips/5c4f853e8f91855d711176f6')
           .then((res) => {
@@ -70,9 +69,11 @@ describe('Commands', () => {
             done();
           })
     });
+
   });
 
   describe('/POST IT - create command', () => {
+
     it('it should return user not found error.', (done) => {
       chai.request(SERVER_APPLICATION_HOST)
           .post('/api/tips')
@@ -83,31 +84,114 @@ describe('Commands', () => {
             done();
           });
     });
+
+    it('it should create command.', function(done) {
+
+      let tempCommand = COMMAND_OBJECT_MOCK;
+
+      async.series([
+          (cb) => {
+            chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+              res.should.have.status(201);
+                //console.log('user created %j', res.body);
+                tempCommand.userId = res.body.user._id;
+                //console.log('temp commad %j', tempCommand);
+                return cb(null, tempCommand);
+            })
+
+          },
+          (cb) => {
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+              //console.log('body %j', res.body);
+              res.should.have.status(201);
+              res.body.command.should.have.property('_id').to.be.a('string');
+              return cb(null, tempCommand);
+            });
+          }
+      ], done);
+    });
+
   });
 
-  describe('/POST IT - creating command', () => {
-    let userId = '';
-    let tempCommand = COMMAND_OBJECT_MOCK;
+  describe('/POST IT - Query Command', () => {
 
-      it('it should create command.', (done) => {
+    it('it should find command.', function(done) {
 
-        chai.request(SERVER_APPLICATION_HOST)
-          .post('/api/users')
-          .send(VALID_USER_MOCK)
-          .end((err, res) => {
-                if(err) return done(err);
-                res.should.have.status(201);
+      let tempCommand = COMMAND_OBJECT_MOCK;
+
+      async.series([
+          (cb) => {
+            VALID_USER_MOCK.email = VALID_USER_MOCK.email + Math.floor(Math.random() * Math.floor(100));
+            chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+              //console.log('user created %j', res.body);
+              res.should.have.status(201);
                 tempCommand.userId = res.body.user._id;
-                chai.request(SERVER_APPLICATION_HOST)
-                  .post('/api/tips')
-                  .send(tempCommand)
-                  .end((err, res) => {
-                        res.should.have.status(201);
-                        res.body.should.have.property('message').to.be.a('string', 'User not found.');
-                    done();
-                  });
-            done();
-          });
+                //console.log('temp commad %j', tempCommand);
+                return cb(null, tempCommand);
+            })
+
+          },
+          (cb) => {
+            tempCommand.title = tempCommand.title + Math.floor(Math.random() * Math.floor(100));
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+              //console.log('body %j', res.body);
+              res.should.have.status(201);
+              tempCommand = res.body;
+              return cb(null, tempCommand);
+            });
+          },
+          (cb) => {
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).get('/api/tips/search/'+ tempCommand.command.title.substring(0,4)).send(tempCommand).end((err, res) => {
+              //console.log('body %j', res.body);
+              res.should.have.status(200);
+              res.body.commands.should.not.be.empty;
+              return cb(null, tempCommand);
+            });
+          }
+      ], done);
+    });
+
+    it('it should not find command.', function(done) {
+
+      let tempCommand = COMMAND_OBJECT_MOCK;
+
+      async.series([
+          (cb) => {
+            VALID_USER_MOCK.email = VALID_USER_MOCK.email + Math.floor(Math.random() * Math.floor(100));
+            chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+              //console.log('user created %j', res.body);
+              res.should.have.status(201);
+                tempCommand.userId = res.body.user._id;
+                //console.log('temp commad %j', tempCommand);
+                return cb(null, tempCommand);
+            })
+
+          },
+          (cb) => {
+            tempCommand.title = tempCommand.title + Math.floor(Math.random() * Math.floor(100));
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+              //console.log('body %j', res.body);
+              res.should.have.status(201);
+              tempCommand = res.body;
+              return cb(null, tempCommand);
+            });
+          },
+          (cb) => {
+            //console.log('creating command %j', tempCommand);
+            let invalidDescribe = Math.floor(Math.random() * Math.floor(1000));
+            chai.request(SERVER_APPLICATION_HOST).get('/api/tips/search/'+ invalidDescribe).send(tempCommand).end((err, res) => {
+              //console.log('seach body response %j', res.body);
+              res.should.have.status(200);
+              res.body.commands.should.be.empty;
+              return cb(null, tempCommand);
+            });
+          }
+      ], done);
     });
   });
+
 });

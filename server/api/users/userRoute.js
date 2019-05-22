@@ -75,7 +75,7 @@ router.get('/:userId/tips', (req, res, next) => {
 
     const userId = req.params.userId;
 
-    console.log('Looking for the commands from the user ' + userId + '.');
+    console.debug('Looking for the commands from the user ' + userId + '.');
 
     Command.find({user_id: userId})
         .exec()

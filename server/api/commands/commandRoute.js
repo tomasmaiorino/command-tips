@@ -47,7 +47,7 @@ router.get('/:commandId', (req, res, next) => {
 
     const commandId = req.params.commandId;
 
-    console.log('Looking for the command ' + commandId + '.');
+    console.debug('Looking for the command ' + commandId + '.');
 
     CommandController.findById(commandId)
         .then(command => {
@@ -192,7 +192,7 @@ router.post('/',(req, res, next) => {
        checkValidUser(req, res, next);
     }, (req, res) => {
 
-      console.log('creating command');
+      console.debug('creating command');
 
         const description = req.body.description == null || undefined ? req.body.title : req.body.description;
         const command = new Command({

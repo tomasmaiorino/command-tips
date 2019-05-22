@@ -1,3 +1,0 @@
-*.js linguist-language=Javascript
-assets/* linguist-vendored
-**/dist/* linguist-vendored=tr

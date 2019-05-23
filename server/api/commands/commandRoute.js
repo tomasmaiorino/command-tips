@@ -100,6 +100,9 @@ router.patch('/:commandId', (req, res, next) => {
     const increment = req.body.increment;
     const value = req.body.value;
 
+    console.debug('Params received %j', req.params);
+    console.debug('Body received %j', req.body);
+
     Command.findById(commandId, (err, command) => {
         if (err) {
             res.status(500).json({
@@ -140,6 +143,7 @@ router.patch('/:commandId', (req, res, next) => {
                     });
             }
         } else {
+          //console.log('Command %j not found.', commandId);
             res.status(404).json({
                 'message': 'Command not found'
             });
@@ -150,12 +154,18 @@ router.patch('/:commandId', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
 
     const commandId = req.params.id;
+    Command.findById(commandId, (err, command) => {
+      if (err) {
+          res.status(500).json({
+              error: err
+          });
 
-    res.status(200).json({
-        "message": "command tip",
-        "id": commandId
-    });
+      } else if (command) {
+        return res.status(200).json({
+          "command": command
 
+      });
+    }});
 });
 
 doValidateRequest = (req, res, next) => {

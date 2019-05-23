@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'test';
 const config = require('./../../config/config');
+const randomstring = require("randomstring");
 let async = require('async');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -116,13 +117,13 @@ describe('Commands', () => {
 
   describe('/POST IT - Query Command', () => {
 
-    it('it should find command.', function(done) {
+    it('it should find command searching by title.', function(done) {
 
       let tempCommand = COMMAND_OBJECT_MOCK;
 
       async.series([
           (cb) => {
-            VALID_USER_MOCK.email = VALID_USER_MOCK.email + Math.floor(Math.random() * Math.floor(100));
+            VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
             chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
               //console.log('user created %j', res.body);
               res.should.have.status(201);
@@ -133,7 +134,7 @@ describe('Commands', () => {
 
           },
           (cb) => {
-            tempCommand.title = tempCommand.title + Math.floor(Math.random() * Math.floor(100));
+            tempCommand.title = tempCommand.title + randomstring.generate(5);
             //console.log('creating command %j', tempCommand);
             chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
               //console.log('body %j', res.body);
@@ -154,13 +155,15 @@ describe('Commands', () => {
       ], done);
     });
 
-    it('it should not find command.', function(done) {
+    it('it should find command searching by full description.', function(done) {
 
       let tempCommand = COMMAND_OBJECT_MOCK;
+      let fullDescription = randomstring.generate();
+      tempCommand.description = fullDescription;
 
       async.series([
           (cb) => {
-            VALID_USER_MOCK.email = VALID_USER_MOCK.email + Math.floor(Math.random() * Math.floor(100));
+            VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
             chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
               //console.log('user created %j', res.body);
               res.should.have.status(201);
@@ -171,7 +174,7 @@ describe('Commands', () => {
 
           },
           (cb) => {
-            tempCommand.title = tempCommand.title + Math.floor(Math.random() * Math.floor(100));
+            tempCommand.title = tempCommand.title + randomstring.generate(6);
             //console.log('creating command %j', tempCommand);
             chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
               //console.log('body %j', res.body);
@@ -182,7 +185,92 @@ describe('Commands', () => {
           },
           (cb) => {
             //console.log('creating command %j', tempCommand);
-            let invalidDescribe = Math.floor(Math.random() * Math.floor(1000));
+            chai.request(SERVER_APPLICATION_HOST).get('/api/tips/search/'+ fullDescription.substring(0, 4)).send(tempCommand).end((err, res) => {
+              if (err) {
+                console.error('error searching %j', err);
+              }
+              //console.log('body %j', res.body);
+              res.should.have.status(200);
+              res.body.commands.should.not.be.empty;
+              return cb(null, tempCommand);
+            });
+          }
+      ], done);
+    });
+
+    it('it should find command searching by command.', function(done) {
+
+      let tempCommand = COMMAND_OBJECT_MOCK;
+      let command = randomstring.generate();
+      tempCommand.command = command;
+
+      async.series([
+          (cb) => {
+            VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+              //console.log('user created %j', res.body);
+              res.should.have.status(201);
+                tempCommand.userId = res.body.user._id;
+                //console.log('temp commad %j', tempCommand);
+                return cb(null, tempCommand);
+            })
+
+          },
+          (cb) => {
+            tempCommand.title = tempCommand.title + randomstring.generate(6);
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+              //console.log('body %j', res.body);
+              res.should.have.status(201);
+              tempCommand = res.body;
+              return cb(null, tempCommand);
+            });
+          },
+          (cb) => {
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).get('/api/tips/search/' +
+              command.substring(0, Math.floor(Math.random() * Math.floor(command.length)))).send(tempCommand).end((err, res) => {
+              if (err) {
+                console.error('error searching %j', err);
+              }
+              //console.log('body %j', res.body);
+              res.should.have.status(200);
+              res.body.commands.should.not.be.empty;
+              return cb(null, tempCommand);
+            });
+          }
+      ], done);
+    });
+
+    it('it should not find command.', function(done) {
+
+      let tempCommand = COMMAND_OBJECT_MOCK;
+
+      async.series([
+          (cb) => {
+            VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+              //console.log('user created %j', res.body);
+              res.should.have.status(201);
+                tempCommand.userId = res.body.user._id;
+                //console.log('temp commad %j', tempCommand);
+                return cb(null, tempCommand);
+            })
+
+          },
+          (cb) => {
+            tempCommand.title = tempCommand.title + randomstring.generate(5);
+            //console.log('creating command %j', tempCommand);
+            chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+              //console.log('body %j', res.body);
+              res.should.have.status(201);
+              tempCommand = res.body;
+              return cb(null, tempCommand);
+            });
+          },
+          (cb) => {
+            //console.log('creating command %j', tempCommand);
+            let invalidDescribe = randomstring.generate();
             chai.request(SERVER_APPLICATION_HOST).get('/api/tips/search/'+ invalidDescribe).send(tempCommand).end((err, res) => {
               //console.log('seach body response %j', res.body);
               res.should.have.status(200);
@@ -194,4 +282,80 @@ describe('Commands', () => {
     });
   });
 
+});
+
+describe('/PATCH IT - create command', () => {
+
+  let invalidCommandId = '5c48eada47227ff3460dce9b';
+
+  it('it should return command not found error.', (done) => {
+    chai.request(SERVER_APPLICATION_HOST)
+        .patch('/api/tips/' + invalidCommandId)
+        .send(COMMAND_OBJECT_MOCK)
+        .end((err, res) => {
+              res.should.have.status(404);
+              //console.log('response %j', res.body);
+              res.body.message.should.equal('Command not found');
+          done();
+        });
+  });
+
+  it('it should update command.', function(done) {
+
+    let tempCommand = COMMAND_OBJECT_MOCK;
+    const value = randomstring.generate();
+
+    async.series([
+        (cb) => {
+          VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(201);
+              tempCommand.userId = res.body.user._id;
+              //console.log('temp commad %j', tempCommand);
+              return cb(null, tempCommand);
+          })
+        },
+        (cb) => {
+          tempCommand.title = tempCommand.title + randomstring.generate(5);
+          //console.log('creating command %j', tempCommand);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+            //console.log('body %j', res.body);
+            res.should.have.status(201);
+            tempCommand = res.body;
+            return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('creating command %j', tempCommand);
+          const attribute = 'command';
+          const increment = false;
+
+          tempCommand.increment = increment;
+          tempCommand.attribute = attribute;
+          tempCommand.value = value;
+
+          chai.request(SERVER_APPLICATION_HOST)
+            .patch('/api/tips/'+ tempCommand.command._id)
+            .send(tempCommand).end((err, res) => {
+              if (err) {
+                console.log('Error updating command %j.', tempCommand);
+              }
+              console.debug('seach body response %j', res.body);
+              res.should.have.status(200);
+              tempCommand = res.body.command;
+              return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          console.log('id ' +tempCommand._id);
+          chai.request(SERVER_APPLICATION_HOST).get('/api/tips/' + tempCommand._id).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(200);
+            res.body.command.command.should.equal(value);
+            return cb(null, tempCommand);
+          })
+        }
+    ], done);
+  });
 });

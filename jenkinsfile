@@ -11,10 +11,16 @@ pipeline {
                 sh 'cd server && npm install'
             }
         }
-        stage('Tests') {
+        stage('Unit Tests') {
             steps {
                 sh 'npm test'
             }
         }
+        stage('Integration tests Tests') {
+            steps {
+                sh 'npm run-script it'
+            }
+        }
+
     }
 }

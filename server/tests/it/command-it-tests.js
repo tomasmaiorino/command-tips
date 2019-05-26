@@ -284,7 +284,7 @@ describe('Commands', () => {
 
 });
 
-describe('/PATCH IT - create command', () => {
+describe('/PATCH IT - update command', () => {
 
   let invalidCommandId = '5c48eada47227ff3460dce9b';
 
@@ -348,7 +348,7 @@ describe('/PATCH IT - create command', () => {
           });
         },
         (cb) => {
-          console.log('id ' +tempCommand._id);
+          //console.log('id ' +tempCommand._id);
           chai.request(SERVER_APPLICATION_HOST).get('/api/tips/' + tempCommand._id).end((err, res) => {
             //console.log('user created %j', res.body);
             res.should.have.status(200);
@@ -358,4 +358,179 @@ describe('/PATCH IT - create command', () => {
         }
     ], done);
   });
+
+   it('it should update command.', function(done) {
+
+    let tempCommand = COMMAND_OBJECT_MOCK;
+    const value = randomstring.generate();
+
+    async.series([
+        (cb) => {
+          VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(201);
+              tempCommand.userId = res.body.user._id;
+              //console.log('temp commad %j', tempCommand);
+              return cb(null, tempCommand);
+          })
+        },
+        (cb) => {
+          tempCommand.title = tempCommand.title + randomstring.generate(5);
+          //console.log('creating command %j', tempCommand);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+            //console.log('body %j', res.body);
+            res.should.have.status(201);
+            tempCommand = res.body;
+            return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('creating command %j', tempCommand);
+          const attribute = 'command';
+          const increment = false;
+
+          tempCommand.increment = increment;
+          tempCommand.attribute = attribute;
+          tempCommand.value = value;
+
+          chai.request(SERVER_APPLICATION_HOST)
+            .patch('/api/tips/'+ tempCommand.command._id)
+            .send(tempCommand).end((err, res) => {
+              if (err) {
+                console.log('Error updating command %j.', tempCommand);
+              }
+              console.debug('seach body response %j', res.body);
+              res.should.have.status(200);
+              tempCommand = res.body.command;
+              return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('id ' +tempCommand._id);
+          chai.request(SERVER_APPLICATION_HOST).get('/api/tips/' + tempCommand._id).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(200);
+            res.body.command.command.should.equal(value);
+            return cb(null, tempCommand);
+          })
+        }
+    ], done);
+  });
+
+  it('it should increment command works.', function(done) {
+
+    let tempCommand = COMMAND_OBJECT_MOCK;
+    const value = randomstring.generate();
+
+    async.series([
+        (cb) => {
+          VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(201);
+              tempCommand.userId = res.body.user._id;
+              //console.log('temp commad %j', tempCommand);
+              return cb(null, tempCommand);
+          })
+        },
+        (cb) => {
+          tempCommand.title = tempCommand.title + randomstring.generate(5);
+          //console.log('creating command %j', tempCommand);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+            //console.log('body %j', res.body);
+            res.should.have.status(201);
+            tempCommand = res.body;
+            return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('creating command %j', tempCommand);
+          const attribute = 'works';
+          const increment = true;
+
+          tempCommand.increment = increment;
+          tempCommand.attribute = attribute;
+
+          chai.request(SERVER_APPLICATION_HOST)
+            .patch('/api/tips/'+ tempCommand.command._id)
+            .send(tempCommand).end((err, res) => {
+              if (err) {
+                console.log('Error updating command %j.', tempCommand);
+              }
+              console.debug('seach body response %j', res.body);
+              res.should.have.status(200);
+              tempCommand = res.body.command;
+              return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('id ' +tempCommand._id);
+          chai.request(SERVER_APPLICATION_HOST).get('/api/tips/' + tempCommand._id).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(200);
+            res.body.command.works.should.be.equal(1);
+            return cb(null, tempCommand);
+          })
+        }
+    ], done);
+  });
+
+  it('it should increment command does not works.', function(done) {
+
+    let tempCommand = COMMAND_OBJECT_MOCK;
+
+    async.series([
+        (cb) => {
+          VALID_USER_MOCK.email = VALID_USER_MOCK.email + randomstring.generate(5);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/users').send(VALID_USER_MOCK).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(201);
+              tempCommand.userId = res.body.user._id;
+              //console.log('temp commad %j', tempCommand);
+              return cb(null, tempCommand);
+          })
+        },
+        (cb) => {
+          tempCommand.title = tempCommand.title + randomstring.generate(5);
+          //console.log('creating command %j', tempCommand);
+          chai.request(SERVER_APPLICATION_HOST).post('/api/tips').send(tempCommand).end((err, res) => {
+            //console.log('body %j', res.body);
+            res.should.have.status(201);
+            tempCommand = res.body;
+            return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('creating command %j', tempCommand);
+          const attribute = 'doesnt_work';
+          const increment = true;
+
+          tempCommand.increment = increment;
+          tempCommand.attribute = attribute;
+
+          chai.request(SERVER_APPLICATION_HOST)
+            .patch('/api/tips/'+ tempCommand.command._id)
+            .send(tempCommand).end((err, res) => {
+              if (err) {
+                console.log('Error updating command %j.', tempCommand);
+              }
+              console.debug('seach body response %j', res.body);
+              res.should.have.status(200);
+              tempCommand = res.body.command;
+              return cb(null, tempCommand);
+          });
+        },
+        (cb) => {
+          //console.log('id ' +tempCommand._id);
+          chai.request(SERVER_APPLICATION_HOST).get('/api/tips/' + tempCommand._id).end((err, res) => {
+            //console.log('user created %j', res.body);
+            res.should.have.status(200);
+            res.body.command.doesnt_work.should.be.equal(1);
+            return cb(null, tempCommand);
+          })
+        }
+    ], done);
+  });
+
 });

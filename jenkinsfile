@@ -9,8 +9,8 @@ pipeline {
         stage('Building server application') {
             steps {
                 sh 'cd server'
-                sn 'ls'
-                sn 'npm install'
+                sh 'pwd'
+                sh 'npm install'
             }
         }
         stage('Unit Tests') {

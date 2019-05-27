@@ -8,19 +8,17 @@ pipeline {
     stages {
         stage('Building server application') {
             steps {
-                sh 'cd server'
-                sh 'pwd'
-                sh 'npm install'
+                sh 'npm install --prefix server'
             }
         }
         stage('Unit Tests') {
             steps {
-                sh 'npm test'
+                sh 'npm test --prefix server'
             }
         }
         stage('Integration tests Tests') {
             steps {
-                sh 'npm run-script it'
+                sh 'npm run-script it --prefix server'
             }
         }
 

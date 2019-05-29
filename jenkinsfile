@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Building server application') {
             steps {
-                sh 'npm install --verbose --prefix server'
+                sh 'npm install --ignore-scripts --unsafe-perm --verbose --prefix server'
             }
         }
         stage('Unit Tests') {

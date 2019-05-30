@@ -10,4 +10,6 @@ FROM jenkinsci/blueocean
 # update dpkg repositories
 USER root
 RUN apk update
+RUN apk upgrade
 RUN apk add nodejs
+RUN apk add npm

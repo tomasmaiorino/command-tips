@@ -21,15 +21,18 @@
   },
   "homepage": "https://github.com/tomasmaiorino/command-tips#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.5.12"
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
+    "mongoose": "^5.2.12"
   },
   "devDependencies": {
+    "async": "^3.0.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mockgoose": "^8.0.2",
+    "mockgoose": "^8.0.1",
+    "nodemon": "^1.18.9",
     "randomstring": "^1.1.5",
     "sinon": "^7.3.2"
   }

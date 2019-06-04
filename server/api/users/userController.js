@@ -40,7 +40,7 @@ function findOne(userEmail) {
 }
 
 function save(user) {
-  console.debug("Creating user: " + user);
+  console.debug("Creating user: %j", user);
     return new Promise((resolve, reject) => {
         User.create(user)
         .then(createdUser => {

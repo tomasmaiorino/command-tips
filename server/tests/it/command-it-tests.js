@@ -1,3 +1,4 @@
+const MongoMemoryServer = require('mongodb-memory-server');
 process.env.NODE_ENV = 'test';
 const config = require('./../../config/config');
 const randomstring = require("randomstring");
@@ -7,13 +8,9 @@ let chaiHttp = require('chai-http');
 let should = chai.should();
 let Command = require('./../../api/commands/command');
 chai.use(chaiHttp);
+let mongoServer;
 const server = require('./../../server');
-
-const Mockgoose = require('mockgoose').Mockgoose;
 const mongoose = require('mongoose');
-
-let mockgoose = new Mockgoose(mongoose);
-mockgoose.helper.setDbVersion('3.2.1');
 const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 
 const COMMAND_OBJECT_MOCK = {
@@ -30,11 +27,19 @@ const VALID_USER_MOCK = {
   'password': '192837'
   }
 
-
 before((done) => {
-  mockgoose.prepareStorage()
-    .then(() =>
-      mongoose.connect(config.db.url, {useNewUrlParser: true}, done));
+  mongoServer = new MongoMemoryServer();
+  mongoServer
+    .getConnectionString()
+    .then((mongoUri) => {
+      return mongoose.connect(config.db.url, {useNewUrlParser: true}, done));
+    })
+    .then(() => done());
+});
+
+after(() => {
+  mongoose.disconnect();
+  mongoServer.stop();
 });
 
 describe('Commands', () => {

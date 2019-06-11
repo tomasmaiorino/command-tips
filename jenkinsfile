@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Integration tests Tests') {
             steps {
-                sh 'npm run-script it --prefix server'
+                sh 'npm --run-script it --prefix server'
             }
         }
 

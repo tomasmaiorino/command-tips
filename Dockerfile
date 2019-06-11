@@ -1,15 +1,7 @@
-# **********************************************************************************************************************
-# Copyright  Tomas Inc., 2018.
-# All Rights Reserved.
-#
-# Usage:
-#   docker build -t <image_name> --build-arg branch_name=<branch_name> .
-# **********************************************************************************************************************
-FROM jenkinsci/blueocean
-
-# update dpkg repositories
+FROM ubuntu:latest
 USER root
-RUN apk update
-RUN apk upgrade
-RUN apk add nodejs
-RUN apk add npm
+RUN apt-get update
+RUN apt-get -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
+RUN apt-get -y install nodejs
+RUN npm install

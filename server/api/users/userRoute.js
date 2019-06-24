@@ -9,29 +9,25 @@ const Command = require('../commands/command');
 const UserController = require('./userController');
 
 
-router.get('/:userId', (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
 
     const userId = req.params.userId;
 
     console.log('Looking for the user ' + userId + '.');
-
-    UserController.findById(req.params.userId)
-        .then(user => {
-            if (user) {
-                res.status(200).json(
-                    {
-                    'user': user
-                    }
-                );
-            } else {
-                res.status(404);
-            }
+    try {
+      let result = UserController.findById(req.params.id);
+      if (result) {
+        res.status(200).json({
+          'user': user
         })
-        .catch(error => {
-            res.status(500).json({
-                'error': error
-            })
-        });
+      } else {
+        res.status(404);
+      }
+    } catch(error) {
+        res.status(500).json({
+            'error': error
+      });
+    }
 });
 
 

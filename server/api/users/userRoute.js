@@ -5,32 +5,82 @@ const bodyParser = require('body-parser');
 const User = require('./user');
 const mongoose = require('mongoose');
 const UserService = require('./userService');
-const Command = require('../commands/command');
 const UserController = require('./userController');
 
 
 router.get('/:userId', async (req, res, next) => {
 
-    const userId = req.params.userId;
+  const userId = req.params.userId;
 
-    console.log('Looking for the user ' + userId + '.');
-    try {
-      let result = UserController.findById(req.params.id);
-      if (result) {
-        res.status(200).json({
-          'user': user
-        })
-      } else {
-        res.status(404);
-      }
-    } catch(error) {
-        res.status(500).json({
-            'error': error
+  console.debug('Looking for the user ' + userId + '.');
+
+  try {
+
+    let result = await UserController.findById(userId);
+
+    console.debug('User found %j.', result);
+
+    if (result) {
+      res.status(200).json({
+        'user': user
       });
+    } else {
+      res.status(404).json({});
     }
+  } catch (error) {
+    console.error('Error finding user %j. Error %j', userId, error);
+    res.status(500).json({
+      'error': error
+    });
+  }
 });
 
+router.post('/', async (req, res, next) => {
 
+  try {
+    console.info('user to save %j.', req.body);
+
+    let data = await UserController.findOne(req.body.email);
+
+    console.info('user response %j.', data);
+
+    if (data) {
+      console.info('user found.');
+      return res.status(400).json({
+        message: 'Email already exist'
+      });
+    }
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 10)
+    });
+
+    const error = user.validateSync();
+
+    if (error) {
+      console.log('Invalid user given ' + user + ' .');
+      return res.status(400).json({
+        'errors': error.errors
+      });
+    }
+
+    console.log('Saving user %j.', user);
+    let userSaved = await UserController.save(user);
+
+    console.log('Saved user %j.', userSaved);
+    if (userSaved) {
+      res.status(201).json({
+        'user': user
+      });
+    }
+  } catch (error) {
+    console.log('error catch' + error);
+    res.status(500).json({ 'error': error });
+  }
+});
+
+/*
 router.put('/:userId', (req, res, next) => {
     const userId = req.params.userId;
     console.log('Updating user ' + userId + '.');
@@ -129,5 +179,5 @@ router.post('/', (req, res, next) => {
         res.status(500).json({'error': error});
     });
 });
-
+*/
 module.exports = router;

@@ -214,139 +214,64 @@ describe("Finding user by id.", function () {
 
   });
 
-
-  /*
-
-describe("Update user.", function () {
+  describe("Update user.", () => {
 
     let findOneAndUpdate;
 
     it("Should finvoke ind one and update.", function () {
-        // Set up
-        findOneAndUpdate = sinon.spy(user, "findOneAndUpdate");
+      // Set up
+      findOneAndUpdate = sinon.spy(user, "findOneAndUpdate");
 
-        // Do test
-        userController.update(USER_ID, USER_TO_UPDATE);
+      // Do test
+      userController.update(USER_ID, USER_TO_UPDATE);
 
-        // Assertions
-        sinon.assert.calledOnce(findOneAndUpdate);
+      // Assertions
+      sinon.assert.calledOnce(findOneAndUpdate);
     });
 
     it("Should invoke find one and update user with user id.", function () {
-        // Set up
-        findOneAndUpdate = sinon.spy(user, "findOneAndUpdate");
+      // Set up
+      findOneAndUpdate = sinon.spy(user, "findOneAndUpdate");
 
-        // Do test
-        userController.update(USER_ID, USER_TO_UPDATE);
+      // Do test
+      userController.update(USER_ID, USER_TO_UPDATE);
 
-        // Assertions
-        assert(findOneAndUpdate.calledWith({_id:USER_ID},
-            {$set: USER_TO_UPDATE}, {new:true}));
+      // Assertions
+      assert(findOneAndUpdate.calledWith({ _id: USER_ID },
+        { $set: USER_TO_UPDATE }, { new: true }));
 
     });
 
-    it("Success call should return updated user.", function (done) {
-        // Set up
-        findOneAndUpdate = sinon.stub(user, 'findOneAndUpdate').resolves(USER_OBJECT_MOCK);
+    it("Success call should return updated user.", async () => {
+      // Set up
+      findOneAndUpdate = sinon.stub(user, 'findOneAndUpdate').resolves(USER_OBJECT_MOCK);
 
-        // Do test
-        userController.update(USER_ID, USER_TO_UPDATE).then(data => {
-
-            // Assertions
-            expect(data).to.deep.equal(USER_OBJECT_MOCK);
-
-        }).catch(responseError => {
-            console.error('responseError ' + responseError);
-            assert.ok(false, "should not thrown an error.");
-
-        }).then(() => done(), error => done(error));
+      try {
+        let response = await userController.update(USER_ID, USER_TO_UPDATE);
+        expect(response).to.deep.equal(USER_OBJECT_MOCK);
+      } catch (responseError) {
+        console.error('responseError ' + responseError);
+        assert.ok(false, "should not thrown an error.");
+      }
     });
 
-    it("Error calling update should return error.", function (done) {
+    it("Error calling update should return error.", async () => {
       // Set up
       const error = new Error();
       findOneAndUpdate = sinon.stub(user, 'findOneAndUpdate').rejects(error);
 
-      // Do test
-      userController.update(USER_ID, USER_TO_UPDATE).then(data => {
-          assert.ok(false, "should thrown an error.");
-
-      }).catch(responseError => {
+      try {
+        // Do test
+        await userController.update(USER_ID, USER_TO_UPDATE);
+        assert.ok(false, "should thrown an error.");
+      } catch (responseError) {
         // Assertions
         sinon.assert.match(responseError, error);
-
-      }).then(() => done(), error => done(error));
-  });
-
-    afterEach(() => {
-        findOneAndUpdate.restore();
+      }
     });
 
-});
-
-describe("Save user.", function () {
-
-  let save;
-
-  it("Should invoke save user.", function () {
-      // Set up
-      save = sinon.stub(user, 'create').resolves(USER_OBJECT_MOCK);
-
-      // Do test
-      userController.save(USER_TO_SAVE);
-
-      // Assertions
-      sinon.assert.calledOnce(save);
+    afterEach(() => {
+      findOneAndUpdate.restore();
+    });
   });
-
-  it("Should invoke save user with user.", function () {
-      // Set up
-      save = sinon.stub(user, 'create').resolves(USER_OBJECT_MOCK);
-
-      // Do test
-      userController.save(USER_TO_SAVE);
-
-      // Assertions
-      assert(save.calledWith(USER_TO_SAVE));
-
-  });
-
-  it("Success call should return created user.", function (done) {
-      // Set up
-      save = sinon.stub(user, 'create').resolves(USER_OBJECT_MOCK);
-
-      // Do test
-      userController.save(USER_TO_SAVE).then(data => {
-
-          // Assertions
-          expect(data).to.deep.equal(USER_OBJECT_MOCK);
-
-      }).catch(responseError => {
-          console.error('responseError ' + responseError);
-          assert.ok(false, "should not thrown an error.");
-
-      }).then(() => done(), error => done(error));
-  });
-
-  it("Error calling save should return error.", function (done) {
-    // Set up
-    const error = new Error();
-    save = sinon.stub(user, 'create').rejects(error);
-
-    // Do test
-    userController.save(USER_TO_SAVE).then(data => {
-        assert.ok(false, "should thrown an error.");
-
-    }).catch(responseError => {
-      // Assertions
-      sinon.assert.match(responseError, error);
-
-    }).then(() => done(), error => done(error));
-});
-
-  afterEach(() => {
-    save.restore();
-  });
-
-*/
 });

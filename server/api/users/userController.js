@@ -1,8 +1,14 @@
 const User = require('./user');
 
-function findById(userId) {
-  return User.findById(userId)
-    .exec();
+async function findById(userId) {
+  console.debug('user controller find by id ' + userId);
+  return User.findById(userId).exec((error, user) => {
+    if (error) {
+      return error;
+    } else {
+      return user;
+    }
+  });
 }
 
 function update(userId, newUser) {
@@ -10,14 +16,20 @@ function update(userId, newUser) {
     { $set: newUser }, { new: true });
 }
 
-function findOne(userEmail) {
+async function findOne(userEmail) {
   console.debug("Looking for user by email: " + userEmail);
-  return User.findOne({ email: userEmail });
+  return User.findOne({ email: userEmail }).exec((error, user) => {
+    if (error) {
+      return error;
+    } else {
+      return user;
+    }
+  });
 }
 
-function save(user) {
-  console.debug("Creating user: " + user);
-  return User.create(user);
+async function save(user) {
+  console.info("Creating user: " + user);
+  return await User.create(user);
 }
 
 module.exports = { findById, update, save, findOne };

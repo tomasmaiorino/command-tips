@@ -3,8 +3,6 @@ const express = require('express')
 const router = express.Router();
 const bodyParser = require('body-parser');
 const User = require('./user');
-const mongoose = require('mongoose');
-const UserService = require('./userService');
 const UserController = require('./userController');
 
 
@@ -38,19 +36,19 @@ router.get('/:userId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 
   try {
-    console.info('user to save %j.', req.body);
+    console.debug('user to save %j.', req.body);
 
     let data = await UserController.findOne(req.body.email);
 
-    console.info('user response %j.', data);
+    console.debug('user response %j.', data);
 
     if (data) {
-      console.info('user found.');
+      console.info('User found for email %j.', data.email);
       return res.status(400).json({
         message: 'Email already exist'
       });
     }
-    const user = new User({
+    let user = new User({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10)
@@ -65,20 +63,59 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-    console.log('Saving user %j.', user);
+    console.debug('Saving user %j.', user);
+
     let userSaved = await UserController.save(user);
 
-    console.log('Saved user %j.', userSaved);
+    console.debug('Saved user %j.', userSaved);
+
     if (userSaved) {
-      res.status(201).json({
+      return res.status(201).json({
         'user': user
       });
+    } else {
+      return res.status(500).json({});
     }
   } catch (error) {
     console.log('error catch' + error);
-    res.status(500).json({ 'error': error });
+    return res.status(500).json({ 'error': error });
   }
 });
+router.put('/:userId', async (req, res, next) => {
+  const userId = req.params.userId;
+  console.log('Updating user ' + userId + '.');
+
+  try {
+
+    let user = await UserController.findById(req.params.userId);
+
+    if (!user) {
+      console.log('User not found.');
+      return res.status(404).json({
+        message: 'User not found.'
+      });
+    }
+
+    const newUser = new User({
+      username: req.body.username,
+      email: req.body.email
+    });
+
+    const error = newUser.validateSync();
+
+    if (error) {
+      console.log('Invalid user given %j.', user);
+      return res.status(400).json({
+        'errors': error.errors
+      });
+    }
+
+  } catch(err){
+    console.log('Error .' + err);
+  };
+
+});
+
 
 /*
 router.put('/:userId', (req, res, next) => {

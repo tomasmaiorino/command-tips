@@ -23,7 +23,7 @@ router.get('/tags/:tagValue', async (req, res, next) => {
 
   const tagValue = req.params.tagValue;
 
-  console.info('looking for tag ' + tagValue);
+  console.debug('looking for tag ' + tagValue);
   try {
 
     let commands = await CommandController.findByTag(tagValue);
@@ -50,7 +50,7 @@ router.get('/:commandId', (req, res, next) => {
 
   const commandId = req.params.commandId;
 
-  console.info('Looking for the command ' + commandId + '.');
+  console.debug('Looking for the command ' + commandId + '.');
 
   CommandController.findById(commandId)
     .then(command => {
@@ -97,22 +97,6 @@ router.get('/search/:query', async (req, res, next) => {
     });
   }
 });
-
-function configureCommandToUpdate(command, attribute, increment, value) {
-  console.debug('attribute to update ' + attribute);
-  console.debug('increment ' + increment);
-  console.debug('value ' + value);
-
-  if (increment === true) {
-
-    console.debug('incremmenting attribute ' + command[attribute]);
-    command[attribute] = command[attribute] + 1;
-
-  } else {
-    command[attribute] = value;
-  }
-  return command;
-}
 
 router.patch('/:commandId', async (req, res, next) => {
 
@@ -162,56 +146,23 @@ router.patch('/:commandId', async (req, res, next) => {
   } catch (error) {
     console.error(error);
   }
-  /*
-
-  Command.findById(commandId, (err, command) => {
-    if (err) {
-      res.status(500).json({
-        error: err
-      });
-
-    } else if (command) {
-
-      if (command[attribute] == undefined || attribute === 'id' || attribute === '_id') {
-        // do something
-        res.status(400).json({
-          'message': 'Invalid attribute [' + attribute + '].'
-        });
-      } else {
-        console.debug('attribute to update ' + attribute);
-        console.debug('increment ' + increment);
-        console.debug('value ' + value);
-
-        if (increment === true) {
-
-          console.debug('incremmenting attribute ' + command[attribute]);
-          command[attribute] = command[attribute] + 1;
-
-        } else {
-          command[attribute] = value;
-        }
-        console.debug('updating command ' + command);
-        command.save()
-          .then(updatedCommand => {
-            res.status(200).json({
-              'command': updatedCommand
-            });
-          })
-          .catch(error => {
-            res.status(500).json({
-              'error': error
-            });
-          });
-      }
-    } else {
-      //console.log('Command %j not found.', commandId);
-      res.status(404).json({
-        'message': 'Command not found'
-      });
-    }
-  });
-  */
 });
+
+function configureCommandToUpdate(command, attribute, increment, value) {
+  console.debug('attribute to update ' + attribute);
+  console.debug('increment ' + increment);
+  console.debug('value ' + value);
+
+  if (increment == true) {
+
+    console.debug('incremmenting attribute ' + command[attribute]);
+    command[attribute] = command[attribute] + 1;
+
+  } else {
+    command[attribute] = value;
+  }
+  return command;
+}
 
 router.get('/:id', async (req, res, next) => {
 
@@ -270,7 +221,7 @@ router.post('/',
      checkValidUser(req, res, next);
   },
   */
-  (req, res) => {
+  async (req, res) => {
 
     console.debug('creating command');
 
@@ -297,18 +248,21 @@ router.post('/',
       processingTags(command.tags);
     }
 
-    command.save()
-      .then(saved => {
+    try {
+      let commandResponse = await CommandController.save(command);
+
+      if (commandResponse) {
         return res.status(201).json({
-          'command': command
+          'command': commandResponse
         });
-      })
-      .catch(error => {
-        console.log('Error creation command [' + error + '].');
-        res.status(500).json({
-          'error': error
-        });
+      }
+
+    } catch (error) {
+      console.log('Error creation command [' + error + '].');
+      res.status(500).json({
+        'error': error
       });
+    }
   });
 
 processingTags = (paramTags) => {

@@ -96,6 +96,90 @@ describe('Commands PATCH', () => {
     result.status.should.equal(400);
 
   });
+
+  it('changed title given should return ok.', async () => {
+
+    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    setUpResult.status.should.equal(201);
+
+    let patchBody = {
+      attribute: 'title',
+      value: 'new title'
+    }
+
+    let commandId = setUpResult.body.command._id;
+    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+
+    result.status.should.equal(200);
+
+    expect(result.body.command.title).to.equal(patchBody.value);
+
+  });
+
+  it('increment it works should return ok.', async () => {
+
+    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    setUpResult.status.should.equal(201);
+
+    let patchBody = {
+      attribute: 'works',
+      increment: true
+    }
+
+    let commandId = setUpResult.body.command._id;
+    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+
+    result.status.should.equal(200);
+
+    // console.log('%j', result.body);
+
+    expect(result.body.command.works).to.equal(1);
+
+  });
+
+  it('decrement it works should return ok.', async () => {
+
+    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    setUpResult.status.should.equal(201);
+
+    let patchBody = {
+      attribute: 'doesnt_work',
+      increment: true
+    }
+
+    let commandId = setUpResult.body.command._id;
+    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+
+    result.status.should.equal(200);
+
+    //console.log('%j', result.body);
+
+    expect(result.body.command.works).to.equal(0);
+    expect(result.body.command.doesnt_work).to.equal(1);
+
+  });
+
+  it('update tags title given should return ok.', async () => {
+
+    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    setUpResult.status.should.equal(201);
+
+    let patchBody = {
+      attribute: 'tags',
+      value: setUpResult.body.command.tags + ' ' + 'GIT'
+    }
+
+    let commandId = setUpResult.body.command._id;
+    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+
+    result.status.should.equal(200);
+
+    //console.log('%j', result.body);
+
+    expect(result.body.command.tags).to.equal(patchBody.value);
+
+  });
+
 });
 
 describe('Commands POST', () => {

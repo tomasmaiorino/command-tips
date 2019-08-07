@@ -3,56 +3,26 @@ const Command = require('./command');
 async function findById(commandId) {
   console.debug('controller -> Looking for the command  ' + commandId);
   return Command.findById(commandId);
-/*
-  return new Promise((resolve, reject) => {
-      console.debug('promisse -> Looking for the command  ' + commandId);
-        Command.findById(commandId)
-            .exec()
-            .then(command => {
-              console.debug('resolving commnad  ' + command);
-                resolve(command);
-            })
-            .catch(error => {
-              console.error('error looking for command. ' + commandId);
-              reject(error);
-        });
-    });
-    */
 }
 
 async function findByTag(tagValue) {
+  console.debug('looking command by tag %j.', tagValue);
   return Command.find({ "tags": { $regex: tagValue, $options: 'i' } });
-  /*
-    return new Promise((resolve, reject) => {
-        Command.find({ "tags": { $regex: tagValue, $options: 'i' } })
-            .exec()
-            .then(commands => {
-                resolve(commands);
-            })
-            .catch(error => {
-                reject(error);
-        });
-    });
-    */
 }
 
-function search(query) {
-    //console.log('looking for ' + query);
-    return new Promise((resolve, reject) => {
-        Command.find({
-            $or: [
-                { "full_description": { $regex: query, $options: 'i' } },
-                { "title": { $regex: query, $options: 'i' } },
-                { "command": { $regex: query, $options: 'i' } }]
-        })
-        .exec()
-        .then(commands => {
-            resolve(commands);
-        })
-        .catch(error =>{
-            reject(error);
-        })
-    });
+async function save(command) {
+  console.debug('creating command');
+  return Command.create(command);
 }
 
-module.exports = { findById, findByTag, search };
+async function search(query) {
+  console.debug('looking for ' + query);
+  return Command.find({
+    $or: [
+      { "full_description": { $regex: query, $options: 'i' } },
+      { "title": { $regex: query, $options: 'i' } },
+      { "command": { $regex: query, $options: 'i' } }]
+  });
+}
+
+module.exports = { findById, findByTag, search, save };

@@ -4,8 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const User = require('../users/user');
 const Command = require('./command');
-const TagService = require('../tags/tagService')
-const Tag = require('../tags/tag');
+const Tag = require('./tags/tag');
 const CommandController = require('./commandController');
 
 router.get('/', (req, res, next) => {
@@ -249,6 +248,7 @@ router.post('/',
     }
 
     try {
+
       let commandResponse = await CommandController.save(command);
 
       if (commandResponse) {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let timestampPlugin = require('../plugins/timestamp')
+let timestampPlugin = require('../../plugins/timestamp')
 
 const projectSchema = mongoose.Schema({
   name: { type: String, required: [true, 'The name is required.'] },

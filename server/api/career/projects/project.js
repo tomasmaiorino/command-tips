@@ -4,7 +4,7 @@ let timestampPlugin = require('../../plugins/timestamp')
 const projectSchema = mongoose.Schema({
   name: { type: String, required: [true, 'The name is required.'] },
   techs: { type: Array, required: [true, 'The techs are required.'] },
-  role: { type: Array},
+  roles: { type: Array},
   description: { type: String, required: [true, 'The description is required.'] },
   achievements: { type: Array },
   /*user_id: {type: String, required: [true, 'The user id is required.']},*/

@@ -1,8 +1,8 @@
 const Project = require('./project');
 
 async function findById(projectId) {
-  console.debug('controller -> Looking for the project  ' + projectId);
-  return Project.findById(commandId);
+  console.info('controller -> Looking for the project  ' + projectId);
+  return Project.findById(projectId);
 }
 
 async function save(project) {

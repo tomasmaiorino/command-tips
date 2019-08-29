@@ -33,16 +33,16 @@ module.exports = merge(baseConfig, {
             { from: 'node_modules/font-awesome/css/font-awesome.min.css' },
         ]),
         new ExtractTextPlugin('style.css')],
-    devServer: {
-        inline: true,
-        port: 3000,
-        host: "0.0.0.0",
-        hot: true,
-        historyApiFallback: true,
-        open: true,
-        proxy: {
-            "/api": "http://localhost:8080"
-        }
-    },
+        devServer: {
+            inline: true,
+            port: 3000,
+            host: "0.0.0.0",
+            hot: true,
+            historyApiFallback: true,
+            open: true,
+            proxy: {
+                "/api": "http://localhost:8080"
+            }
+        },
 });
 

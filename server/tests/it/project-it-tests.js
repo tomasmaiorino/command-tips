@@ -8,6 +8,7 @@ const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let Project = require('../../api/career/projects/project');
+let Technology = require('../../api/career/projects/technology');
 chai.use(chaiHttp);
 let mongoServer;
 let con;
@@ -21,10 +22,10 @@ const PROJECTS_URL = '/api/projects/';
 function getProjectMock() {
   return {
     "name": "Executing a cucumber test through maven using an specif tag.",
-    "techs": "mvn test",
-    "role": "mvn test",
-    "description": "description",
-    "achievements": ""
+    "techs": ['mvn','test'],
+    "roles": ['mvn', 'test'],
+    "description": ['description'],
+    "achievements": ['achi', 'achi']
   }
 }
 
@@ -53,7 +54,7 @@ describe('Project POST', () => {
 
   it('invalid project given should return bad request with error message.', async () => {
 
-    let tempProject = getProjectMock();;
+    let tempProject = getProjectMock();
     delete tempProject.name;
 
     let result = await chai.request(SERVER_APPLICATION_HOST).post(PROJECTS_URL).send(tempProject);
@@ -66,7 +67,7 @@ describe('Project POST', () => {
 
   });
 
-  it('valid project given should return bad request with error message.', async () => {
+  it('valid project given should return created response.', async () => {
 
     let tempProject = getProjectMock();;
 
@@ -79,19 +80,24 @@ describe('Project POST', () => {
   });
 
 });
-/*
-describe('Commands FIND BY ID', () => {
+
+describe('Projects FIND BY ID', () => {
 
   beforeEach((done) => {
     Project.deleteMany({}, (err) => {
+      //done();
+    });
+    Technology.deleteMany({}, (err) => {
       done();
     });
   });
 
   it('it should not find by id.', async () => {
-    let invalidCommandId = '5c48eada47227ff3460dce9a';
+    let invalidProjectId = '1c48eada47227ff3460dce9a';
 
-    let result = await chai.request(SERVER_APPLICATION_HOST).get(PROJECTS_URL + invalidCommandId);
+    let result = await chai.request(SERVER_APPLICATION_HOST).get(PROJECTS_URL + invalidProjectId);
+
+    //console.log('result %j', result);
 
     result.status.should.equal(404);
 
@@ -99,23 +105,24 @@ describe('Commands FIND BY ID', () => {
 
   it('it should find by id.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(PROJECTS_URL).send(COMMAND_OBJECT_MOCK);
+    let tempProject = getProjectMock();
+    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(PROJECTS_URL).send(tempProject);
 
     //console.log('%j', result);
 
     setUpResult.status.should.equal(201);
 
-    let commandId = setUpResult.body.project._id;
+    let projectId = setUpResult.body.project._id;
 
-    let findResult = await chai.request(SERVER_APPLICATION_HOST).get(PROJECTS_URL + commandId);
+    let findResult = await chai.request(SERVER_APPLICATION_HOST).get(PROJECTS_URL + projectId);
 
     findResult.status.should.equal(200);
 
-    expect(findResult.body.project._id).to.equal(commandId);
+    expect(findResult.body.project._id).to.equal(projectId);
   });
 
 });
-
+/*
 describe('Commands QUERY', () => {
 
   beforeEach((done) => {

@@ -49,7 +49,7 @@ router.get('/:commandId', (req, res, next) => {
 
   const commandId = req.params.commandId;
 
-  console.debug('Looking for the command ' + commandId + '.');
+  //console.debug('Looking for the command ' + commandId + '.');
 
   CommandController.findById(commandId)
     .then(command => {
@@ -76,7 +76,7 @@ router.get('/search/:query', async (req, res, next) => {
 
   const query = req.params.query;
 
-  console.debug('Looking for the command with the query [' + query + '].');
+  //console.debug('Looking for the command with the query [' + query + '].');
 
   try {
 
@@ -104,8 +104,8 @@ router.patch('/:commandId', async (req, res, next) => {
   const increment = req.body.increment;
   const value = req.body.value;
 
-  console.debug('Params received %j', req.params);
-  console.debug('Body received %j', req.body);
+  //console.debug('Params received %j', req.params);
+  //console.debug('Body received %j', req.body);
 
   try {
 
@@ -122,7 +122,7 @@ router.patch('/:commandId', async (req, res, next) => {
 
         command = configureCommandToUpdate(command, attribute, increment, value);
 
-        console.debug('updating command ' + command);
+        //console.debug('updating command ' + command);
 
         command.save()
           .then(updatedCommand => {
@@ -148,9 +148,9 @@ router.patch('/:commandId', async (req, res, next) => {
 });
 
 function configureCommandToUpdate(command, attribute, increment, value) {
-  console.debug('attribute to update ' + attribute);
-  console.debug('increment ' + increment);
-  console.debug('value ' + value);
+  // console.debug('attribute to update ' + attribute);
+  // console.debug('increment ' + increment);
+  // console.debug('value ' + value);
 
   if (increment == true) {
 
@@ -222,7 +222,7 @@ router.post('/',
   */
   async (req, res) => {
 
-    console.debug('creating command');
+    //console.debug('creating command');
 
     const description = req.body.description == null || undefined ? req.body.title : req.body.description;
     const command = new Command({
@@ -270,23 +270,23 @@ processingTags = (paramTags) => {
     .exec()
     .then(tags => {
       if (tags) {
-        console.debug(' tags ' + tags.length);
+        //console.debug(' tags ' + tags.length);
         let tagsInformed = paramTags.split(" ");
         tags.map(t1 => {
           if (tagsInformed.length > 0) {
-            console.debug('tag found value ' + t1.value);
+            //console.debug('tag found value ' + t1.value);
             const tagIndex = tagsInformed.indexOf(t1.value.toUpperCase());
-            console.debug('index found ' + tagIndex);
+            //console.debug('index found ' + tagIndex);
             if (tagIndex !== -1) {
-              console.debug('removing tag: ' + t1);
+              //console.debug('removing tag: ' + t1);
               tagsInformed.splice(tagIndex, 1);
             }
           }
         });
         if (tagsInformed.length > 0) {
-          console.debug('tagInformed length ' + tagsInformed.length);
+          //console.debug('tagInformed length ' + tagsInformed.length);
           tagsInformed.map(t2 => {
-            console.debug('tag being created: ' + t2);
+//            console.debug('tag being created: ' + t2);
             new Tag({ value: t2 }).save();
           });
         }

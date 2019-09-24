@@ -44,7 +44,7 @@ before((done) => {
     .catch(error => {
       console.debug('error ' + error);
     });
-  console.log('mongoServer ' + mongoServer);
+  //console.log('mongoServer ' + mongoServer);
 });
 
 after(() => {

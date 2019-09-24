@@ -10,13 +10,13 @@ router.get('/:userId', async (req, res, next) => {
 
   const userId = req.params.userId;
 
-  console.debug('Looking for the user ' + userId + '.');
+  ///console.debug('Looking for the user ' + userId + '.');
 
   try {
 
     let result = await UserController.findById(userId);
 
-    console.debug('User found %j.', result);
+    //console.debug('User found %j.', result);
 
     if (result) {
       res.status(200).json({
@@ -36,11 +36,11 @@ router.get('/:userId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 
   try {
-    console.debug('user to save %j.', req.body);
+    //console.debug('user to save %j.', req.body);
 
     let data = await UserController.findOne(req.body.email);
 
-    console.debug('user response %j.', data);
+    //console.debug('user response %j.', data);
 
     if (data) {
       console.info('User found for email %j.', data.email);
@@ -63,11 +63,11 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-    console.debug('Saving user %j.', user);
+    //console.debug('Saving user %j.', user);
 
     let userSaved = await UserController.save(user);
 
-    console.debug('Saved user %j.', userSaved);
+    //console.debug('Saved user %j.', userSaved);
 
     if (userSaved) {
       return res.status(201).json({
@@ -83,7 +83,7 @@ router.post('/', async (req, res, next) => {
 });
 router.put('/:userId', async (req, res, next) => {
   const userId = req.params.userId;
-  console.log('Updating user ' + userId + '.');
+  //console.debug('Updating user ' + userId + '.');
 
   try {
 

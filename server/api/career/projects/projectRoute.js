@@ -52,7 +52,7 @@ router.post('/', async (req, res, next) => {
 
   console.info('project being created %j.', project);
 
-  await saveTechnologies(techs);
+  let newTechs = await saveTechnologies(techs);
 
   const error = project.validateSync();
 
@@ -88,16 +88,20 @@ function createTech(name) {
   });
   return tech;
 }
-
+/*
 async function saveTechnologies(techs) {
   techs.forEach(t => {
     if (!t.createdAt) {
+      try {
       let saved = await TechnologyController.save(t);
       console.log('tec saved %j', saved);
+      } catch(err) {
+        console.log('Error saving functions %j.', err);
+      };
     }
   });
 }
-
+*/
 async function createTechs(techs, onlyCreate) {
   console.info('Creating techs %j. %j', techs, onlyCreate);
   let projectTechs = new Array();

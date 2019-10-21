@@ -34,11 +34,11 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 
-  console.info('creating project.');
+  console.debug('creating project.');
 
   let technologies = await processTecnologies(req.body.techs);
 
-  console.log('technologies to be create ' + technologies);
+  //console.debug('technologies to be create ' + technologies);
 
   const project = new Project({
     name: req.body.name,
@@ -52,12 +52,13 @@ router.post('/', async (req, res, next) => {
 
   console.info('project being created %j.', project);
 
-  let newTechs = await saveTechnologies(techs);
+  //let newTechs = await saveTechnologies(techs);
 
   const error = project.validateSync();
 
   if (error) {
     console.debug('Invalid project given [' + project + '].');
+    console.log(error);
     return res.status(400).json({
       'errors': error.errors
     });

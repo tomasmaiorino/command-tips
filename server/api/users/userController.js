@@ -5,9 +5,9 @@ async function findById(userId) {
   return User.findById(userId);
 }
 
-function update(userId, newUser) {
+async function update(userId, newUser) {
   return User.findOneAndUpdate({ _id: userId },
-    { $set: newUser }, { new: true });
+    { $set: newUser }, {new: true, useFindAndModify: false});
 }
 
 async function findOne(userEmail) {

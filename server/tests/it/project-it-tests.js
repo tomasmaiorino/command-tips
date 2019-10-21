@@ -24,7 +24,7 @@ function getProjectMock() {
     "name": "Executing a cucumber test through maven using an specif tag.",
     "techs": ['mvn','test'],
     "roles": ['mvn', 'test'],
-    "description": ['description'],
+    "description": 'description',
     "achievements": ['achi', 'achi']
   }
 }

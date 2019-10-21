@@ -14,6 +14,7 @@ const expect = chai.expect;
 var should = require('chai').should()
 const TAGS_URI = '/api/tags/';
 const tagController = require('../../api/commands/tags/tagController');
+const Tags = require('../../api/commands/tags/tag');
 
 before((done) => {
   mongoServer = new MongoMemoryServer({ debug: false });
@@ -32,11 +33,18 @@ before((done) => {
 });
 
 after(() => {
+  Tags.remove({})
   mongoose.disconnect();
   mongoServer.stop();
 });
 
 describe('Tags', () => {
+
+  beforeEach((done) => {
+    Tags.deleteMany({}, (err) => {
+      done();
+    });
+  });
 
   it('should return all tags.', async () => {
 

@@ -83,7 +83,7 @@ router.post('/', async (req, res, next) => {
 });
 router.put('/:userId', async (req, res, next) => {
   const userId = req.params.userId;
-  //console.debug('Updating user ' + userId + '.');
+  console.info('Updating user ' + userId + '.');
 
   try {
 
@@ -96,18 +96,47 @@ router.put('/:userId', async (req, res, next) => {
       });
     }
 
+    let userByEmail = await UserController.findOne(req.body.email);
+    
+    if (userByEmail != null && !userByEmail._id.equals(user._id)){
+      console.log('Email %j already in use.', userByEmail.email);
+      return res.status(400).json({
+        message: 'Email already in use.'
+      });
+    }
+
+    console.log('request body %j', req.body);
+
     const newUser = new User({
+      _id: userId,
+      password: user.password,
       username: req.body.username,
       email: req.body.email
     });
 
+
     const error = newUser.validateSync();
 
     if (error) {
-      console.log('Invalid user given %j.', user);
+      console.log('Invalid user given %j for update.', user);
+
+      console.log('error ' + error);
+
       return res.status(400).json({
         'errors': error.errors
       });
+    }
+
+    let updatedUser = await UserController.update(userId, newUser);
+
+    console.log('User updated.');
+
+    if (updatedUser) {
+      return res.status(200).json({
+        'user': user
+      });
+    } else {
+      return res.status(500).json({});
     }
 
   } catch(err){
@@ -115,106 +144,4 @@ router.put('/:userId', async (req, res, next) => {
   };
 
 });
-
-
-/*
-router.put('/:userId', (req, res, next) => {
-    const userId = req.params.userId;
-    console.log('Updating user ' + userId + '.');
-    UserController.findById(req.params.userId)
-        .then(user => {
-            if (!user) {
-                return res.status(400).json({
-                    'message': 'User not found.'
-                });
-            }
-            const newUser = {
-                username: req.body.username,
-                email: req.body.email
-            };
-
-            UserController.update(req.params.userId, newUser)
-            .then(updatedUser => {
-                return res.status(200).json({
-                    'user': updatedUser
-                });
-            })
-            .catch(error => {
-                return res.status(500).json({
-                    'error': error
-                })
-            });
-        })
-        .catch(error => {
-            return res.status(500).json({
-                'error': error
-            })
-        });
-});
-
-//curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X GET http://localhost:3000/users/5c3f1d1b1fe49b35a0c7a968/tips
-
-router.get('/:userId/tips', (req, res, next) => {
-
-    const userId = req.params.userId;
-
-    console.debug('Looking for the commands from the user ' + userId + '.');
-
-    Command.find({user_id: userId})
-        .exec()
-        .then(commands => {
-            if (commands) {
-                res.status(200).json(
-                    {
-                        commands
-                    }
-                );
-            } else {
-                res.status(404);
-            }
-        })
-        .catch(error => {
-            res.status(500).json({
-                'error': error
-            })
-        });
-});
-
-//curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:3000/users -d "{\"username\":\"test\", \"password\": \"1233\", \"email\": \"teste@test.com\"}"
-router.post('/', (req, res, next) => {
-  UserController.findOne(req.body.email)
-    .then(data => {
-
-        if (data) {
-            return res.status(400).json({
-                message: 'Email already exist'
-            });
-        }
-        const user = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 10)
-        });
-
-        const error = user.validateSync();
-        if (error) {
-            console.log('Invalid user given ' + user + ' .');
-            return res.status(400).json({
-                'errors': error.errors
-            });
-        }
-
-        UserController.save(user)
-            .then(saved => {
-                return res.status(201).json({
-                    'user': user
-                });
-            });
-    })
-    .catch(error => {
-        console.log('error catch' + error);
-        res.status(500).json({'error': error});
-    });
-});
-*/
 module.exports = router;

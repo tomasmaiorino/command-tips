@@ -1,0 +1,11 @@
+{
+    "name":"Senior Software Engineer",
+    "techs": ["JavaSE 8+", "Spring boot/Spring data/Transactions", "JMeter", "GIT"],
+    "roles": [],
+    "description": "The company would change its e-commerce platform and the current catalog integration would not work properly with this new platform.",
+    "achievements": [
+        "Delivered a sleek, fast, lightweight, and testable solution which reduced the time spent during the catalog, price and inventory integrations.",
+        "Reduced time spent consuming messages on the price integration from 3 hours to 15 minutes after a cache implementation."
+    ]   
+
+}

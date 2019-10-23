@@ -48,11 +48,11 @@ router.post('/', async (req, res, next) => {
     achievements: req.body.achievements
   });
 
-  console.debug('%j', req.body);
+  //console.debug('%j', req.body);
 
-  console.info('project being created %j.', project);
+  //console.info('project being created %j.', project);
 
-  //let newTechs = await saveTechnologies(techs);
+  let newTechs = await saveTechnologies(techs);
 
   const error = project.validateSync();
 
@@ -89,20 +89,27 @@ function createTech(name) {
   });
   return tech;
 }
-/*
+
 async function saveTechnologies(techs) {
-  techs.forEach(t => {
+
+  console.log('techs to be saved %j', techs);
+
+  for (const t of techs) {
     if (!t.createdAt) {
       try {
-      let saved = await TechnologyController.save(t);
-      console.log('tec saved %j', saved);
+        let saved = await TechnologyController.save(t);
+        console.log('tec saved %j', saved);
       } catch(err) {
-        console.log('Error saving functions %j.', err);
+        console.log('Error saving tecnologies %j.', err);
       };
     }
+  }
+
+  techs.forEach(t => {
+    
   });
 }
-*/
+
 async function createTechs(techs, onlyCreate) {
   console.info('Creating techs %j. %j', techs, onlyCreate);
   let projectTechs = new Array();

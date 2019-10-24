@@ -15,7 +15,7 @@ router.get('/:id', async (req, res, next) => {
 
     let project = await ProjectController.findById(projectId);
 
-    console.debug('project found %j.', project);
+    //console.debug('project found %j.', project);
 
     if (project == null) {
       return res.status(404).json({});
@@ -52,7 +52,7 @@ router.post('/', async (req, res, next) => {
 
   //console.info('project being created %j.', project);
 
-  let newTechs = await saveTechnologies(techs);
+  let newTechs = await saveTechnologies(project.techs);
 
   const error = project.validateSync();
 
@@ -92,7 +92,7 @@ function createTech(name) {
 
 async function saveTechnologies(techs) {
 
-  console.log('techs to be saved %j', techs);
+  //console.log('techs to be saved %j', techs);
 
   for (const t of techs) {
     if (!t.createdAt) {
@@ -111,12 +111,13 @@ async function saveTechnologies(techs) {
 }
 
 async function createTechs(techs, onlyCreate) {
-  console.info('Creating techs %j. %j', techs, onlyCreate);
+  //console.info('Creating techs %j. %j', techs, onlyCreate);
   let projectTechs = new Array();
-  techs.forEach(t => {
+  for (const t of techs) {
     if (onlyCreate) {
       projectTechs.push(createTech(t));
     } else {
+      let createdTechs = await TechnologyController.findAll();
       let op = createdTechs.filter(data => (data.name.upperCase === t.upperCase));
       if (!op) {
         projectTechs.push(createTech(t));
@@ -124,16 +125,16 @@ async function createTechs(techs, onlyCreate) {
         projectTechs.push(op);
       }
     }
-  });
-  console.log('techs to creat %j', projectTechs);
+  }
+  //console.log('techs to creat %j', projectTechs);
   return projectTechs;
 }
 
 async function processTecnologies(techs) {
-  console.info('Processing techs %j.', techs);
+  //console.info('Processing techs %j.', techs);
   if (techs != null && techs.length > 1) {
     let createdTechs = await TechnologyController.findAll();
-    console.log('Created techs %j.', createdTechs)
+    //console.log('Created techs %j.', createdTechs)
     if (createdTechs != null && createdTechs.length > 0) {
       return createTechs(techs, false);
     } else {
@@ -141,13 +142,6 @@ async function processTecnologies(techs) {
     }
   }
   return null;
-}
-
-function processRoles(roles) {
-  if (!roles && roles.length > 1) {
-
-
-  }
 }
 
 module.exports = router;

@@ -115,6 +115,8 @@ describe('Projects FIND BY ID', () => {
     findResult.status.should.equal(200);
 
     expect(findResult.body.project._id).to.equal(projectId);
+
+    expect(findResult.body.project.techs).to.have.lengthOf(tempProject.techs.length); 
   });
 
 });

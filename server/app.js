@@ -4,6 +4,7 @@ const users = require('./api/users/userRoute');
 const commands = require('./api/commands/commandRoute');
 const tags = require('./api/commands/tags/tagRoute');
 const projects = require('./api/career/projects/projectRoute');
+const positions = require('./api/career/positions/positionRoute');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use('/api/users', users);
 app.use('/api/tips', commands);
 app.use('/api/tags', tags);
 app.use('/api/projects', projects);
+app.use('/api/positions', positions);
 
 app.use((req, res, next) => {
     const error = new Error("not found");

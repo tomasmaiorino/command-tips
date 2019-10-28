@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const express = require('express')
 const router = express.Router();
 const Project = require('./project');
@@ -45,7 +44,9 @@ router.post('/', async (req, res, next) => {
     techs: technologies,
     roles: req.body.roles,
     description: req.body.description,
-    achievements: req.body.achievements
+    achievements: req.body.achievements,
+    companyName: req.body.companyName,
+    projectTimeline: req.body.projectTimeline
   });
 
   //console.debug('%j', req.body);

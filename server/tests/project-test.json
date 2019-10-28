@@ -6,6 +6,7 @@
     "achievements": [
         "Delivered a sleek, fast, lightweight, and testable solution which reduced the time spent during the catalog, price and inventory integrations.",
         "Reduced time spent consuming messages on the price integration from 3 hours to 15 minutes after a cache implementation."
-    ]   
-
+    ],
+    "companyName": "Compass",
+    "projectTimeline" : "2017  - 2019"
 }

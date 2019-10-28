@@ -8,7 +8,9 @@ const projectSchema = mongoose.Schema({
   description: { type: String, required: [true, 'The description is required.'] },
   achievements: { type: Array },
   /*user_id: {type: String, required: [true, 'The user id is required.']},*/
-  active: { type: Boolean, default: true }
+  active: { type: Boolean, default: true },  
+  companyName: { type: String, required: [true, 'The company name is required.'] },
+  projectTimeline: { type: String, required: [true, 'The project timeline is required.'] }
 });
 
 projectSchema.plugin(timestampPlugin);
@@ -20,19 +22,3 @@ projectSchema.methods.toJSON = function() {
 }
 
 module.exports = mongoose.model('Project', projectSchema);
-
-//id
-//title
-//tags
-//command
-//full description
-//helpfull links
-//user
-//helpfull (counter)
-//unhelpfull (counter)
-//it does works (counter)
-//it doesnt work (counter)
-//maybe wrong
-//comments count
-//create date
-//last update

@@ -1,8 +1,6 @@
-const bcrypt = require('bcrypt');
 const express = require('express')
 const router = express.Router();
 const Tag = require('./tag');
-
 
 router.get('/', (req, res, next) => {
 

@@ -10,5 +10,10 @@ async function save(project) {
   return Project.create(project);
 }
 
+async function findAllByIds(ids) {
+  console.log('searching projects by id %j', ids);
+  return await Project.find().where('_id').in(ids).exec();
+}
 
-module.exports = { findById, save };
+
+module.exports = { findById, save, findAllByIds };

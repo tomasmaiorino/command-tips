@@ -10,8 +10,8 @@ const positionSchema = mongoose.Schema({
   link: { type: String, required: [true, 'The position link is required.'] },
   applied: { type: Boolean, default: false },
   appliedDate: { type: Date },
-  mainColor: { type: String }
-  /*projects: [] */
+  mainColor: { type: String },
+  projects: []
 });
 
 positionSchema.plugin(timestampPlugin);

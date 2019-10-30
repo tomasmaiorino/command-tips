@@ -5,4 +5,9 @@ async function save(position) {
   return Position.create(position);
 }
 
-module.exports = { save };
+async function findById(positionId) {
+  console.info('controller -> Looking for the position  ' + positionId);
+  return Position.findById(positionId);
+}
+
+module.exports = { save, findById };

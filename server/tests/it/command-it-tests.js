@@ -191,9 +191,9 @@ describe('Commands POST', () => {
 
     let result = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(tempCommand);
 
-    //console.log('%j', result.body);
+    //console.log('command post invalid param %j', result.body);
 
-    result.body.errors.should.have.property('title');
+    expect(result.body.error.message).to.have.string('The title is required');
 
     result.status.should.equal(400);
 

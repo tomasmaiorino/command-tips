@@ -24,6 +24,7 @@ const USER_ID = '5c48eada47227ff3460dce9b';
 const POSITION_URL = '/api/positions/';
 const POSITION_ID = '5c48eada47227ff3460dce9C';
 const PROJECT_ID = '5c48eada47227ff3460dce9C';
+const server = require('../../server');
 
 
 function getFileObject(content) {
@@ -76,7 +77,7 @@ describe('Positions POST', () => {
 
     //console.log('%j', result.body);
 
-    result.body.errors.should.have.property('name');
+    expect(result.body.error.message).to.have.string('The name is required');
 
     result.status.should.equal(400);
 
@@ -97,19 +98,19 @@ describe('Positions POST', () => {
 });
 
 describe('Adding project to position', () => {
-
-  beforeEach((done) => {
-    Position.deleteMany({}, (err) => {
-      //done();
+  
+    beforeEach((done) => {
+      Position.deleteMany({}, (err) => {
+        //done();
+      });
+      Project.deleteMany({}, (err) => {
+        done();
+      });
     });
-    Project.deleteMany({}, (err) => {
-      done();
-    });
-  });
-
+  
   it('not found position given should return not found.', async () => {
 
-    let projectIds = {'projectIds': [PROJECT_ID]};
+    let projectIds = { 'projectIds': [PROJECT_ID] };
     let result = await chai.request(SERVER_APPLICATION_HOST).post(POSITION_URL + POSITION_ID).send(projectIds);
 
     //console.log('%j', result.body);
@@ -120,6 +121,23 @@ describe('Adding project to position', () => {
 
   it('project not found given should return bad request', async () => {
 
+
+    let tempPosition = getPositionMock();
+
+    let result = await chai.request(SERVER_APPLICATION_HOST).post(POSITION_URL).send(tempPosition);
+
+    let positionId = result.body.position._id;
+
+    let projectIds = { 'projectIds': [PROJECT_ID] };
+    let secondResult = await chai.request(SERVER_APPLICATION_HOST).post(POSITION_URL + positionId).send(projectIds);
+
+    //console.log('%j', result.body);
+
+    secondResult.status.should.equal(400);
+
+  });
+
+  it('all projects given not found given should return bad request', async () => {
 
     let tempProject = getProjectMock();
 
@@ -133,13 +151,38 @@ describe('Adding project to position', () => {
 
     let positionId = result.body.position._id;
 
-    let projectIds = {'projectIds': [createdProjectId]};
+    let projectIds = { 'projectIds': [createdProjectId, PROJECT_ID] };
     let secondResult = await chai.request(SERVER_APPLICATION_HOST).post(POSITION_URL + positionId).send(projectIds);
 
     //console.log('%j', result.body);
 
-    secondResult.status.should.equal(404);
+    secondResult.status.should.equal(400);
 
-  })
+  });
+
+  it('valid projects given should return ok', async () => {
+
+    let tempProject = getProjectMock();
+
+    let projectResult = await chai.request(SERVER_APPLICATION_HOST).post(PROJECTS_URL).send(tempProject);
+
+    let createdProjectId = projectResult.body.project._id;
+
+    let tempPosition = getPositionMock();
+
+    let result = await chai.request(SERVER_APPLICATION_HOST).post(POSITION_URL).send(tempPosition);
+
+    let positionId = result.body.position._id;
+
+    let projectIds = { 'projectIds': [createdProjectId] };
+    let secondResult = await chai.request(SERVER_APPLICATION_HOST).post(POSITION_URL + positionId).send(projectIds);
+
+    console.log('position it created position %j', result.body.position.projects.length);
+
+    secondResult.status.should.equal(200);
+
+    expect(secondResult.body.position.projects).to.have.lengthOf(projectIds.projectIds.length);
+
+  });
 
 });

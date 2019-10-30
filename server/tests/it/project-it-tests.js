@@ -57,7 +57,7 @@ describe('Project POST', () => {
 
     let result = await chai.request(SERVER_APPLICATION_HOST).post(PROJECTS_URL).send(tempProject);
 
-    result.body.errors.should.have.property('name');
+    expect(result.body.errors).to.have.string('The name is required');
 
     result.status.should.equal(400);
 

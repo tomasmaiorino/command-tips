@@ -10,6 +10,12 @@ const app = express();
 
 app.use(express.static("dist"));
 app.use(bodyParser.json());
+/*
+app.use((req, res, next) => {
+    req.isAuth = true;
+    next();
+});
+*/
 app.use('/api/users', users);
 app.use('/api/tips', commands);
 app.use('/api/tags', tags);
@@ -22,10 +28,11 @@ app.use((req, res, next) => {
     next(error);
 });
 
-app.use((error, req, res, next) => {
+app.use((error, req, res, next) => {    
     res.status(error.status || 500);
     res.json({
         error: {
+            error: error.code,
             message: error.message
         }
     });

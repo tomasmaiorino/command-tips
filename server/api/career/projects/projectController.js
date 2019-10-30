@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Project = require('./project');
 
 async function findById(projectId) {
@@ -11,8 +12,11 @@ async function save(project) {
 }
 
 async function findAllByIds(ids) {
-  console.log('searching projects by id %j', ids);
-  return await Project.find().where('_id').in(ids).exec();
+  console.log('searching projects by ids ' + ids[0]);
+  return Project.findById(ids[0]);
+  //return Project.find();
+  //let arr = ids.map(item => new mongoose.Types.ObjectId(item));
+  //return Project.find().where('_id').in(ids).exec();
 }
 
 

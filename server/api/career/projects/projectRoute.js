@@ -49,21 +49,21 @@ router.post('/', async (req, res, next) => {
     projectTimeline: req.body.projectTimeline
   });
 
+  const errors = project.validateSync();
+
+  if (errors) {
+    console.debug('Invalid project given [' + project + '].');
+    console.log(errors.message);
+    return res.status(400).json({
+      'errors': errors.message
+    });
+  }
+
   //console.debug('%j', req.body);
 
   //console.info('project being created %j.', project);
 
   let newTechs = await saveTechnologies(project.techs);
-
-  const error = project.validateSync();
-
-  if (error) {
-    console.debug('Invalid project given [' + project + '].');
-    console.log(error);
-    return res.status(400).json({
-      'errors': error.errors
-    });
-  }
 
   try {
 
@@ -99,7 +99,7 @@ async function saveTechnologies(techs) {
     if (!t.createdAt) {
       try {
         let saved = await TechnologyController.save(t);
-        console.log('tec saved %j', saved);
+        //console.log('tec saved %j', saved);
       } catch(err) {
         console.log('Error saving tecnologies %j.', err);
       };
@@ -143,6 +143,10 @@ async function processTecnologies(techs) {
     }
   }
   return null;
+}
+
+function printValidationError(error) {
+  //console.log(error.)
 }
 
 module.exports = router;

@@ -1,30 +1,25 @@
 process.env.NODE_ENV = 'test';
 const assert = require("assert");
 const mongoose = require('mongoose');
-//const DB = require('mongoose').Db;
+const server = require('../../server');
 const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const config = require('../../config/config');
-const SERVER_APPLICATION_HOST = 'http://localhost:8080';
+let should = require('chai').should()
+let Command = require('./../../api/commands/command');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let Command = require('./../../api/commands/command');
+
 chai.use(chaiHttp);
 let mongoServer;
 let con;
 let db;
-const server = require('../../server');
+
 const expect = chai.expect;
-var should = require('chai').should()
+const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 const USER_ID = '5c48eada47227ff3460dce9b';
 const COMMANDS_URL = '/api/tips/';
-
-const COMMAND_OBJECT_MOCK = {
-  "title": "Executing a cucumber test through maven using an specif tag.",
-  "command": "mvn test -DskipTest",
-  "links": "",
-  /*"userId": "5c48eada47227ff3460dce9b",*/
-  "tags": "MAVEN"
-}
+const COMMANDS_ADMIN_URL = '/admin/api/commands/';
+const AUTHORIZATION_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
 function getCommandMock() {
   return {
@@ -62,14 +57,14 @@ describe('Commands PATCH', () => {
   it('not found command given should return not found.', async () => {
 
     let invalidCommandId = '5c48eada47227ff3460dce9a';
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + invalidCommandId).send({});
+    let result = await patchCall(COMMANDS_ADMIN_URL + invalidCommandId, {});
     result.status.should.equal(404);
 
   });
 
   it('not allowed params given should return bad request.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
     setUpResult.status.should.equal(201);
 
     let patchBody = {
@@ -77,14 +72,14 @@ describe('Commands PATCH', () => {
     }
 
     let commandId = setUpResult.body.command._id;
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+    let result = await patchCall(COMMANDS_ADMIN_URL + commandId, patchBody);
     result.status.should.equal(400);
 
   });
 
   it('not found params given should return bad request.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
     setUpResult.status.should.equal(201);
 
     let patchBody = {
@@ -92,14 +87,14 @@ describe('Commands PATCH', () => {
     }
 
     let commandId = setUpResult.body.command._id;
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+    let result = await patchCall(COMMANDS_ADMIN_URL + commandId, patchBody);
     result.status.should.equal(400);
 
   });
 
   it('changed title given should return ok.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
     setUpResult.status.should.equal(201);
 
     let patchBody = {
@@ -108,7 +103,7 @@ describe('Commands PATCH', () => {
     }
 
     let commandId = setUpResult.body.command._id;
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+    let result = await patchCall(COMMANDS_ADMIN_URL + commandId, patchBody);
 
     result.status.should.equal(200);
 
@@ -118,7 +113,7 @@ describe('Commands PATCH', () => {
 
   it('increment it works should return ok.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
     setUpResult.status.should.equal(201);
 
     let patchBody = {
@@ -127,7 +122,7 @@ describe('Commands PATCH', () => {
     }
 
     let commandId = setUpResult.body.command._id;
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+    let result = await patchCall(COMMANDS_ADMIN_URL + commandId, patchBody);
 
     result.status.should.equal(200);
 
@@ -139,7 +134,7 @@ describe('Commands PATCH', () => {
 
   it('decrement it works should return ok.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
     setUpResult.status.should.equal(201);
 
     let patchBody = {
@@ -148,7 +143,7 @@ describe('Commands PATCH', () => {
     }
 
     let commandId = setUpResult.body.command._id;
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+    let result = await patchCall(COMMANDS_ADMIN_URL + commandId, patchBody);
 
     result.status.should.equal(200);
 
@@ -161,7 +156,7 @@ describe('Commands PATCH', () => {
 
   it('update tags title given should return ok.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
     setUpResult.status.should.equal(201);
 
     let patchBody = {
@@ -170,7 +165,7 @@ describe('Commands PATCH', () => {
     }
 
     let commandId = setUpResult.body.command._id;
-    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_URL + commandId).send(patchBody);
+    let result = await patchCall(COMMANDS_ADMIN_URL + commandId, patchBody);
 
     result.status.should.equal(200);
 
@@ -180,16 +175,25 @@ describe('Commands PATCH', () => {
 
   });
 
+
+  it('patch not token given should return unauthorized error.', async () => {
+
+    let result = await chai.request(SERVER_APPLICATION_HOST).patch(COMMANDS_ADMIN_URL).send(getCommandMock());
+
+    result.status.should.equal(401);
+
+  });
+
 });
 
 describe('Commands POST', () => {
 
   it('invalid command given should return bad request with error message.', async () => {
 
-    let tempCommand = getCommandMock();;
+    let tempCommand = getCommandMock();
     delete tempCommand.title;
 
-    let result = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(tempCommand);
+    let result = await postCall(COMMANDS_ADMIN_URL, tempCommand);
 
     //console.log('command post invalid param %j', result.body);
 
@@ -203,11 +207,19 @@ describe('Commands POST', () => {
 
     let tempCommand = getCommandMock();;
 
-    let result = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(tempCommand);
+    let result = await postCall(COMMANDS_ADMIN_URL, tempCommand);
 
     result.body.command.should.have.property('_id');
 
     result.status.should.equal(201);
+
+  });
+
+  it('not token given should return unauthorized error.', async () => {
+
+    let result = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_ADMIN_URL).send(getCommandMock());
+
+    expect(result.status).to.equal(401);
 
   });
 
@@ -226,24 +238,23 @@ describe('Commands FIND BY ID', () => {
 
     let result = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + invalidCommandId);
 
-    result.status.should.equal(404);
+    expect(result.status).to.equal(404);
 
   });
 
   it('it should find by id.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
     //console.log('%j', result);
 
-    setUpResult.status.should.equal(201);
+    expect(setUpResult.status).to.equal(201);
 
     let commandId = setUpResult.body.command._id;
 
     let findResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + commandId);
 
-    findResult.status.should.equal(200);
-
+    expect(findResult.status).to.equal(200);
     expect(findResult.body.command._id).to.equal(commandId);
   });
 
@@ -259,34 +270,30 @@ describe('Commands QUERY', () => {
 
   it('not valid query given should return empty commands array.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
-    setUpResult.status.should.equal(201);
+    expect(setUpResult.status).to.equal(201);
 
     let query = 'query';
 
     let testResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + 'search/' + query);
 
-    testResult.status.should.equal(200);
-
-    testResult.body.commands.length.should.equal(0);
-
+    expect(testResult.status).to.equal(200);
+    expect(testResult.body.commands).to.have.lengthOf(0);
   });
 
   it('valid query by command given should return empty commands array.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
-    setUpResult.status.should.equal(201);
+    expect(setUpResult.status).to.equal(201);
 
     let query = setUpResult.body.command.command.substring(0, 4);
 
     let testResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + 'search/' + query);
 
-    testResult.status.should.equal(200);
-
-    testResult.body.commands.length.should.equal(1);
-
+    expect(testResult.status).to.equal(200);
+    expect(testResult.body.commands).to.have.lengthOf(1);
   });
 
 });
@@ -301,39 +308,43 @@ describe('Commands TAGS', () => {
 
   it('it should not find by tag.', async () => {
 
-    let setUpResult = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
-    setUpResult.status.should.equal(201);
+    expect(setUpResult.status).to.equal(201);
 
     let invalidTag = 'invalid';
 
     let testResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + 'tags/' + invalidTag);
 
-    testResult.status.should.equal(404);
+    expect(testResult.status).to.equal(404);
 
   });
 
 
   it('it should find by tag.', async () => {
 
-    let result = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    let result = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
-    result = await chai.request(SERVER_APPLICATION_HOST).post(COMMANDS_URL).send(COMMAND_OBJECT_MOCK);
+    result = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
-    result.status.should.equal(201);
+    expect(result.status).to.equal(201);
 
     let validTag = result.body.command.tags;
 
     let testResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + 'tags/' + validTag);
 
-    testResult.status.should.equal(200);
-
-    testResult.body.commands[0].should.have.property('_id');
-
-    testResult.body.commands[0].tags.should.equal(validTag);
-
-    testResult.body.commands.length.should.equal(2);
-
+    expect(testResult.status).to.equal(200);
+    expect(testResult.body.commands[0]).to.have.property('_id');
+    expect(testResult.body.commands[0].tags).to.equal(validTag);
+    expect(testResult.body.commands).to.have.lengthOf(2);
   });
 
 });
+
+async function postCall(url, body) {
+  return chai.request(SERVER_APPLICATION_HOST).post(url).set('authorization', AUTHORIZATION_TOKEN).send(body);
+}
+
+async function patchCall(url, body) {
+  return chai.request(SERVER_APPLICATION_HOST).patch(url).set('authorization', AUTHORIZATION_TOKEN).send(body);
+}

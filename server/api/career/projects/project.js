@@ -7,7 +7,7 @@ const projectSchema = mongoose.Schema({
   roles: { type: Array},
   description: { type: String, required: [true, 'The description is required.'] },
   achievements: { type: Array },
-  /*user_id: {type: String, required: [true, 'The user id is required.']},*/
+  userAuthId: {type: String, required: [true, 'The auth id is required.']},
   active: { type: Boolean, default: true },  
   companyName: { type: String, required: [true, 'The company name is required.'] },
   projectTimeline: { type: String, required: [true, 'The project timeline is required.'] }

@@ -19,18 +19,8 @@ async function findById(req, res, next) {
     }
   } catch (error) {
     console.error('Error looking for command ' + error);
-    return next(ErrorsUtils.createError('internal server error', error.message, 500));
+    return next(ErrorsUtils.createGenericError('internal server error'));
   }
-}
-/*
-async function findByTag(tagValue) {
-  //console.debug('looking command by tag %j.', tagValue);
-  return Command.find({ "tags": { $regex: tagValue, $options: 'i' } });
-}
-*/
-async function save(command) {
-  //console.debug('creating command');
-  return Command.create(command);
 }
 
 async function search(req, res, next) {
@@ -55,7 +45,7 @@ async function search(req, res, next) {
     }
   } catch (error) {
     console.error(error);
-    return next(ErrorsUtils.createError('internal server error', error.message, 500));
+    return next(ErrorsUtils.createGenericError('internal server error'));
   }
 }
 
@@ -149,6 +139,7 @@ async function create(req, res, next) {
   const description = req.body.description == null || undefined ? req.body.title : req.body.description;
 
   const command = new Command({
+    userAuthId: req.authId,
     title: req.body.title,
     command: req.body.command,
     full_description: description,

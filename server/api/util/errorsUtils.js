@@ -17,4 +17,12 @@ function createGenericError(message) {
     return createError('internal server error', message, 500);
 }
 
-module.exports = { createBadRequest, createError, createNotFound, createGenericError }
+function createForbiddenError(message) {
+    return createError('forbidden', message, 403);
+}
+
+function createUnauthorizedError() {
+    return createError('unauthorized', 'You are not authorized to make this request', 401);
+}
+
+module.exports = { createBadRequest, createError, createNotFound, createGenericError, createForbiddenError, createUnauthorizedError }

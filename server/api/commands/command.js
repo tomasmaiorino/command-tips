@@ -7,7 +7,7 @@ const commandSchema = mongoose.Schema({
   command: { type: String, required: [true, 'The command is required.'] },
   full_description: { type: String },
   helpfull_links: { type: String },
-  /*user_id: {type: String, required: [true, 'The user id is required.']},*/
+  userAuthId: {type: String, required: [true, 'The auth id is required.']},
   helpfull: {type: Number, default: 0 },
   unhelpfull: {type: Number, default: 0},
   works: {type: Number, default: 0 },

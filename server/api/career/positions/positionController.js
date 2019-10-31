@@ -45,7 +45,7 @@ async function addProjectsToPosition(req, res, next) {
 
   } catch (error) {
     console.error(error);
-    return next(ErrorsUtils.createError('internal server error', error.message, 500));
+    return next(ErrorsUtils.createGenericError('internal server error'));
   }
 }
 
@@ -55,6 +55,7 @@ async function create(req, res, next) {
   //console.debug('technologies to be create ' + technologies);
 
   const position = new Position({
+    userAuthId: req.authId,
     name: req.body.name,
     companyName: req.body.companyName,
     description: req.body.description,
@@ -70,13 +71,8 @@ async function create(req, res, next) {
 
   if (error) {
     console.debug('Invalid position given [' + position + '].');
-    //console.log(error);
     console.log(error.message);
-    /*
-    error.errorCode = 400;
-    next(error);
-    */
-   return next(ErrorsUtils.createBadRequest(error.message));
+    return next(ErrorsUtils.createBadRequest(error.message));
   }
 
   try {
@@ -96,9 +92,25 @@ async function create(req, res, next) {
   }
 }
 
-async function findById(positionId) {
+async function findById(req, res, next) {
+
+  const positionId = req.params.id;
+
   console.info('controller -> Looking for the position  ' + positionId);
-  return Position.findById(positionId);
+
+  try {
+    let positionResponse = await Position.findById(positionId);
+
+    if (positionResponse == null) {
+      return next(ErrorsUtils.createNotFound('position not found'));
+    }
+    return res.status(200).json({
+      'position': positionResponse
+    });
+  } catch (error) {
+    console.log('Error searching for position [' + error + '].');
+    return next(ErrorsUtils.createGenericError(error.message));
+  }
 }
 
-module.exports = { create, addProjectsToPosition };
+module.exports = { create, addProjectsToPosition, findById };

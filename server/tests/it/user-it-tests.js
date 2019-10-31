@@ -1,21 +1,26 @@
 process.env.NODE_ENV = 'test';
 const assert = require("assert");
 const mongoose = require('mongoose');
-//const DB = require('mongoose').Db;
-const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const config = require('../../config/config');
-const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let User = require('./../../api/users/user');
+const server = require('../../server');
+//const DB = require('mongoose').Db;
+const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
+
 chai.use(chaiHttp);
 let mongoServer;
 let con;
 let db;
-const server = require('../../server');
+
 const expect = chai.expect;
-var should = require('chai').should()
+
+const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 const USER_ID = '5c48eada47227ff3460dce9b';
+const USER_URL = '/api/users/';
+const USER_ADMIN_URL = '/admin/api/users/';
+const AUTHORIZATION_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
 function createTestUser() {
   return {
@@ -61,20 +66,21 @@ describe('Users ', () => {
 
   it('it should not find user by id.', async () => {
 
-    var result = await chai.request(SERVER_APPLICATION_HOST).get('/api/users/' + USER_ID);
+    var result = await chai.request(SERVER_APPLICATION_HOST).get(USER_URL + USER_ID);
 
-    result.status.should.equal(404);
+    expect(result.status).to.equal(404);
+
   });
 
   it('it should create an user.', async () => {
 
     try {
 
-      var result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(VALID_USER_MOCK);
+      var result = await postCall(USER_ADMIN_URL, VALID_USER_MOCK);
 
       expect(result.status).to.equal(201);
-      result.body.user.should.have.property('email');
-      result.body.user.should.have.property('_id');
+      expect(result.body.user).to.have.property('email');
+      expect(result.body.user).to.have.property('_id');
 
     } catch (err) {
       assert.fail(err.message);
@@ -88,7 +94,7 @@ describe('Users ', () => {
       let tempUser = VALID_USER_MOCK;
       delete tempUser.email;
 
-      var result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(tempUser);
+      var result = await postCall(USER_ADMIN_URL, tempUser);
 
       expect(result.status).to.equal(400);
 
@@ -101,11 +107,11 @@ describe('Users ', () => {
 
     try {
 
-      var result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(createTestUser());
+      var result = await postCall(USER_ADMIN_URL, createTestUser());
 
       expect(result.status).to.equal(201);
 
-      result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(createTestUser());
+      result = await postCall(USER_ADMIN_URL, createTestUser());
 
       expect(result.status).to.equal(400);
 
@@ -118,7 +124,7 @@ describe('Users ', () => {
 
     try {
 
-      var result = await chai.request(SERVER_APPLICATION_HOST).put('/api/users/' + USER_ID).send(createTestUser());
+      var result = await putCall(USER_ADMIN_URL + USER_ID, createTestUser());
 
       expect(result.status).to.equal(404);
 
@@ -132,7 +138,7 @@ describe('Users ', () => {
 
     try {
 
-      let result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(createTestUser());
+      let result = await postCall(USER_ADMIN_URL, createTestUser());
 
       expect(result.status).to.equal(201);
 
@@ -141,7 +147,7 @@ describe('Users ', () => {
       let tempUser = createTestUser();
       delete tempUser.email;
 
-      result = await chai.request(SERVER_APPLICATION_HOST).put('/api/users/' + userId).send(tempUser);
+      result = await putCall(USER_ADMIN_URL + userId, tempUser);
 
       expect(result.status).to.equal(400);
 
@@ -156,7 +162,7 @@ describe('Users ', () => {
 
       let user = createTestUser();
 
-      let result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(user);
+      let result = await postCall(USER_ADMIN_URL, user);
 
       expect(result.status).to.equal(201);
 
@@ -164,11 +170,10 @@ describe('Users ', () => {
 
       user.username = 'new user name';
 
-      result = await chai.request(SERVER_APPLICATION_HOST).put('/api/users/' + userId).send(user);
+      result = await putCall(USER_ADMIN_URL + userId, user);
 
       expect(result.status).to.equal(200);
-      
-      result.body.user.should.have.property('email');
+      expect(result.body.user).to.have.property('email');        
 
     } catch (err) {
       assert.fail(err.message);
@@ -181,12 +186,12 @@ describe('Users ', () => {
 
       let user = createTestUser();
 
-      let result = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(user);
+      let result = await postCall(USER_ADMIN_URL, user);
 
       let userTwo = createTestUser();
       userTwo.email = userTwo.email + 'br';
 
-      let resultTwo = await chai.request(SERVER_APPLICATION_HOST).post('/api/users/').send(userTwo);
+      let resultTwo = await postCall(USER_ADMIN_URL, userTwo);
 
       expect(resultTwo.status).to.equal(201);
 
@@ -194,7 +199,7 @@ describe('Users ', () => {
 
       userTwo.email = user.email;
 
-      result = await chai.request(SERVER_APPLICATION_HOST).put('/api/users/' + userIdTwo).send(userTwo);
+      result = await putCall(USER_ADMIN_URL + userIdTwo, userTwo);
 
       expect(result.status).to.equal(400);
 
@@ -203,4 +208,28 @@ describe('Users ', () => {
     }
   });
 
+  it('create user not token given should return unauthorized error.', async () => {  
+
+    let result = await chai.request(SERVER_APPLICATION_HOST).post(USER_ADMIN_URL).send(createTestUser());
+
+    expect(result.status).to.equal(401);    
+
+  });
+
+  it('update user not token given should return unauthorized error.', async () => {  
+
+    let result = await chai.request(SERVER_APPLICATION_HOST).put(USER_ADMIN_URL).send(createTestUser());
+
+    expect(result.status).to.equal(401);    
+
+  });
+
 });
+
+async function postCall(url, body) {
+  return chai.request(SERVER_APPLICATION_HOST).post(url).set('authorization', AUTHORIZATION_TOKEN).send(body);
+}
+
+async function putCall(url, body) {
+  return chai.request(SERVER_APPLICATION_HOST).put(url).set('authorization', AUTHORIZATION_TOKEN).send(body);
+}

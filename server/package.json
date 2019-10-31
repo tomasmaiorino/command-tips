@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha tests/*.js",
-    "it": "mocha tests/it/*.js --exit"
+    "it": "mocha tests/it/*it*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -24,13 +24,14 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "firebase-admin": "^8.7.0",
     "mocha": "^5.2.0",
-    "mongoose": "^5.2.12"
+    "mongoose": "^5.7.7"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mockgoose": "^8.0.1",
+    "mockgoose": "^8.0.4",
     "mongodb-memory-server": "^5.1.5",
     "nodemon": "^1.18.9",
     "randomstring": "^1.1.5",

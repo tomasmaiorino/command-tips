@@ -10,12 +10,11 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let Position = require('./../../api/career/positions/position');
 let Project = require('./../../api/career/projects/project');
-const firebaseAdmin = require('firebase-admin')
 
 let positionTestFileName = "position-test.json";
 let projectTestFileName = "project-test.json";
-let content = fs.readFileSync(process.cwd() + "/tests/" + positionTestFileName).toString()
-let projectContent = fs.readFileSync(process.cwd() + "/tests/" + projectTestFileName).toString()
+let content = fs.readFileSync(process.cwd() + "/tests/" + positionTestFileName).toString();
+let projectContent = fs.readFileSync(process.cwd() + "/tests/" + projectTestFileName).toString();
 
 chai.use(chaiHttp);
 let mongoServer;
@@ -70,31 +69,25 @@ after(() => {
 
 describe('Positions POST', () => {
 
-  sinon.stub(firebaseAdmin, 'auth')
-    .returns({
-      verifyIdToken: function(token) {
-        return  {
-          uid:'123'
-        }
-      }
-    });
   beforeEach((done) => {
     Position.deleteMany({}, (err) => {
       done();
     });
   });
 
-  it('invalid position given should return bad request with error message.', async () => {
+  afterEach(()=> {
+  })
 
+  it('invalid position given should return bad request with error message.', async () => {
+    
     let tempPosition = getPositionMock();
     delete tempPosition.name;
 
     let result = await postCall(POSITION_ADMIN_URL, tempPosition);
 
-    //console.log('%j', result.body);
-
     expect(result.body.error.message).to.have.string('The name is required');
     expect(result.status).to.equal(400);
+    
   });
 
   it('valid position given should create position.', async () => {
@@ -141,7 +134,6 @@ describe('Adding project to position', () => {
   });
 
   it('project not found given should return bad request', async () => {
-
 
     let tempPosition = getPositionMock();
 

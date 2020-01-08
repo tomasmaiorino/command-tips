@@ -6,4 +6,9 @@ router.get('/', (req, res, next) => {
   return TagController.findAllTags(req, res, next);
 });
 
+router.get('/search/:query', async (req, res, next) => {
+  return TagController.search(req, res, next);
+});
+
+
 module.exports = router;

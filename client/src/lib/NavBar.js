@@ -18,7 +18,7 @@ const NavBar = () => {
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-
+                        
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active nav-item-background">
@@ -29,6 +29,11 @@ const NavBar = () => {
                             </ul>
                         </div>
                     */}
+                        <ul className="nav justify-content-end lighten-4 py-4">
+                            <li className="nav-item">
+                                <a className="nav-link active" href="/login">Login</a>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </header>

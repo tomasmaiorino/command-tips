@@ -1,34 +1,20 @@
 import React from "react";
-import './HomePage.css';
-import NavBar from './NavBar';
-import SearchCommand from './search/SearchCommand';
-import SearchResults from './search/SearchResults';
-import Load from './Load';
+import NavBar from './../NavBar';
+import SearchResults from './../search/SearchResults';
+import Command from './Command';
+import SearchCommand from './../../lib/search/SearchCommand';
 
 const uuidv1 = require('uuid/v1');
 const SEARCH_COMMANDS_BY_TAG = "/api/tips/tags/";
 const SEARCH_TAG_CONTENT_URL = "/api/tags/";
 
-class HomePage extends React.Component {
+class CommandsPage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       searchResults: []
     };
-  }
-
-  componentDidMount() {
-    // returns a promise object
-    fetch(SEARCH_TAG_CONTENT_URL).then(result => result.json()).then((data) => {
-      console.debug('setting tags ' + data.tags.length);
-      this.setState({
-        tags: data.tags,
-      })
-    }, (error) => {
-      this.setState({ isLoaded: false, error: error });
-      console.error(error);
-    });
   }
 
   doProcessResult = (commands) => {
@@ -48,13 +34,24 @@ class HomePage extends React.Component {
     });
   }
 
-  render() {
+  componentDidMount() {
+    // returns a promise object
+    fetch(SEARCH_TAG_CONTENT_URL).then(result => result.json()).then((data) => {
+      console.debug('setting tags ' + data.tags.length);
+      this.setState({
+        tags: data.tags,
+      })
+    }, (error) => {
+      this.setState({ isLoaded: false, error: error });
+      console.error(error);
+    });
+  }
 
-    const { searchResults, tags } = this.state.searchResults;
+  render() {
 
     return (
       <main>
-        <NavBar/>
+        <NavBar />
         <div className="container">
           <div className="md-form mt-0 form-li-pointer input-field">
             <SearchCommand
@@ -62,9 +59,9 @@ class HomePage extends React.Component {
           </div>
 
           <div className="row">
-            <h3 className="ml-3">Check this tags to search.</h3>
+            <h3 className="ml-3">Search commands by tags.</h3>
           </div>
-          {!this.state.searchResults && 
+          {!this.state.searchResults &&
             <Load />
           }
           <div className="row">
@@ -73,13 +70,14 @@ class HomePage extends React.Component {
             })}
           </div>
           <hr className="mb-5" />
-          {!this.state.searchResults && 
+          {!this.state.searchResults &&
             <Load />
-          }          
+          }
           <SearchResults results={this.state.searchResults} />
+          <Command />
         </div>
       </main>
     )
   }
 }
-export default HomePage;
+export default CommandsPage;

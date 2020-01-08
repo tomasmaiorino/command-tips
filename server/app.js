@@ -12,12 +12,29 @@ const adminPositions = require('./api/career/positions/admin/positionRoute');
 const CheckTokenMiddleware = require('./api/util/checkTokenMiddleware');
 const firebaseAdmin = require('firebase-admin')
 const app = express();
+const cors = require('cors');
 
 firebaseAdmin.initializeApp({
     "credential": firebaseAdmin.credential.applicationDefault()
 });
 
+let whitelist = ['http://localhost:3000', 'http://0.0.0.0:3000'];
+
+let corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    methods: 'DELETE, POST, GET, OPTIONS',
+    allowedHeaders: "Content-Type"
+}
+
+app.use(cors(corsOptions));
 app.use(express.static("dist"));
+
 app.use(bodyParser.json());
 /*
 app.use((req, res, next) => {
@@ -37,6 +54,7 @@ app.use('/admin/api/users', adminUsers);
 app.use('/admin/api/commands', adminCommands);
 app.use('/admin/api/projects', adminProjects);
 app.use('/admin/api/positions', adminPositions);
+
 
 app.use((req, res, next) => {
     const error = new Error("not found");

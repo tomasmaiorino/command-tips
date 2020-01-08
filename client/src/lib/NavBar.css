@@ -5,3 +5,10 @@
 .nav-item-background {
     background-color: #F6F7F8 !important;
 }
+.nav-item a {
+    color: #000000;
+}
+
+.nav-item a:active {
+    color: #ffc107;
+}

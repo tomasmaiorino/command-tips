@@ -74,18 +74,19 @@ class SearchCommand extends React.Component {
 
     if (value.length > 3) {
 
-      fetch(SEARCH_CONTENT_URL + value).then(result => result.json()).then((data) => {
-        if (data) {
-          //commands = data.commands;
-          this.setState({
-            suggestions: data.commands
-          });
-        }
-      }, (error) => {
-        this.setState({ isLoaded: false, error: error });
-        console.log(error);
-      });
-
+      fetch(SEARCH_CONTENT_URL + value)
+        .then(result => result.json())
+        .then((data) => {
+          if (data) {
+            //commands = data.commands;
+            this.setState({
+              suggestions: data.commands
+            });
+          }
+        }, (error) => {
+          this.setState({ isLoaded: false, error: error });
+          console.log(error);
+        });
     }
 
     // this.setState({

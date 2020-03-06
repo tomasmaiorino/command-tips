@@ -18,10 +18,10 @@ const firebaseAdmin = require('firebase-admin')
 const app = express();
 const cors = require('cors');
 
-const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(serviceAccount)
+    credential: firebaseAdmin.credential.cert(JSON.stringify(serviceAccount))
     //"credential": firebaseAdmin.credential.applicationDefault()
 });
 

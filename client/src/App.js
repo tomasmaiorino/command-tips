@@ -1,30 +1,36 @@
-import React, { Component } from 'react';
-//import Footer from './lib/Footer';
+import React from 'react';
 import HomePage from './lib/HomePage';
-import Login from './lib/login/LoginPage';
-import LoginBKP from './lib/login/LoginPageBKP';
-import CommandsPage from './lib/commands/CommandsPage'
-import { Route, IndexRoute } from 'react-router'
-
-import {
-  BrowserRouter as Router
-} from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import VisibleLogin from './lib/login/VisibleLogin';
+import NavBar from './lib/NavBar';
+import NotFound from './lib/util/NotFound';
+import Logout from './lib/login/Logout';
+import VisibleCommand from './lib/commands/VisibleCommand';
 
 import './App.css';
 
-class App extends React.Component {
-  render() {
-    return (
+const App = ({ store }) => {
+  return (
+    <Provider store={store}>
       <Router>
-        <div>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/login" component={Login} />
-          <Route path="/loginBkp" component={LoginBKP} />
-          <Route path="/commands" component={CommandsPage} />
-        </div>
+        <main>
+          <NavBar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/login" component={VisibleLogin} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/commands" component={VisibleCommand} />
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </div>
+        </main>
       </Router>
-    );
-  }
+    </Provider>
+  );
 }
 
 export default App;

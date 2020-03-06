@@ -1,6 +1,5 @@
-
 const firebase = require('firebase');
-
+//process.env.FIREBASE_APIKEY
 const config = {
     apiKey: "AIzaSyB31On5_sGKC7zbWDgwqOalKmW5v70-Vtg",
     authDomain: "command-2c7bb.firebaseapp.com",

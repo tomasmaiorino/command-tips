@@ -6,7 +6,7 @@ const config = require('../../config/config');
 const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let Command = require('./../../api/commands/command');
+let Command = require('./../../api/commands/Command');
 chai.use(chaiHttp);
 let mongoServer;
 const server = require('../../server');
@@ -48,8 +48,8 @@ describe('Tags', () => {
 
   it('should return all tags.', async () => {
 
-    let savedTag = await tagController.save({'value': 'MAVEN'});
-    savedTag = await tagController.save({'value': 'GIT'});
+    let savedTag = await tagController.save({ 'value': 'MAVEN' });
+    savedTag = await tagController.save({ 'value': 'GIT' });
 
     let result = await chai.request(SERVER_APPLICATION_HOST).get(TAGS_URI);
     result.status.should.equal(200);

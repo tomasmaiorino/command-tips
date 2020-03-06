@@ -1,41 +1,41 @@
 .react-autosuggest__suggestions-list .react-autosuggest__suggestion {
-    list-style-type: none;
+  list-style-type: none;
 }
 .react-autosuggest__input {
-    width: 100%;
+  width: 100%;
 }
 
 .md-form input[type="text"] {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
- /* label color */
- .input-field label {
-    color: #000 !important;
-  }
-  /* label focus color */
-  .input-field input[type=text]:focus + label {
-    color: #000 !important;
-  }
-  /* label underline focus color */
-  .input-field input[type=text]:focus {
-    border-bottom: 1px solid #000 !important;
-    box-shadow: 0 1px 0 0 #000 !important;
-  }
-  /* valid color */
-  .input-field input[type=text].valid {
-    border-bottom: 1px solid #000 !important;
-    box-shadow: 0 1px 0 0 #000 !important;
-  }
-  /* invalid color */
-  .input-field input[type=text].invalid {
-    border-bottom: 1px solid #000 !important;
-    box-shadow: 0 1px 0 0 #000 !important;
-  }
-  /* icon prefix focus color */
-  .input-field .prefix.active {
-    color: #000 !important;
-  }
+/* label color */
+.input-field label {
+  color: #000 !important;
+}
 
-  .tag-input li {
-    list-style-type: none;
-  }
+/* label focus color */
+.input-field input[type=text]:focus + label {
+  color: #000 !important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #000 !important;
+}
+.tag-input li {
+  list-style-type: none;
+}

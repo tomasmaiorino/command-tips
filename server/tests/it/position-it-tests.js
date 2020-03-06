@@ -67,7 +67,7 @@ after(() => {
   mongoServer.stop();
 });
 
-describe('Positions POST', () => {
+describe.skip('Positions POST', () => {
 
   beforeEach((done) => {
     Position.deleteMany({}, (err) => {
@@ -75,11 +75,11 @@ describe('Positions POST', () => {
     });
   });
 
-  afterEach(()=> {
+  afterEach(() => {
   })
 
   it('invalid position given should return bad request with error message.', async () => {
-    
+
     let tempPosition = getPositionMock();
     delete tempPosition.name;
 
@@ -87,7 +87,7 @@ describe('Positions POST', () => {
 
     expect(result.body.error.message).to.have.string('The name is required');
     expect(result.status).to.equal(400);
-    
+
   });
 
   it('valid position given should create position.', async () => {
@@ -111,7 +111,7 @@ describe('Positions POST', () => {
 
 });
 
-describe('Adding project to position', () => {
+describe.skip('Adding project to position', () => {
 
   beforeEach((done) => {
     Position.deleteMany({}, (err) => {
@@ -206,7 +206,7 @@ describe('Adding project to position', () => {
 
 });
 
-describe('Positions GET', () => {
+describe.skip('Positions GET', () => {
 
   beforeEach((done) => {
     Position.deleteMany({}, (err) => {

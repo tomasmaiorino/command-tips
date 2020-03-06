@@ -1,43 +1,42 @@
-import React, { Component } from 'react';
-
+import React from 'react';
+import { connect } from "react-redux";
 import './NavBar.css';
-import { BrowserRouter as Router, Link, NavLink, Redirect, Prompt } from 'react-router-dom';
 
-const NavBar = () => {
+function mapStateToProps(state) {
+    return state;
+};
+
+const NavBar = ({ user }) => {
+
     return (
-        <div>
-            <header>
-                <nav className="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar override-bar">
-                    <div className="container">
-
-                        <a className="navbar-brand waves-effect" href="/">
-                            <img src="assets/img/logo-header.png"/>
-                        </a>
-                    {/*
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active nav-item-background">
-                                    <a className="nav-link waves-effect" href="/">Home
-                                        <span className="sr-only">(current)</span>
-                                    </a>
+        <nav className="mb-1 navbar navbar-expand-lg navbar-dark override-bar">
+            <div className="container">
+                <a className="navbar-brand waves-effect" href="/">
+                    <img src="assets/img/logo-header.png" />
+                </a>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent-4">
+                    <ul className="navbar-nav ml-auto">
+                        {!user &&
+                            <li className="nav-item active">
+                                <a className="nav-link" href="/login"><span>Login</span>
+                                </a>
+                            </li>}
+                        {user && user.token &&
+                            <React.Fragment>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i className="fas fa-user"></i> {user.email} </a>
+                                    <div className="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                                        <a className="dropdown-item" href="/commands">Commands</a>
+                                        <a className="dropdown-item" href="/logout">Log out</a>
+                                    </div>
                                 </li>
-                            </ul>
-                        </div>
-                    */}
-                        <ul className="nav justify-content-end lighten-4 py-4">
-                            <li className="nav-item">
-                                <a className="nav-link active" href="/login">Login</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
-        </div>
+                            </React.Fragment>}
+                    </ul>
+                </div>
+            </div>
+        </nav>
     );
 }
-export default NavBar;
+export default connect(mapStateToProps, null)(NavBar);

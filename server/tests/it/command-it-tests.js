@@ -5,7 +5,7 @@ const server = require('../../server');
 const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const config = require('../../config/config');
 let should = require('chai').should()
-let Command = require('./../../api/commands/command');
+let Command = require('./../../api/commands/Command');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 

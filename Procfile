@@ -1,1 +1,1 @@
-web: NODE_ENV=prod npm --prefix server start
+web: NODE_ENV=prod GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS npm --prefix server start

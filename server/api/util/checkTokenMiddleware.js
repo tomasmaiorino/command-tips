@@ -12,6 +12,7 @@ const getAuthToken = (req, res, next) => {
 };
 
 async function getUserInfo(token) {
+    console.debug('checking token ' + token);
     return admin.auth().verifyIdToken(token);
 }
 
@@ -23,24 +24,20 @@ async function checkIfAuthenticated(req, res, next) {
     getAuthToken(req, res, async () => {
         try {
             const { authToken } = req;
-            if (authToken == null) {   
+            if (authToken) {
                 const userInfo = await getUserInfo(authToken);
                 req.authId = userInfo.uid;
                 req.isAdminRequest = true;
                 return next();
             }
             //TODO - to remove
-            req.authId = '123123123';
+            //req.authId = '123123123';
             return next();
         } catch (e) {
-            console.log('check new authentication error %j', e);
+            console.log(`check new authentication error ${JSON.stringify(e)}`);
             return next(ErrorUtils.createUnauthorizedError());
         }
     });
 }
 
-function print () {
-
-    console.log('printing content');
-}
-module.exports = { checkIfAuthenticated, getUserInfo, print };
+module.exports = { checkIfAuthenticated, getUserInfo };

@@ -8,6 +8,7 @@ function mapStateToProps(state) {
 
 const NavBar = ({ user }) => {
 
+    console.log('navball ->');
     return (
         <nav className="mb-1 navbar navbar-expand-lg navbar-dark override-bar">
             <div className="container">

@@ -12,7 +12,7 @@ const HomePage = () => {
       tempCommands.push(command);
       setCommands(tempCommands);
     }
-    console.log('processing search result ', command);
+    console.deb('processing search result ', command);
   }
 
   const processTagsResult = (pCommands) => {

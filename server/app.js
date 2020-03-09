@@ -66,6 +66,12 @@ app.use('/admin/api/commands', adminCommands);
 app.use('/admin/api/projects', adminProjects);
 app.use('/admin/api/positions', adminPositions);
 
+if (process.env.NODE_ENV === 'prod') {
+    console.log('redirecting to home -->');
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname, '/dist/index.html'));
+    });
+}
 
 app.use((req, res, next) => {
     const error = new Error("not found");
@@ -82,11 +88,5 @@ app.use((error, req, res, next) => {
         }
     });
 });
-
-if (process.env.NODE_ENV === "prod") {
-    app.get('/*', (req, res) => {
-        res.sendFile(path.join(__dirname, '/dist/index.html'));
-    });
-}
 
 module.exports = app;

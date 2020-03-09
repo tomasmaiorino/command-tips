@@ -26,7 +26,6 @@ const Command = ({ user }) => {
             setTagsErrorMessage(tags.length == 0 ? 'Tags is required.' : '');
         }
 
-        console.log('userParam for request %j', userParam.user);
         fetch(CREATE_COMMAND_URL, {
             method: 'POST',
             headers: {
@@ -34,7 +33,7 @@ const Command = ({ user }) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + userParam.token
             },
-            body: JSON.stringify({ tags: tags.value, command, description, title })
+            body: JSON.stringify({ tags: tags, command, description, title })
         })
             .then(rawResponse => {
                 if (rawResponse.status == 201) {
@@ -54,15 +53,18 @@ const Command = ({ user }) => {
             fetch(SEARCH_TAGS_QUERY_CONTENT_URL + value)
                 .then(result => result.json())
                 .then((data) => {
-                    //console.log('data response %j', data);
-                    if (data) {
+                    if (data && data.length > 0) {
                         setSuggestions(data);
+                    } else {
+                        setTags(value);
                     }
                 }, (error) => {
                     setIsLoaded(false);
                     //setError(error);
                     console.log(error);
                 });
+        } else {
+            setTags(value);
         }
     }
 
@@ -76,7 +78,7 @@ const Command = ({ user }) => {
     };
 
     const onSuggestionSelected = (event, result) => {
-        setTags(suggestions[result.suggestionIndex]);
+        setTags(suggestions[result.suggestionIndex].value);
         return suggestions[result.suggestionIndex];
     }
 

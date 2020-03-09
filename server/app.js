@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path');
 
 //admin rounts
 const adminProjects = require('./api/career/projects/admin/projectRoute');

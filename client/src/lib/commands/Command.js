@@ -9,7 +9,7 @@ const Command = ({ user }) => {
 
     const SERVER_HOST = Config.server.url;
     const SEARCH_TAGS_QUERY_CONTENT_URL = "/api/tags/search/";
-    const CREATE_COMMAND_URL = SERVER_HOST + '/admin/api/commands';
+    const CREATE_COMMAND_URL = '/admin/api/commands';
 
     const getSuggestionValue = suggestion => suggestion.value;
 

@@ -1,4 +1,4 @@
-const admin = require('firebase-admin')
+const firebaseHelper = require('./FirebaseHelper');
 const ErrorUtils = require('./errorsUtils');
 
 const getAuthToken = (req, res, next) => {
@@ -12,8 +12,8 @@ const getAuthToken = (req, res, next) => {
 };
 
 async function getUserInfo(token) {
-    console.debug('checking token ' + token);
-    return admin.auth().verifyIdToken(token);
+    //console.debug('checking token ' + token);
+    return firebaseHelper.getUserInfo(token);
 }
 
 async function checkIfAuthenticated(req, res, next) {
@@ -26,6 +26,7 @@ async function checkIfAuthenticated(req, res, next) {
             const { authToken } = req;
             if (authToken) {
                 const userInfo = await getUserInfo(authToken);
+                console.log('user found ' + JSON.stringify(userInfo));
                 req.authId = userInfo.uid;
                 req.isAdminRequest = true;
                 return next();

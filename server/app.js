@@ -15,19 +15,16 @@ const users = require('./api/users/userRoute');
 const positions = require('./api/career/positions/positionRoute');
 
 const CheckTokenMiddleware = require('./api/util/checkTokenMiddleware');
-const firebaseAdmin = require('firebase-admin')
+const firebaseHelper = require('./api/util/FirebaseHelper')
 const app = express();
 const cors = require('cors');
 
 const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(serviceAccount)
-    //"credential": firebaseAdmin.credential.applicationDefault()
-});
+firebaseHelper.initialize(serviceAccount);
 
 let env = process.env.NODE_ENV || 'dev';
-console.log('env ' + env + ' ' + process.env.NODE_ENV);
+
 if (env === 'dev') {
     console.log('configuring cors for dev environment.');
     let whitelist = ['http://localhost:3000', 'http://0.0.0.0:3000'];

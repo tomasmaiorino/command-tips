@@ -11,7 +11,7 @@ const LoginPage = ({ user, addUserName }) => {
             let user = {}
             LoginService.login(email, pass)
                 .then(userResponse => {
-                    console.log('user found %O', userResponse);
+                    console.debug('user found %O', userResponse);
                     user.uid = userResponse.user.uid;
                     user.email = userResponse.user.email;
                     user.loginTime = new Date().getTime();

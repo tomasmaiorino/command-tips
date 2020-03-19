@@ -26,7 +26,7 @@ const findById = async (req, res, next) => {
 }
 
 async function search(req, res, next) {
-  console.log('searching form ->' + req.params.query);
+  //console.log('searching form ->' + req.params.query);
   const query = req.params.query;
 
   try {
@@ -115,7 +115,7 @@ function configureCommandToUpdate(command, attribute, increment, value) {
 async function findByTag(req, res, next) {
   const tagValue = req.params.tagValue;
 
-  console.debug('looking for tag ' + tagValue);
+  console.debug('looking for tag [%s].', tagValue);
   try {
 
     let commands = await Command.find({ "tags": { $regex: tagValue, $options: 'i' } });
@@ -210,4 +210,28 @@ processingTags = (paramTags) => {
     });
 }
 
-module.exports = { updateCommand, findById, findByTag, search, create };
+const deleteCommand = async (req, res, next) => {
+
+  try {
+
+    const commandId = req.params.commandId;
+    console.debug('controller -> Looking for command to delete [%s].', commandId);
+    let command = await Command.findById(commandId);
+    if (command) {
+      console.log('removing command [%s].', commandId);
+
+      let result = await Command.findOneAndDelete({ _id: commandId }).exec();
+
+      return res.status(204);
+
+    } else {
+      return next(ErrorsUtils.createNotFound('command not found'));
+    }
+  } catch (error) {
+    console.error('Error looking for command ' + error);
+    return next(ErrorsUtils.createGenericError('internal server error'));
+  }
+}
+
+
+module.exports = { updateCommand, findById, findByTag, search, create, deleteCommand };

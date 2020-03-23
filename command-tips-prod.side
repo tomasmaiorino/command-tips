@@ -1,0 +1,180 @@
+{
+  "id": "50c188e4-9284-4283-86a6-a981fe94e398",
+  "version": "2.0",
+  "name": "https://intense-shore-54487.herokuapp.com/",
+  "url": "https://intense-shore-54487.herokuapp.com",
+  "tests": [{
+    "id": "956e896c-cdbb-479a-8020-f05103e1113d",
+    "name": "search-test",
+    "commands": [{
+      "id": "7c3a7c2e-191c-40c8-a3df-feeb8f37c837",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d69818f5-0ec3-4f67-8143-ed5b1a055efb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1900x1030",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ce9c830c-7eb6-4cf8-aafb-2ac0a2b64fbc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "681a3a71-345e-4215-be9a-8959750fe83e",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@value='mongo']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "mongo"
+    }, {
+      "id": "235fc007-f230-41a7-ad84-87bad6329710",
+      "comment": "",
+      "command": "click",
+      "target": "css=#react-autowhatever-1--item-0 > .site-font",
+      "targets": [
+        ["css=#react-autowhatever-1--item-0 > .site-font", "css:finder"],
+        ["xpath=//li[@id='react-autowhatever-1--item-0']/div", "xpath:idRelative"],
+        ["xpath=//li/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6684009a-6466-4348-a19c-0a816e5afa49",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//a[text() =  'Copy']",
+      "targets": [],
+      "value": ""
+    }]
+  },{
+    "id": "956e896c-cdbb-479a-8020-f05103e1113d",
+    "name": "login",
+    "commands": [{
+      "id": "7c3a7c2e-191c-40c8-a3df-feeb8f37c837",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d69818f5-0ec3-4f67-8143-ed5b1a055efb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1900x1030",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5e7cc02f-edb7-44c2-9f6b-ad24f8af20ac",
+      "comment": "",
+      "command": "click",
+      "target": "id=form1",
+      "targets": [
+        ["id=form1", "id"],
+        ["name=email", "name"],
+        ["css=#form1", "css:finder"],
+        ["xpath=//input[@id='form1']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d46aaeb-f766-4154-95ed-4db2364f22a7",
+      "comment": "",
+      "command": "type",
+      "target": "id=form1",
+      "targets": [
+        ["id=form1", "id"],
+        ["name=email", "name"],
+        ["css=#form1", "css:finder"],
+        ["xpath=//input[@id='form1']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tomasmaiorino4@gmail.com"
+    }, {
+      "id": "0e25d509-bb52-4088-8c90-eeb22dbdb199",
+      "comment": "",
+      "command": "type",
+      "target": "id=form2",
+      "targets": [
+        ["id=form2", "id"],
+        ["name=pass", "name"],
+        ["css=#form2", "css:finder"],
+        ["xpath=//input[@id='form2']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "{PASS}"
+    }, {
+      "id": "3f755176-042b-47fb-80e2-e29f854b8be1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "945a93ca-714f-46a1-a0ff-17fe4cbc01ef",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarDropdownMenuLink-4",
+      "targets": [
+        ["id=navbarDropdownMenuLink-4", "id"],
+        ["linkText=tomasmaiorino4@gmail.com", "linkText"],
+        ["css=#navbarDropdownMenuLink-4", "css:finder"],
+        ["xpath=//a[@id='navbarDropdownMenuLink-4']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,' tomasmaiorino4@gmail.com ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "047597cc-1f19-4439-abf0-a4606202c49b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Log out",
+      "targets": [
+        ["linkText=Log out", "linkText"],
+        ["css=.dropdown-item:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Log out')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Log out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "0438864a-1fc5-484e-a2f0-e4beb0d0e1d3",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["956e896c-cdbb-479a-8020-f05103e1113d"]
+  }],
+  "urls": ["https://intense-shore-54487.herokuapp.com/"],
+  "plugins": []
+}

@@ -31,11 +31,9 @@ async function checkIfAuthenticated(req, res, next) {
                 req.isAdminRequest = true;
                 return next();
             }
-            //TODO - to remove
-            //req.authId = '123123123';
             return next();
         } catch (e) {
-            console.log(`check new authentication error ${JSON.stringify(e)}`);
+            console.log('check new authentication error: ', e);
             return next(ErrorUtils.createUnauthorizedError());
         }
     });

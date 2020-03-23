@@ -9,7 +9,7 @@ const initialize = (serviceAccount) => {
 
 const getUserInfo = (token) => {
     //console.debug('checking token ' + token);
-    return admin.auth().verifyIdToken(token);
+    return firebaseAdmin.auth().verifyIdToken(token);
 }
 
 module.exports = { initialize, getUserInfo };

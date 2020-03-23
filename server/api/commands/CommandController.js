@@ -135,7 +135,7 @@ async function findByTag(req, res, next) {
   }
 }
 
-async function create(req, res, next) {
+async function createCommand(req, res, next) {
   //console.debug('creating command');
 
   const description = req.body.description == null || undefined ? req.body.title : req.body.description;
@@ -216,22 +216,20 @@ const deleteCommand = async (req, res, next) => {
 
     const commandId = req.params.commandId;
     console.debug('controller -> Looking for command to delete [%s].', commandId);
-    let command = await Command.findById(commandId);
+
+    let command = await Command.findOneAndDelete(commandId);
+
     if (command) {
-      console.log('removing command [%s].', commandId);
 
-      let result = await Command.findOneAndDelete({ _id: commandId }).exec();
-
-      return res.status(204);
+      return res.status(204).json({});
 
     } else {
       return next(ErrorsUtils.createNotFound('command not found'));
     }
   } catch (error) {
-    console.error('Error looking for command ' + error);
+    console.error('Error removing for command ' + error);
     return next(ErrorsUtils.createGenericError('internal server error'));
   }
 }
 
-
-module.exports = { updateCommand, findById, findByTag, search, create, deleteCommand };
+module.exports = { updateCommand, findById, findByTag, search, createCommand, deleteCommand };

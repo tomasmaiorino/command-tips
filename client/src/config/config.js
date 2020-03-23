@@ -12,7 +12,7 @@ let envValues = {
 if (process.env.NODE_ENV === 'prod') {
     envValues = {
         server: {
-            url: 'http://127.0.0.1:8080'
+            url: ''
         }
     };
 }

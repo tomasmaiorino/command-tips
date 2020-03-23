@@ -309,8 +309,6 @@ describe('Commands DELETE BY ID', () => {
 
     let setUpResult = await postCall(COMMANDS_ADMIN_URL, getCommandMock());
 
-    //console.log('%j', result);
-
     expect(setUpResult.status).to.equal(201);
 
     let commandId = setUpResult.body.command._id;
@@ -318,6 +316,10 @@ describe('Commands DELETE BY ID', () => {
     let findResult = await chai.request(SERVER_APPLICATION_HOST).delete(COMMANDS_ADMIN_URL + commandId);
 
     expect(findResult.status).to.equal(204);
+
+    let assertResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + commandId);
+
+    expect(assertResult.status).to.equal(404);
 
   });
 

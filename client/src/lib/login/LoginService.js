@@ -28,7 +28,7 @@ async function doesVerifyToken(idToken) {
         });
 }
 function verifyToken(user) {
-    console.log('verifying token for user', user);
+    //console.log('verifying token for user', user);
     const response = {
         async() { doesVerifyToken(user.token) }
     }

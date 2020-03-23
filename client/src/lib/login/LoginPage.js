@@ -18,9 +18,9 @@ const LoginPage = ({ user, addUserName }) => {
                     return LoginService.recoverTokenId();
                 })
                 .then(token => {
-                    console.log('adding token response %O', token);
+                    //console.log('adding token response %O', token);
                     user.token = token;
-                    console.log('adding user name %O', user);
+                    //console.log('adding user name %O', user);
                     addUserName(user);
                 })
                 .catch(err => {

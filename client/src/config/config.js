@@ -9,12 +9,8 @@ let envValues = {
     }
 };
 
-if (process.env.NODE_ENV === 'prod') {
-    envValues = {
-        server: {
-            url: ''
-        }
-    };
+if (env === 'prod') {
+    envValues.server.url = '';
 }
 
 module.exports = envValues;

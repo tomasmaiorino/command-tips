@@ -46,9 +46,7 @@ const LoginPage = ({ user, addUserName }) => {
                 <div className="card w-25 center-div">
                     <div className="card-body input-field">
                         <div className="md-form">
-                            <input type="text" id="email" name="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
+                            <input type="text" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}
                                 className={`form-control ${emailErrorMessage.length > 0 ? " is-invalid" : ""}`} />
                             <label htmlFor="email" data-error="wrong" data-success="right">Email</label>
                             <div className="invalid-feedback">

@@ -12,7 +12,7 @@
           "id": "93754f51-b210-42dc-90c5-d44c231c020f",
           "comment": "",
           "command": "open",
-          "target": "http://https://intense-shore-54487.herokuapp.com/login",
+          "target": "https://intense-shore-54487.herokuapp.com/login",
           "targets": [],
           "value": ""
         },
@@ -236,7 +236,7 @@
           "id": "bd906cd2-fff5-4ad0-8670-f42ca5a74ed8",
           "comment": "",
           "command": "open",
-          "target": "http://https://intense-shore-54487.herokuapp.com/",
+          "target": "https://intense-shore-54487.herokuapp.com/",
           "targets": [],
           "value": ""
         },

@@ -130,30 +130,30 @@ const Command = ({ user }) => {
                     <div className="card w-50">
                         <div className="card-body input-field">
                             <div className="md-form">
-                                <input type="text" id="form1" name="title"
+                                <input type="text" id="title" name="title"
                                     value={title}
                                     onChange={e => setTitle(e.target.value)}
                                     className={`form-control ${titleErrorMessage.length > 0 ? " is-invalid" : ""}`} />
-                                <label htmlFor="form1" data-error="wrong" data-success="right">Title</label>
+                                <label htmlFor="title" data-error="wrong" data-success="right">Title</label>
                                 <div className="invalid-feedback">
                                     {titleErrorMessage}
                                 </div>
                             </div>
                             <div className="md-form">
-                                <input type="text" id="form1" name="description"
+                                <input type="text" id="description" name="description"
                                     value={description}
                                     onChange={e => setDescription(e.target.value)}
                                     className="form-control" />
-                                <label htmlFor="form1" data-error="wrong" data-success="right">Description</label>
+                                <label htmlFor="description" data-error="wrong" data-success="right">Description</label>
                                 <div className="invalid-feedback">
                                 </div>
                             </div>
                             <div className="md-form">
-                                <input type="text" id="form1" name="command"
+                                <input type="text" id="command" name="command"
                                     value={command}
                                     onChange={e => setCommand(e.target.value)}
                                     className={`form-control ${commandErrorMessage.length > 0 ? " is-invalid" : ""}`} />
-                                <label htmlFor="form1" data-error="wrong" data-success="right">Command</label>
+                                <label htmlFor="command" data-error="wrong" data-success="right">Command</label>
                                 <div className="invalid-feedback">
                                     {commandErrorMessage}
                                 </div>

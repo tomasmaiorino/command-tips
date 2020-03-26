@@ -1,4 +1,4 @@
-const firebaseHelper = require('./FirebaseHelper');
+const firebaseHelper = require('./firebaseHelper');
 const ErrorUtils = require('./errorsUtils');
 
 const getAuthToken = (req, res, next) => {

@@ -5,17 +5,17 @@ const path = require('path');
 //admin rounts
 const adminProjects = require('./api/career/projects/admin/projectRoute');
 const projects = require('./api/career/projects/projectRoute');
-const adminCommands = require('./api/commands/admin/CommandRoute');
+const adminCommands = require('./api/commands/commandAdminRoute');
 const adminPositions = require('./api/career/positions/admin/positionRoute');
 
 const adminUsers = require('./api/users/admin/userRoute');
-const commands = require('./api/commands/CommandRoute');
-const tags = require('./api/commands/tags/TagRoute');
+const commands = require('./api/commands/commandRoute');
+const tags = require('./api/tags/tagRoute');
 const users = require('./api/users/userRoute');
 const positions = require('./api/career/positions/positionRoute');
 
 const CheckTokenMiddleware = require('./api/util/checkTokenMiddleware');
-const firebaseHelper = require('./api/util/FirebaseHelper')
+const firebaseHelper = require('./api/util/firebaseHelper')
 const app = express();
 const cors = require('cors');
 

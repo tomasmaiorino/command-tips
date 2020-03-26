@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
 const MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const config = require('../../config/config');
 let should = require('chai').should()
-let Command = require('./../../api/commands/Command');
+let Command = require('./../../api/commands/command');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 
-let firebaseHelper = require('../../api/util/FirebaseHelper');
+let firebaseHelper = require('../util/firebaseHelper');
 
 chai.use(chaiHttp);
 let mongoServer;
@@ -270,8 +270,28 @@ describe('Commands POST', () => {
 
   });
 
-});
+  it('production test command given should return bad request with error message.', async () => {
 
+    process.env.NODE_ENV = 'prod';
+
+    let tempCommand = getCommandMock();
+    tempCommand.title = 'git rmvprod';
+
+    let result = await postCall(COMMANDS_ADMIN_URL, tempCommand);
+
+    result.status.should.equal(201);
+
+    let commandId = result.body.command._id;
+
+    let assertResult = await chai.request(SERVER_APPLICATION_HOST).get(COMMANDS_URL + commandId);
+
+    assertResult.status.should.equal(404);
+
+    process.env.NODE_ENV = '';
+
+  });
+
+});
 
 describe('Commands DELETE BY ID', () => {
   let getUserInfoStub, firebaseHelperStub, server;

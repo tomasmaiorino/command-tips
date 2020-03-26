@@ -1,8 +1,8 @@
 const assert = require("assert");
 const expect = require('chai').expect;
 const sinon = require("sinon");
-let command = require('./../api/commands/command');
-let commandController = require('./../api/commands/commandController');
+let command = require('./command');
+let commandController = require('./commandService');
 const COMMAND_ID = '5c4f853e8f91855d711176f6';
 const { mockRequest, mockResponse } = require('mock-req-res')
 const COMMAND_OBJECT_MOCK = {
@@ -18,7 +18,7 @@ const COMMAND_OBJECT_MOCK = {
 }
 const TAG_TO_SEARCH = 'NODE';
 
-const next = () => {};
+const next = () => { };
 
 describe("Finding command by id.", () => {
 
@@ -28,7 +28,7 @@ describe("Finding command by id.", () => {
         // Set up
         findById = sinon.spy(command, "findById");
 
-        const req = mockRequest({params: { commandId: COMMAND_ID}});
+        const req = mockRequest({ params: { commandId: COMMAND_ID } });
         const res = mockResponse();
 
         // Do test        
@@ -38,11 +38,11 @@ describe("Finding command by id.", () => {
         sinon.assert.calledOnce(findById);
     });
 
-   
+
     it("Should invoke find command with command id.", function () {
         // Set up
         findById = sinon.spy(command, "findById");
-        const req = mockRequest({params: { commandId: COMMAND_ID}});
+        const req = mockRequest({ params: { commandId: COMMAND_ID } });
         const res = mockResponse();
 
         // Do test
@@ -55,7 +55,7 @@ describe("Finding command by id.", () => {
 
     it("Success call should return command object.", function (done) {
         // Set up
-        const req = mockRequest({params: { commandId: COMMAND_ID}});
+        const req = mockRequest({ params: { commandId: COMMAND_ID } });
         const res = mockResponse();
 
         findById = sinon.stub(command, 'findById').returns({
@@ -74,29 +74,29 @@ describe("Finding command by id.", () => {
 
         }).then(() => done(), error => done(error));
     });
-/*
-    it("Error during find command by it should return error.", function (done) {
-        // Set up
-        const req = mockRequest({ commandId: COMMAND_ID});
-        const res = mockResponse();        
-        const error = new Error();
-        findById = sinon.stub(command, 'findById').returns({
-            exec: sinon.stub().rejects(error)
-            //exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)
+    /*
+        it("Error during find command by it should return error.", function (done) {
+            // Set up
+            const req = mockRequest({ commandId: COMMAND_ID});
+            const res = mockResponse();        
+            const error = new Error();
+            findById = sinon.stub(command, 'findById').returns({
+                exec: sinon.stub().rejects(error)
+                //exec: sinon.stub().resolves(COMMAND_OBJECT_MOCK)
+            });
+    
+            // Do test
+            commandController.findById(req, res, next).then(data => {
+              console.log('data ' + data);
+                assert.ok(false, "should thrown an error.");
+            }).catch(responseError => {
+              console.log('responseError ' + responseError);
+                // Assertions
+                sinon.assert.match(responseError, error);
+            }).then(() => done(), error => done(error));
         });
-
-        // Do test
-        commandController.findById(req, res, next).then(data => {
-          console.log('data ' + data);
-            assert.ok(false, "should thrown an error.");
-        }).catch(responseError => {
-          console.log('responseError ' + responseError);
-            // Assertions
-            sinon.assert.match(responseError, error);
-        }).then(() => done(), error => done(error));
-    });
-
-    */
+    
+        */
     afterEach(() => {
         findById.restore();
     });

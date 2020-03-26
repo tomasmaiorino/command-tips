@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { findAllTags, search } = require('./TagController');
+const { findAllTags, search } = require('./tagController');
 
 router.get('/', (req, res, next) => {
   return findAllTags(req, res, next);

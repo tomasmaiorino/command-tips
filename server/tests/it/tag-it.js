@@ -6,15 +6,15 @@ const config = require('../../config/config');
 const SERVER_APPLICATION_HOST = 'http://localhost:8080';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let Command = require('./../../api/commands/Command');
+let Command = require('./../../api/commands/command');
 chai.use(chaiHttp);
 let mongoServer;
 const server = require('../../server');
 const expect = chai.expect;
 var should = require('chai').should()
 const TAGS_URI = '/api/tags/';
-const tagController = require('../../api/commands/tags/tagController');
-const Tags = require('../../api/commands/tags/tag');
+const tagController = require('../../api/tags/tagController');
+const Tags = require('../../api/tags/tag');
 
 before((done) => {
   mongoServer = new MongoMemoryServer({ debug: false });

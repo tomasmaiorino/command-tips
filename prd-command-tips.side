@@ -1,349 +1,452 @@
 {
   "id": "38659078-e50c-4ecf-b1d6-cc9d8232d2fa",
   "version": "2.0",
-  "name": "prd-command-tips-tests",
+  "name": "dev-command-tips-tests",
   "url": "https://intense-shore-54487.herokuapp.com",
-  "tests": [
-    {
-      "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
-      "name": "login",
-      "commands": [
-        {
-          "id": "93754f51-b210-42dc-90c5-d44c231c020f",
-          "comment": "",
-          "command": "open",
-          "target": "https://intense-shore-54487.herokuapp.com/login",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "900a698e-d980-45b1-ac8b-211382457a2a",
-          "comment": "",
-          "command": "setWindowSize",
-          "target": "1360x371",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "326f5714-14e6-400d-b66b-1e5da11d1e31",
-          "comment": "",
-          "command": "click",
-          "target": "id=email",
-          "targets": [
-            [
-              "id=email",
-              "id"
-            ],
-            [
-              "name=email",
-              "name"
-            ],
-            [
-              "css=#email",
-              "css:finder"
-            ],
-            [
-              "xpath=//input[@id='email']",
-              "xpath:attributes"
-            ],
-            [
-              "xpath=//div[@id='root']/main/div/div/div/div/div/div/input",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//input",
-              "xpath:position"
-            ]
-          ],
-          "value": ""
-        },
-        {
-          "id": "37e13033-6993-434d-b6a6-40d16a1d3c58",
-          "comment": "",
-          "command": "type",
-          "target": "id=email",
-          "targets": [
-            [
-              "id=email",
-              "id"
-            ],
-            [
-              "name=email",
-              "name"
-            ],
-            [
-              "css=#email",
-              "css:finder"
-            ],
-            [
-              "xpath=//input[@id='email']",
-              "xpath:attributes"
-            ],
-            [
-              "xpath=//div[@id='root']/main/div/div/div/div/div/div/input",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//input",
-              "xpath:position"
-            ]
-          ],
-          "value": "tomasmaiorino4@gmail.com"
-        },
-        {
-          "id": "8d1ca47d-5ed6-4b63-8d72-46331a1c551b",
-          "comment": "",
-          "command": "type",
-          "target": "id=pass",
-          "targets": [
-            [
-              "id=pass",
-              "id"
-            ],
-            [
-              "name=pass",
-              "name"
-            ],
-            [
-              "css=#pass",
-              "css:finder"
-            ],
-            [
-              "xpath=//input[@id='pass']",
-              "xpath:attributes"
-            ],
-            [
-              "xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//div[2]/input",
-              "xpath:position"
-            ]
-          ],
-          "value": "{PASS}"
-        },
-        {
-          "id": "da9d311b-b089-455a-b648-333988c26e69",
-          "comment": "",
-          "command": "click",
-          "target": "css=.btn",
-          "targets": [
-            [
-              "css=.btn",
-              "css:finder"
-            ],
-            [
-              "xpath=//a[contains(text(),'Login')]",
-              "xpath:link"
-            ],
-            [
-              "xpath=//div[@id='root']/main/div/div/div/div/div/div[3]/a",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//a[contains(@href, '#')]",
-              "xpath:href"
-            ],
-            [
-              "xpath=//div[3]/a",
-              "xpath:position"
-            ]
-          ],
-          "value": ""
-        },
-        {
-          "id": "179ed1f9-50ac-4b82-b8fe-922e0e67dc5a",
-          "comment": "",
-          "command": "click",
-          "target": "id=navbarDropdownMenuLink-4",
-          "targets": [
-            [
-              "id=navbarDropdownMenuLink-4",
-              "id"
-            ],
-            [
-              "linkText=tomasmaiorino4@gmail.com",
-              "linkText"
-            ],
-            [
-              "css=#navbarDropdownMenuLink-4",
-              "css:finder"
-            ],
-            [
-              "xpath=//a[@id='navbarDropdownMenuLink-4']",
-              "xpath:attributes"
-            ],
-            [
-              "xpath=//div[@id='navbarSupportedContent-4']/ul/li/a",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//li/a",
-              "xpath:position"
-            ],
-            [
-              "xpath=//a[contains(.,' tomasmaiorino4@gmail.com ')]",
-              "xpath:innerText"
-            ]
-          ],
-          "value": ""
-        },
-        {
-          "id": "b4135512-3c12-460b-9427-cc93f577e8bb",
-          "comment": "",
-          "command": "click",
-          "target": "linkText=Log out",
-          "targets": [
-            [
-              "linkText=Log out",
-              "linkText"
-            ],
-            [
-              "css=.dropdown-item:nth-child(2)",
-              "css:finder"
-            ],
-            [
-              "xpath=//a[contains(text(),'Log out')]",
-              "xpath:link"
-            ],
-            [
-              "xpath=//div[@id='navbarSupportedContent-4']/ul/li/div/a[2]",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//a[contains(@href, '/logout')]",
-              "xpath:href"
-            ],
-            [
-              "xpath=//a[2]",
-              "xpath:position"
-            ],
-            [
-              "xpath=//a[contains(.,'Log out')]",
-              "xpath:innerText"
-            ]
-          ],
-          "value": ""
-        }
-      ]
-    },
-    {
-      "id": "598381f3-8016-4a66-b30d-c2496294ebe9",
-      "name": "search",
-      "commands": [
-        {
-          "id": "bd906cd2-fff5-4ad0-8670-f42ca5a74ed8",
-          "comment": "",
-          "command": "open",
-          "target": "https://intense-shore-54487.herokuapp.com/",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "5cf7f679-f1a3-4e44-9c22-c75d840d8cdf",
-          "comment": "",
-          "command": "setWindowSize",
-          "target": "1360x371",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "aa75a90f-1a3f-4008-a16b-8e41e61de1bb",
-          "comment": "",
-          "command": "click",
-          "target": "css=.form-control",
-          "targets": [
-            [
-              "css=.form-control",
-              "css:finder"
-            ],
-            [
-              "xpath=//input[@value='']",
-              "xpath:attributes"
-            ],
-            [
-              "xpath=//div[@id='root']/main/div/div/div/input",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//input",
-              "xpath:position"
-            ]
-          ],
-          "value": ""
-        },
-        {
-          "id": "6f6a7904-4fd8-45ac-9d51-9847b781ea31",
-          "comment": "",
-          "command": "type",
-          "target": "css=.form-control",
-          "targets": [
-            [
-              "css=.form-control",
-              "css:finder"
-            ],
-            [
-              "xpath=//input[@value='mongo']",
-              "xpath:attributes"
-            ],
-            [
-              "xpath=//div[@id='root']/main/div/div/div/input",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//input",
-              "xpath:position"
-            ]
-          ],
-          "value": "mongo"
-        },
-        {
-          "id": "bf2cfa79-749e-436d-bd30-675dcba21389",
-          "comment": "",
-          "command": "click",
-          "target": "css=#react-autowhatever-1--item-0 > .site-font",
-          "targets": [
-            [
-              "css=#react-autowhatever-1--item-0 > .site-font",
-              "css:finder"
-            ],
-            [
-              "xpath=//li[@id='react-autowhatever-1--item-0']/div",
-              "xpath:idRelative"
-            ],
-            [
-              "xpath=//li/div",
-              "xpath:position"
-            ]
-          ],
-          "value": ""
-        },
-        {
-          "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
-          "comment": "",
-          "command": "assertElementPresent",
-          "target": "//a[text() =  'Copy']",
-          "targets": [],
-          "value": ""
-        }
-      ]
-    }
-  ],
-  "suites": [
-    {
-      "id": "53da58db-88a5-4973-b858-fb04ccdf3ba6",
-      "name": "Default Suite",
-      "persistSession": false,
-      "parallel": false,
-      "timeout": 300,
-      "tests": [
-        "b1d7089a-fe52-4c71-805a-462593f921ee"
-      ]
-    }
-  ],
-  "urls": [
-    "https://intense-shore-54487.herokuapp.com"
-  ],
+  "tests": [{
+    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "name": "login",
+    "commands": [{
+      "id": "93754f51-b210-42dc-90c5-d44c231c020f",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "900a698e-d980-45b1-ac8b-211382457a2a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1360x371",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "326f5714-14e6-400d-b66b-1e5da11d1e31",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "37e13033-6993-434d-b6a6-40d16a1d3c58",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tomasmaiorino4@gmail.com"
+    }, {
+      "id": "8d1ca47d-5ed6-4b63-8d72-46331a1c551b",
+      "comment": "",
+      "command": "type",
+      "target": "id=pass",
+      "targets": [
+        ["id=pass", "id"],
+        ["name=pass", "name"],
+        ["css=#pass", "css:finder"],
+        ["xpath=//input[@id='pass']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "{PASS}"
+    }, {
+      "id": "da9d311b-b089-455a-b648-333988c26e69",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "179ed1f9-50ac-4b82-b8fe-922e0e67dc5a",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarDropdownMenuLink-4",
+      "targets": [
+        ["id=navbarDropdownMenuLink-4", "id"],
+        ["linkText=tomasmaiorino4@gmail.com", "linkText"],
+        ["css=#navbarDropdownMenuLink-4", "css:finder"],
+        ["xpath=//a[@id='navbarDropdownMenuLink-4']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,' tomasmaiorino4@gmail.com ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4135512-3c12-460b-9427-cc93f577e8bb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Log out",
+      "targets": [
+        ["linkText=Log out", "linkText"],
+        ["css=.dropdown-item:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Log out')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Log out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "598381f3-8016-4a66-b30d-c2496294ebe9",
+    "name": "search",
+    "commands": [{
+      "id": "bd906cd2-fff5-4ad0-8670-f42ca5a74ed8",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5cf7f679-f1a3-4e44-9c22-c75d840d8cdf",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1360x371",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "aa75a90f-1a3f-4008-a16b-8e41e61de1bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6f6a7904-4fd8-45ac-9d51-9847b781ea31",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@value='mongo']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "mongo"
+    }, {
+      "id": "bf2cfa79-749e-436d-bd30-675dcba21389",
+      "comment": "",
+      "command": "click",
+      "target": "css=#react-autowhatever-1--item-0 > .site-font",
+      "targets": [
+        ["css=#react-autowhatever-1--item-0 > .site-font", "css:finder"],
+        ["xpath=//li[@id='react-autowhatever-1--item-0']/div", "xpath:idRelative"],
+        ["xpath=//li/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "//a[text() =  'Copy']",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "cf839c5e-dff3-400e-af95-8b183ae9dbea",
+    "name": "create-command",
+    "commands": [{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "680e0a30-fcff-47bf-b2ef-3f8a31fedbe5",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2ae5f023-a178-4fed-ac69-a57ed200a493",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-link > span",
+      "targets": [
+        ["css=.nav-link > span", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/a/span", "xpath:idRelative"],
+        ["xpath=//span", "xpath:position"],
+        ["xpath=//span[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4560f0c2-6fe1-4657-adfb-3e30a8a8d3fb",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d5739b7-98e4-4c83-955b-4edcab177134",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tomasmaiorino4@gmail.com"
+    }, {
+      "id": "c9858d7f-7689-4b83-b670-f4c230653004",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a63281f4-05c9-468a-af07-f9a6011f47b9",
+      "comment": "",
+      "command": "type",
+      "target": "id=pass",
+      "targets": [
+        ["id=pass", "id"],
+        ["name=pass", "name"],
+        ["css=#pass", "css:finder"],
+        ["xpath=//input[@id='pass']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "{PASS}"
+    }, {
+      "id": "6e2b5bdb-9828-411c-a82c-2fb34255fe1b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db1dc655-5e3b-4891-b362-4c108ff1fc9b",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarDropdownMenuLink-4",
+      "targets": [
+        ["id=navbarDropdownMenuLink-4", "id"],
+        ["linkText=tomasmaiorino4@gmail.com", "linkText"],
+        ["css=#navbarDropdownMenuLink-4", "css:finder"],
+        ["xpath=//a[@id='navbarDropdownMenuLink-4']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,' tomasmaiorino4@gmail.com ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "47fe96c3-add2-4cc6-8a8c-f22b76f28225",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Commands",
+      "targets": [
+        ["linkText=Commands", "linkText"],
+        ["css=.dropdown-item:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Commands')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/commands')]", "xpath:href"],
+        ["xpath=//li/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Commands')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b1c1011-072c-4975-aa89-f3869d17fcee",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Command')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce6c9da5-c1ae-4eb0-a79a-94d5ae137c21",
+      "comment": "",
+      "command": "click",
+      "target": "id=title",
+      "targets": [
+        ["id=title", "id"],
+        ["name=title", "name"],
+        ["css=#title", "css:finder"],
+        ["xpath=//input[@id='title']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e882efcf-5077-4adb-9024-4ea9a4b42d24",
+      "comment": "",
+      "command": "type",
+      "target": "id=title",
+      "targets": [
+        ["id=title", "id"],
+        ["name=title", "name"],
+        ["css=#title", "css:finder"],
+        ["xpath=//input[@id='title']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "git rmvprod"
+    }, {
+      "id": "6a6a9783-c56a-4c4e-9716-4de8b44f0b02",
+      "comment": "",
+      "command": "type",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["name=description", "name"],
+        ["css=#description", "css:finder"],
+        ["xpath=//input[@id='description']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "git"
+    }, {
+      "id": "c61b69bc-5da1-4328-957e-148e2d48b413",
+      "comment": "",
+      "command": "type",
+      "target": "id=command",
+      "targets": [
+        ["id=command", "id"],
+        ["name=command", "name"],
+        ["css=#command", "css:finder"],
+        ["xpath=//input[@id='command']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/form/div/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "git log3"
+    }, {
+      "id": "066399be-e4c7-492e-af20-7c0b36c76a1a",
+      "comment": "",
+      "command": "type",
+      "target": "id=tagInput",
+      "targets": [
+        ["id=tagInput", "id"],
+        ["css=#tagInput", "css:finder"],
+        ["xpath=//input[@id='tagInput']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/form/div/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "git"
+    }, {
+      "id": "90fccf6a-f1c8-4eff-93b8-f62559e8a6da",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ml-3",
+      "targets": [
+        ["css=.ml-3", "css:finder"],
+        ["xpath=//li[@id='react-autowhatever-1--item-0']/div/span", "xpath:idRelative"],
+        ["xpath=//span", "xpath:position"],
+        ["xpath=//span[contains(.,'GIT')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c52c2149-4e05-4718-94a8-7fe6bbae96d0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Do Create Command')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/form/div/div/div[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[5]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "56246011-3aad-49a4-9aeb-2b64ffce2e78",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "//div[contains(@class, 'alert-success')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c04e1c67-9bf1-4115-bf18-de6e79e1b68a",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarDropdownMenuLink-4",
+      "targets": [
+        ["id=navbarDropdownMenuLink-4", "id"],
+        ["linkText=tomasmaiorino4@gmail.com", "linkText"],
+        ["css=#navbarDropdownMenuLink-4", "css:finder"],
+        ["xpath=//a[@id='navbarDropdownMenuLink-4']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,' tomasmaiorino4@gmail.com ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "59dfd017-b636-4f2d-b1da-b88def79217c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Log out",
+      "targets": [
+        ["linkText=Log out", "linkText"],
+        ["css=.dropdown-item:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Log out')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent-4']/ul/li/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Log out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "53da58db-88a5-4973-b858-fb04ccdf3ba6",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["b1d7089a-fe52-4c71-805a-462593f921ee"]
+  }],
+  "urls": ["https://intense-shore-54487.herokuapp.com"],
   "plugins": []
 }

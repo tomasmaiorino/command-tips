@@ -1,5 +1,5 @@
-const ErrorsUtils = require('../../util/errorsUtils')
-const Tag = require('./Tag');
+const ErrorsUtils = require('../util/errorsUtils')
+const Tag = require('./tag');
 
 const save = async (tag) => {
   return Tag.create(tag);

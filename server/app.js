@@ -65,7 +65,6 @@ app.use('/admin/api/projects', adminProjects);
 app.use('/admin/api/positions', adminPositions);
 
 if (process.env.NODE_ENV === 'prod') {
-    console.log('redirecting to home -->');
     app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, './dist/index.html'));
     });

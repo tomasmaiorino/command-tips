@@ -90,7 +90,7 @@ processingTags = (paramTags) => {
 }
 
 const deleteCommand = async (commandId) => {
-  return Command.findOneAndDelete(commandId);
+  return Command.findOneAndDelete({ "_id": { $eq: commandId } });
 }
 
 module.exports = { updateCommand, findById, findByTag, search, createCommand, deleteCommand };

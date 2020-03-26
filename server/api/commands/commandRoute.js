@@ -32,8 +32,11 @@ router.get('/:commandId', async (req, res, next) => {
   try {
 
     const commandId = req.params.commandId;
+
     console.info('controller -> Looking for the command  ' + commandId);
+
     let command = await findById(commandId);
+
     if (command) {
       console.log('command found ' + JSON.stringify(command))
       return res.status(200).json({

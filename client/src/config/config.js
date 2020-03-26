@@ -9,7 +9,7 @@ let envValues = {
     }
 };
 
-if (env === 'dev') {
+if (env === 'development') {
     envValues.server.url = 'http://127.0.0.1:8080';
 }
 

@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import { Redirect } from 'react-router-dom';
 import theme from './../search/SearchCommand.css';
 import AlertMessage from './../util/AlertMessages';
 import Config from './../../config/config';
 
-const Command = ({ user }) => {
+const Command = (props) => {
+
+    const user = props.state;
+    const commandIdParam = props.commandIdParam;
 
     const SERVER_HOST = Config.server.url;
     const SEARCH_TAGS_QUERY_CONTENT_URL = "/api/tags/search/";
     const CREATE_COMMAND_URL = SERVER_HOST + '/admin/api/commands';
+    const GET_COMMAND_URL = SERVER_HOST + '/api/tips/';
 
     const getSuggestionValue = suggestion => suggestion.value;
 
@@ -107,8 +111,24 @@ const Command = ({ user }) => {
     const [value, setValue] = useState('');
     const [messageResponse, setMessageResponse] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
+    const [commandId, setCommandId] = useState(commandIdParam);
 
-    useEffect(() => console.log('mounted'), []);
+    useEffect(() => {
+        if (commandId) {
+            fetch(GET_COMMAND_URL + commandId)
+                .then(result => result.json())
+                .then((data) => {
+                    setShowCreateCard(true);
+                    const commandParam = data.command;
+                    setTitle(commandParam.title);
+                    setCommand(commandParam.command);
+                    setDescription(commandParam.description);
+                    setTags(commandParam.tags);
+                }, (error) => {
+                    console.log(error);
+                });
+        }
+    }, []);
 
     const inputProps = {
         placeholder: "Search for the tags to add",

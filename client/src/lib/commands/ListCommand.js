@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import AlertMessages from '../util/AlertMessages';
 
@@ -9,7 +11,20 @@ const uuidv1 = require('uuid/v1');
 const INCREMENT_COMMAND_WORK = "/api/tips/";
 const HTML_TAGS_TO_REPLACE = [{ '>': '&gt;' }, { '<': '&lt;' }];
 
-const ListCommand = ({ content }) => {
+const mapStateToProps = (state, content) => ({
+    commandContent: content,
+    state: state
+});
+
+const btnRedirect = (commandId) => {
+    let commandToRedirect = "/command/" + commandId;
+    return <Redirect to={commandToRedirect} />
+}
+
+const ListCommand = (props) => {
+
+    let content = props.content;
+    let isLogged = props.state.user && props.state.user.token && props.state.user.token !== '';
 
     const doReplaceString = value => {
         HTML_TAGS_TO_REPLACE.map(k => {
@@ -79,32 +94,43 @@ const ListCommand = ({ content }) => {
                             <strong className="site-font">{t}</strong>
                         </p>
                     )}
-                    <CopyToClipboard text={entities.decode(command)}
-                        onCopy={() => setCopied('Copied')}>
-                        <a target="#" className="btn btn-dark btn-sm waves-effect waves-light">{copied}
-                            <i className="fas fa-play ml-2"></i>
-                        </a>
-                    </CopyToClipboard>
+                    {!isLogged &&
+                        <CopyToClipboard text={entities.decode(command)}
+                            onCopy={() => setCopied('Copied')}>
+                            <a target="#" className="btn btn-dark btn-sm waves-effect waves-light">{copied}
+                                <i className="fas fa-play ml-2"></i>
+                            </a>
+                        </CopyToClipboard>
+                    }
                 </div>
             </div>
             <div className="row wow fadeIn customRow col-lg-12 mb-4">
                 {v.tags && v.tags.split(" ").map(t => <span key={uuidv1()}
                     className="ml-3 badge badge-warning">{t}</span>)}
             </div>
-            <div className="row wow fadeIn col-xl-7 customRow col-lg-12 mb-4">
-                <button type="button" className="btn btn-dark btn-sm"
-                    onClick={() => doIncrementWork(v._id)}>
-                    It works :) <span className="badge badge-dark ml-2">{worksCount}</span>
-                </button>
-                <button type="button" className="btn btn-dark btn-sm"
-                    onClick={() => doIncrementDoesNotWork(v._id)}>
-                    Does not works :( <span className="badge badge-dark ml-2">{doesNotWorksCount}</span>
-                </button>
-            </div>
+            {!isLogged &&
+                <div className="row wow fadeIn col-xl-7 customRow col-lg-12 mb-4">
+                    <button type="button" className="btn btn-dark btn-sm"
+                        onClick={() => doIncrementWork(v._id)}>
+                        It works :) <span className="badge badge-dark ml-2">{worksCount}</span>
+                    </button>
+                    <button type="button" className="btn btn-dark btn-sm"
+                        onClick={() => doIncrementDoesNotWork(v._id)}>
+                        Does not works :( <span className="badge badge-dark ml-2">{doesNotWorksCount}</span>
+                    </button>
+                </div>
+            }
+            {isLogged &&
+                <div className="row wow fadeIn col-xl-7 customRow col-lg-12 mb-4">
+                    <Link to={`/edit/${v._id}`}>
+                        <button type="button" className="btn btn-dark btn-sm">Edit</button>
+                    </Link>
+                </div>
+            }
             {showErrorMessage && <AlertMessages />}
             <hr className="mb-5" />
         </div>
     );
 }
 
-export default ListCommand;
+export default connect(mapStateToProps, null)(ListCommand);

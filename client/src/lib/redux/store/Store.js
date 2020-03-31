@@ -15,7 +15,7 @@ export default function (state = initialState, action) {
             let response = {
                 user: action.user
             }
-            console.log('adding user action %O', response);
+            //console.log('adding user action %O', response);
             return response;
         }
         case LOGOUT: {

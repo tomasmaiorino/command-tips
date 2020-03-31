@@ -22,6 +22,7 @@ const App = ({ store }) => {
               <Route path="/login" component={VisibleLogin} />
               <Route path="/logout" component={Logout} />
               <Route path="/commands" component={VisibleCommand} />
+              <Route path="/edit/:commandId" component={VisibleCommand} />
               <Route>
                 <NotFound />
               </Route>

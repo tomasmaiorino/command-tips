@@ -1,5 +1,9 @@
 pipeline {
-    agent node {label 'command-tips-node-agent'}
+    agent { 
+        node {
+            label 'command-tips-node-agent'
+        }
+    }
     stages {
         stage('build') {
             steps {

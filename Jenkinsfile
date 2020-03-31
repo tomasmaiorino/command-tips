@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'node:6.14.4' } }
+    agent node {label 'command-tips-node-agent'}
     stages {
         stage('build') {
             steps {

@@ -18,7 +18,7 @@ let con;
 let db;
 
 const expect = chai.expect;
-const SERVER_APPLICATION_HOST = 'http://localhost:8080';
+const SERVER_APPLICATION_HOST = 'http://localhost:8089';
 const USER_ID = '5c48eada47227ff3460dce9b';
 const COMMANDS_URL = '/api/tips/';
 const COMMANDS_ADMIN_URL = '/admin/api/commands/';

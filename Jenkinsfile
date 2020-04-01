@@ -7,13 +7,15 @@ pipeline {
                 //sh 'npm --version'
                 dir("${env.WORKSPACE}/client"){
 //                    sh "pwd"
-                    sh "npm cache clean --force"
-                    sh "npm install"
+                    sh "node --version"
+                    sh "npm --version"
+                    //sh "npm cache clean --force"
+                    //sh "npm install"
                 }
                 dir("${env.WORKSPACE}/server"){
   //                  sh "pwd"
-                    sh "npm cache clean --force"
-                    sh "npm install"
+                   // sh "npm cache clean --force"
+                 //   sh "npm install"
                 }
             }
         }

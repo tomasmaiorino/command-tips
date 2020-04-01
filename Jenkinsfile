@@ -5,14 +5,17 @@ pipeline {
         stage('build-client') {
             steps {
                 sh 'cd client'
+                sh 'pwd'
                 sh 'npm install'
             }
         }
+        /*
         stage('build-server') {
             steps {
                 sh 'cd server'
                 sh 'npm install'
             }
         }
+        */
     }
 }

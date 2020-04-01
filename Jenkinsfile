@@ -12,7 +12,7 @@ pipeline {
         }
         stage('build-server') {
             steps {
-                dir("${env.WORKSPACE}/client"){
+                dir("${env.WORKSPACE}/server"){
                     sh "npm install --no-package-lock"
                 }
             }

@@ -6,6 +6,7 @@ pipeline {
             steps {
                 sh 'cd client'
                 sh 'pwd'
+                sh 'ls -altr'
                 sh 'npm install'
             }
         }

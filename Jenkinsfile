@@ -7,11 +7,12 @@ pipeline {
                 //sh 'npm --version'
                 dir("${env.WORKSPACE}/client"){
 //                    sh "pwd"
-                    sh "rm -fr node_modules"
-                    sh "node --version"
-                    sh "npm --version"
-                    sh "npm cache clean --force"
-                    sh "npm install"
+                    //sh "rm -fr node_modules"
+                    //sh "node --version"
+                    //sh "npm --version"
+                    //sh "npm cache clean --force"
+                    sh "npm install --verbose"
+                    
                 }
                 dir("${env.WORKSPACE}/server"){
   //                  sh "pwd"

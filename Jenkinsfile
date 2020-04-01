@@ -7,10 +7,18 @@ pipeline {
                 //sh 'cd client'
                 sh 'pwd'
                 sh 'ls -altr'
-                sh 'cd client'
-                sh 'pwd'
-                sh 'ls -altr'
-                sh 'npm --version'
+                //sh 'cd client'
+                //sh 'pwd'
+                //sh 'ls -altr'
+                //sh 'npm --version'
+                dir('client'){
+                    sh "pwd"
+                    sh 'ls -altr'
+                }
+                dir("${env.WORKSPACE}/"){
+                    sh "pwd"
+                    sh 'ls -altr'
+                }
             }
         }
         /*

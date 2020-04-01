@@ -11,7 +11,7 @@ pipeline {
                     //sh "node --version"
                     //sh "npm --version"
                     //sh "npm cache clean --force"
-                    sh "npm install --verbose"
+                    sh "npm install --no-package-lock"
                     
                 }
                 dir("${env.WORKSPACE}/server"){

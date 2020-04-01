@@ -10,8 +10,8 @@ pipeline {
                     sh "rm -fr node_modules"
                     sh "node --version"
                     sh "npm --version"
-                    //sh "npm cache clean --force"
-                    //sh "npm install"
+                    sh "npm cache clean --force"
+                    sh "npm install"
                 }
                 dir("${env.WORKSPACE}/server"){
   //                  sh "pwd"

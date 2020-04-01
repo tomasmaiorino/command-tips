@@ -6,10 +6,10 @@ pipeline {
             steps {
                 //sh 'npm --version'
                 dir("${env.WORKSPACE}/client"){
-                    sh "npm install --no-package-lock --verbose"
+                    sh "npm install --no-package-lock"
                 }
                 dir("${env.WORKSPACE}/server"){
-                    sh "npm install --no-package-lock --verbose"
+                    sh "npm install --no-package-lock"
                 }                
             }
         }

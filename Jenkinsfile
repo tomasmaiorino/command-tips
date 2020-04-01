@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage('build-client') {
             steps {
-                sh 'cd client'
+                //sh 'cd client'
                 sh 'pwd'
                 sh 'ls -altr'
-                sh 'npm install'
+                sh 'npm --version'
             }
         }
         /*

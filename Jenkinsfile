@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('build-client') {
             steps {
-                //sh 'npm --version'
                 dir("${env.WORKSPACE}/client"){
                     sh "npm install --no-package-lock"
                 }             
@@ -14,6 +13,13 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}/server"){
                     sh "npm install --no-package-lock"
+                }
+            }
+        }
+        stage('integration-tests') {
+            steps {
+                dir("${env.WORKSPACE}/server"){
+                    sh "npm run-script it"
                 }
             }
         }

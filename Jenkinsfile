@@ -7,6 +7,9 @@ pipeline {
                 //sh 'cd client'
                 sh 'pwd'
                 sh 'ls -altr'
+                sh 'cd client'
+                sh 'pwd'
+                sh 'ls -altr'
                 sh 'npm --version'
             }
         }

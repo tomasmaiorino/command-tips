@@ -6,10 +6,12 @@ pipeline {
             steps {
                 //sh 'npm --version'
                 dir("${env.WORKSPACE}/client"){
-                    sh "npm install"
+                    sh "pwd"
+                    sh "ls -altr"
                 }
                 dir("${env.WORKSPACE}/server"){
-                    sh "npm install"
+                    sh "pwd"
+                    sh "ls -altr"
                 }
             }
         }

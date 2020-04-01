@@ -4,18 +4,12 @@ pipeline {
     stages {
         stage('build-client') {
             steps {
-                //sh 'cd client'
-                sh 'pwd'
-                sh 'ls -altr'
-                //sh 'cd client'
-                //sh 'pwd'
-                //sh 'ls -altr'
                 //sh 'npm --version'
-                dir('client'){
+                dir("${env.WORKSPACE}/client"){
                     sh "pwd"
                     sh 'ls -altr'
                 }
-                dir("${env.WORKSPACE}/"){
+                dir("${env.WORKSPACE}/server"){
                     sh "pwd"
                     sh 'ls -altr'
                 }

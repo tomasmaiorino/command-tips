@@ -7,19 +7,15 @@ pipeline {
                 //sh 'npm --version'
                 dir("${env.WORKSPACE}/client"){
                     sh "npm install --no-package-lock"
-                }
-                dir("${env.WORKSPACE}/server"){
-                    sh "npm install --no-package-lock"
-                }                
+                }             
             }
         }
-        /*
         stage('build-server') {
             steps {
-                sh 'cd server'
-                sh 'npm install'
+                dir("${env.WORKSPACE}/client"){
+                    sh "npm install --no-package-lock"
+                }
             }
         }
-        */
     }
 }

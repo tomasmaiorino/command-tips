@@ -10,7 +10,7 @@ let envValues = {
 };
 
 if (env === 'development') {
-    envValues.server.url = 'http://127.0.0.1:8080';
+    envValues.server.url = 'http://127.0.0.1:8089';
 }
 
 module.exports = envValues;

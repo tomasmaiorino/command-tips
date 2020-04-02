@@ -26,7 +26,6 @@ async function checkIfAuthenticated(req, res, next) {
             const { authToken } = req;
             if (authToken) {
                 const userInfo = await getUserInfo(authToken);
-                console.log('user found ' + JSON.stringify(userInfo));
                 req.authId = userInfo.uid;
                 req.isAdminRequest = true;
                 return next();

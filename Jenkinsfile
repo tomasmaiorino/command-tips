@@ -10,14 +10,16 @@ pipeline {
                 }             
             }
         }
-        stage('build-server') {
+        */
+        stage('integration-tests') {
             steps {
                 dir("${env.WORKSPACE}/server"){
                     sh "npm install --no-package-lock"
+                    sh "npm run-script it"
                 }
             }
         }
-        */
+        /*
         stage('integration-tests') {
             steps {
                 dir("${env.WORKSPACE}/server"){
@@ -27,5 +29,6 @@ pipeline {
                 }
             }
         }
+        */
     }
 }

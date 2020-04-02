@@ -2,7 +2,6 @@ pipeline {
     agent any
     tools {nodejs "node"}
     stages {
-        /*
         stage('build-client') {
             steps {
                 dir("${env.WORKSPACE}/client"){
@@ -10,7 +9,6 @@ pipeline {
                 }             
             }
         }
-        */
         stage('integration-tests') {
             steps {
                 dir("${env.WORKSPACE}/server"){

@@ -21,6 +21,7 @@ pipeline {
         stage('integration-tests') {
             steps {
                 dir("${env.WORKSPACE}/server"){
+                    sh "rm -fr node_modules"
                     sh "npm install --no-package-lock"
                     sh "npm run-script it"
                 }

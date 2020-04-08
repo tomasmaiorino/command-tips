@@ -7,12 +7,14 @@ import Config from './../../config/config';
 
 const Command = (props) => {
 
-    const user = props.state;
+    const user = props.state.user;
+    let isLogged = props.state.user && props.state.user.token && props.state.user.token !== '';
     const commandIdParam = props.commandIdParam;
 
     const SERVER_HOST = Config.server.url;
     const SEARCH_TAGS_QUERY_CONTENT_URL = "/api/tags/search/";
     const CREATE_COMMAND_URL = SERVER_HOST + '/admin/api/commands';
+    const DELETE_COMMAND_URL = SERVER_HOST + '/admin/api/commands/';
     const GET_COMMAND_URL = SERVER_HOST + '/api/tips/';
 
     const getSuggestionValue = suggestion => suggestion.value;
@@ -20,6 +22,27 @@ const Command = (props) => {
     const renderSuggestion = suggestion => {
         let tags = suggestion.value;
         return (<div className="site-font">{tags && <span className="ml-3 badge badge badge-warning pointer site-font">{tags}</span>}</div>);
+    }
+
+    const handleDeleteCommand = (pCommandId) => {
+
+        fetch(DELETE_COMMAND_URL + pCommandId, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + user.token
+            }
+        })
+            .then(rawResponse => {
+                if (rawResponse.status == 204) {
+                    setMessageResponse('Command \"' + title + '\" has been removed.');
+                    handleShowCreateCommand();
+                }
+            })
+            .catch(error => {
+                console.log('Error ' + error);
+            });
     }
 
     const handleCreateCommand = (userParam) => {
@@ -115,19 +138,26 @@ const Command = (props) => {
 
     useEffect(() => {
         if (commandId) {
+            let isMounted = false;
             fetch(GET_COMMAND_URL + commandId)
                 .then(result => result.json())
                 .then((data) => {
-                    setShowCreateCard(true);
-                    const commandParam = data.command;
-                    setTitle(commandParam.title);
-                    setCommand(commandParam.command);
-                    setDescription(commandParam.description);
-                    setTags(commandParam.tags);
+                    if (!isMounted) {
+                        setShowCreateCard(true);
+                        const commandParam = data.command;
+                        setTitle(commandParam.title);
+                        setCommand(commandParam.command);
+                        setDescription(commandParam.description || "");
+                        // setTags(commandParam.tags);
+                    }
                 }, (error) => {
                     console.log(error);
                 });
+            return () => {
+                isMounted = true;
+            };
         }
+
     }, []);
 
     const inputProps = {
@@ -197,6 +227,7 @@ const Command = (props) => {
                             <div className="text-center">
                                 <a href="#" onClick={() => { handleCreateCommand(user) }} className="btn btn-dark btn-sm waves-effect waves-light">Do Create Command</a>
                                 <a href="#" onClick={handleShowCreateCommand} className="btn btn-dark btn-sm waves-effect waves-light">Cancel</a>
+                                {(isLogged && commandId) && <a href="#" onClick={() => handleDeleteCommand(commandId)} className="btn btn-dark btn-sm waves-effect waves-light">Delete</a>}
                             </div>
                         </div>
                     </div>
@@ -207,7 +238,7 @@ const Command = (props) => {
 
     return (
         <div className="text-center margin-top: 30px">
-            {(!user || !user.token) && <Redirect to="/login" />}
+            {!isLogged && <Redirect to="/login" />}
             {messageResponse.length > 0 && <AlertMessage message={messageResponse} />}
             {content}
         </div>

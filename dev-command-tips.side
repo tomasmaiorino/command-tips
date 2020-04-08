@@ -107,6 +107,56 @@
       "value": ""
     }]
   }, {
+    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "name": "createCommandUrlDenniedAccess",
+    "commands": [{
+      "id": "93754f51-b210-42dc-90c5-d44c231c020f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/commands",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "//a[text() =  'Login']",
+      "targets": [],
+      "value": ""
+    }]
+  },{
+    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "name": "editCommandUrlDenniedAccess",
+    "commands": [{
+      "id": "93754f51-b210-42dc-90c5-d44c231c020f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/edit/5e2781bd32d19a171385dc8b",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "//a[text() =  'Login']",
+      "targets": [],
+      "value": ""
+    }]
+  },{
     "id": "598381f3-8016-4a66-b30d-c2496294ebe9",
     "name": "search",
     "commands": [{

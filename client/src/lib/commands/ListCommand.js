@@ -16,11 +16,6 @@ const mapStateToProps = (state, content) => ({
     state: state
 });
 
-const btnRedirect = (commandId) => {
-    let commandToRedirect = "/command/" + commandId;
-    return <Redirect to={commandToRedirect} />
-}
-
 const ListCommand = (props) => {
 
     let content = props.content;
@@ -52,7 +47,6 @@ const ListCommand = (props) => {
             console.error(error);
         });
     }
-
 
     const doIncrementDoesNotWork = commandId => {
         fetch(INCREMENT_COMMAND_WORK + commandId, {

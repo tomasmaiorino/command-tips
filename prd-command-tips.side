@@ -13,11 +13,11 @@
       "target": "https://intense-shore-54487.herokuapp.com/login",
       "targets": [],
       "value": ""
-    }, {
-      "id": "900a698e-d980-45b1-ac8b-211382457a2a",
+    },{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
       "comment": "",
-      "command": "setWindowSize",
-      "target": "1360x371",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
       "targets": [],
       "value": ""
     }, {
@@ -61,7 +61,7 @@
         ["xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "{PASS}"
+      "value": "123456"
     }, {
       "id": "da9d311b-b089-455a-b648-333988c26e69",
       "comment": "",
@@ -106,6 +106,56 @@
       ],
       "value": ""
     }]
+  },{
+    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "name": "createCommandUrlDenniedAccess",
+    "commands": [{
+      "id": "93754f51-b210-42dc-90c5-d44c231c020f",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/commands",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "//a[text() =  'Login']",
+      "targets": [],
+      "value": ""
+    }]
+  },{
+    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "name": "editCommandUrlDenniedAccess",
+    "commands": [{
+      "id": "93754f51-b210-42dc-90c5-d44c231c020f",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/edit/5e2781bd32d19a171385dc8b",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "//a[text() =  'Login']",
+      "targets": [],
+      "value": ""
+    }]
   }, {
     "id": "598381f3-8016-4a66-b30d-c2496294ebe9",
     "name": "search",
@@ -116,14 +166,14 @@
       "target": "https://intense-shore-54487.herokuapp.com/",
       "targets": [],
       "value": ""
-    }, {
-      "id": "5cf7f679-f1a3-4e44-9c22-c75d840d8cdf",
+    },{
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
       "comment": "",
-      "command": "setWindowSize",
-      "target": "1360x371",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
       "targets": [],
       "value": ""
-    }, {
+    },{
       "id": "aa75a90f-1a3f-4008-a16b-8e41e61de1bb",
       "comment": "",
       "command": "click",
@@ -249,7 +299,7 @@
         ["xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "{PASS}"
+      "value": "123456"
     }, {
       "id": "6e2b5bdb-9828-411c-a82c-2fb34255fe1b",
       "comment": "",

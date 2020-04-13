@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from 'react-router-dom';
 import './LoginPage.css';
 import LoginService from './LoginService';
+import AlertMessage from './../util/AlertMessages';
 
 const LoginPage = ({ user, addUserName }) => {
 
@@ -22,8 +23,10 @@ const LoginPage = ({ user, addUserName }) => {
                     user.token = token;
                     //console.log('adding user name %O', user);
                     addUserName(user);
+                    setLoginErrorMessage('');
                 })
                 .catch(err => {
+                    setLoginErrorMessage(err.message);
                     console.log('error %j', err.message);
                 });
         } else {
@@ -36,6 +39,7 @@ const LoginPage = ({ user, addUserName }) => {
     const [pass, setPass] = useState('');
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passErrorMessage, setPassErrorMessage] = useState('');
+    const [loginErrorMessage, setLoginErrorMessage] = useState('');
     if (user) {
         const checkLogin = LoginService.verifyToken(user);
     }
@@ -45,6 +49,7 @@ const LoginPage = ({ user, addUserName }) => {
             <div className="row">
                 <div className="card w-25 center-div">
                     <div className="card-body input-field">
+                        {loginErrorMessage && <AlertMessage message={loginErrorMessage} status="danger" />}
                         <div className="md-form">
                             <input type="text" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}
                                 className={`form-control ${emailErrorMessage.length > 0 ? " is-invalid" : ""}`} />

@@ -7,7 +7,6 @@ const cleanStorage = () => {
 const saveState = (state) => {
     try {
         const serialisedState = JSON.stringify(state);
-
         window.localStorage.setItem(APP_STORAGE_KEY, serialisedState);
     } catch (err) {
         // Log errors here, or ignore

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env=dev --watch --hot --inline",
-    "build": "webpack --env=prod"
+    "build": "webpack --env=prod",
+    "selenium": "mocha src/lib/login/login.spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2016": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "chromedriver": "^80.0.2",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.1",
@@ -37,6 +39,7 @@
     "font-awesome": "^4.7.0",
     "html-webpack-plugin": "^3.1.0",
     "image-webpack-loader": "^6.0.0",
+    "mocha": "^7.1.1",
     "selenium-webdriver": "^4.0.0-alpha.7",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",

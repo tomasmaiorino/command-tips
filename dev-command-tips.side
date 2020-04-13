@@ -108,6 +108,86 @@
     }]
   }, {
     "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "name": "invalid-login",
+    "commands": [{
+      "id": "93754f51-b210-42dc-90c5-d44c2314020f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "326f5714-14e6-400d-b66b-1e5da11d1e31",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "37e13033-6993-434d-b6a6-40d16a1d3c58",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tomasmaiorino4@gmail.com"
+    }, {
+      "id": "8d1ca47d-5ed6-4b63-8d72-46331a1c551b",
+      "comment": "",
+      "command": "type",
+      "target": "id=pass",
+      "targets": [
+        ["id=pass", "id"],
+        ["name=pass", "name"],
+        ["css=#pass", "css:finder"],
+        ["xpath=//input[@id='pass']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "{INVALID-PASS}"
+    }, {
+      "id": "da9d311b-b089-455a-b648-333988c26e69",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='root']/main/div/div/div/div/div/div[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "56246011-3aad-49a4-9aeb-2b64ffce2e78",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "//div[contains(@class, 'alert-danger')]",
+      "targets": [],
+      "value": "30000"
+    }]
+  },{
+    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
     "name": "createCommandUrlDenniedAccess",
     "commands": [{
       "id": "93754f51-b210-42dc-90c5-d44c231c020f",

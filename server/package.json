@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha tests/*.js",
-    "it": "mocha api/commands/command-it-tests.js --exit"
+    "it": "mocha api/commands/command-it-tests.js --exit",
+    "e2e": "NODE_ENV=e2e GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS npm start"
   },
   "repository": {
     "type": "git",

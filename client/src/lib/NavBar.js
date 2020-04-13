@@ -8,6 +8,8 @@ function mapStateToProps(state) {
 
 const NavBar = ({ user }) => {
 
+    let isLogged = user && user.token && user.token !== '';
+
     return (
         <nav className="mb-1 navbar navbar-expand-lg navbar-dark override-bar">
             <div className="container">
@@ -16,12 +18,12 @@ const NavBar = ({ user }) => {
                 </a>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul className="navbar-nav ml-auto">
-                        {!user &&
+                        {!isLogged &&
                             <li className="nav-item active">
                                 <a className="nav-link" href="/login"><span>Login</span>
                                 </a>
                             </li>}
-                        {user && user.token &&
+                        {isLogged &&
                             <React.Fragment>
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"

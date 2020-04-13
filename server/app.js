@@ -64,7 +64,8 @@ app.use('/admin/api/commands', adminCommands);
 app.use('/admin/api/projects', adminProjects);
 app.use('/admin/api/positions', adminPositions);
 
-if (process.env.NODE_ENV === 'prod') {
+//e2e means end to end test outside production
+if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'e2e') {
     app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, './dist/index.html'));
     });

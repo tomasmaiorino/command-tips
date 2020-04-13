@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, NavLink, Redirect, Prompt } from 'react-router-dom';
+import React from 'react';
 import './AlertMessages.css';
 
-const AlertMessages = ({ message }) => {
+const AlertMessages = ({ message, status }) => {
+
+    const classNameValue = status === undefined ? 'alert alert-success' : "alert alert-" + status;
+
     return (
-        <div className="alert alert-success" role="alert">
+        <div className={classNameValue} role="alert">
             {message}
         </div>
     );

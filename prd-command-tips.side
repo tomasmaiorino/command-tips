@@ -107,20 +107,27 @@
       "value": ""
     }]
   },{
-    "id": "b1d7089a-fe52-4c71-805a-462593f921ee",
+    "id": "b1d7089a-fe52-4c71-805a-46259rf921ee",
     "name": "createCommandUrlDenniedAccess",
     "commands": [{
       "id": "93754f51-b210-42dc-90c5-d44c231c020f",
       "comment": "",
       "command": "open",
-      "target": "https://intense-shore-54487.herokuapp.com/commands",
+      "target": "https://intense-shore-54487.herokuapp.com",
       "targets": [],
       "value": ""
     },{
-      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f017ee",
+      "id": "3a71836c-9b34-4dd4-ab5e-28a2f4f117ee",
       "comment": "",
       "command": "executeScript",
       "target": "localStorage.removeItem('command-token');",
+      "targets": [],
+      "value": ""
+    },{
+      "id": "93754f51-b210-42dc-90c5-w44c231c020f",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/commands",
       "targets": [],
       "value": ""
     },{
@@ -174,6 +181,13 @@
       "targets": [],
       "value": ""
     },{
+      "id": "bd106cd2-fff5-4ad0-8670-f42ca5a74ed8",
+      "comment": "",
+      "command": "open",
+      "target": "https://intense-shore-54487.herokuapp.com/",
+      "targets": [],
+      "value": ""
+    },{
       "id": "aa75a90f-1a3f-4008-a16b-8e41e61de1bb",
       "comment": "",
       "command": "click",
@@ -211,10 +225,10 @@
     }, {
       "id": "a87d7f2b-3edb-463b-a8f5-e46331dcfb7c",
       "comment": "",
-      "command": "assertElementPresent",
+      "command": "waitForElementPresent",
       "target": "//a[text() =  'Copy']",
       "targets": [],
-      "value": ""
+      "value": "30000"
     }]
   }, {
     "id": "cf839c5e-dff3-400e-af95-8b183ae9dbea",

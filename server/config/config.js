@@ -11,6 +11,7 @@ let envValues = {
     url: 'mongodb://localhost:27017/command-tips'
   }
 };
+/*
 if (process.env.NODE_ENV === 'prod') {
   envValues = {
     db: {
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV === 'prod') {
     }
   }
 }
+*/
 // const config = {
 //   dev,
 //   prod

@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import theme from './SearchCommand.css';
 import Autosuggest from "react-autosuggest";
-const SEARCH_CONTENT_URL = "/api/tips/search/";
+const SEARCH_CONTENT_URL = "/api/tips/";
 
 const SearchCommand = ({ processResult }) => {
 
     // When suggestion is clicked, Autosuggest needs to populate the input
     // based on the clicked suggestion. Teach Autosuggest how to calculate the
     // input value for every given suggestion.
-    const getSuggestionValue = suggestion => suggestion.title;
+    const getSuggestionValue = suggestion => suggestion.id;
 
     // Use your imagination to render suggestions.
     const renderSuggestion = suggestion => {
-        let tags = '';
-        if (suggestion.tags !== undefined) {
-            tags = suggestion.tags.indexOf(" ") !== -1 ? suggestion.tags.split(" ")[0] : suggestion.tags;
-        }
-        return (<div className="site-font">{suggestion.title} {tags && <span className="ml-3 badge badge badge-warning pointer site-font">{tags}</span>}</div>);
+        console.log('renderSuggestion %j', suggestion)
+        return (<div className="site-font">{suggestion.id}</div>);
     }
 
     const onSuggestionSelected = (event, result) => {
+        console.log('onSuggestionSelected %j', result)
         processResult(suggestions[result.suggestionIndex]);
     }
 
@@ -34,11 +32,13 @@ const SearchCommand = ({ processResult }) => {
         if (value.length > 3) {
 
             fetch(SEARCH_CONTENT_URL + value)
-                .then(result => result.json())
+                .then(result => {
+                    return result.json()
+                })
                 .then((data) => {
+                    console.log('data response %j', data)
                     if (data) {
-                        //commands = data.commands;
-                        setSuggestions(data.commands);
+                        setSuggestions(data);
                     }
                 }, (error) => {
                     setShowLoad(false);

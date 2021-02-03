@@ -7,6 +7,7 @@ import ListCommands from './commands/ListCommands';
 const HomePage = () => {
 
   const processSearchResult = (command) => {
+    console.log('processSearchResult %j', command)
     if (command) {
       let tempCommands = [];
       tempCommands.push(command);
@@ -15,19 +16,11 @@ const HomePage = () => {
     //console.debug('processing search result ', command);
   }
 
-  const processTagsResult = (pCommands) => {
-    if (pCommands && pCommands.length > 0) {
-      setCommands(pCommands);
-      //console.log('commands found from tag search ', pCommands.length);
-    }
-  }
-
   const [commands, setCommands] = useState([]);
 
   return (
     <React.Fragment>
       <SearchCommand processResult={processSearchResult} />
-      <Tags processTagsResult={processTagsResult} />
       {commands.length > 0 &&
         <ListCommands results={commands} />
       }

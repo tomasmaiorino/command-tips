@@ -1,96 +1,37 @@
-const Command = require('./command');
-const Tag = require('./../tags/tag');
+const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
+
+const REGION = "eu-west-1"; //e.g. "us-east-1"
+const dbclient = new DynamoDBClient({ region: REGION });
+const TABLE_NAME = "command-tips";
+
+/*
+const commandSchema = mongoose.Schema({
+  title: { type: String, required: [true, 'The title is required.'] },
+  tags: { type: String },
+  command: { type: String, required: [true, 'The command is required.'] },
+  full_description: { type: String },
+  helpfull_links: { type: String },
+  userAuthId: {type: String, required: [true, 'The auth id is required.']},
+  helpfull: {type: Number, default: 0 },
+  unhelpfull: {type: Number, default: 0},
+  works: {type: Number, default: 0 },
+  doesnt_work: {type: Number, default: 0 },
+  comments_counts: {type: Number, default: 0 },
+  active: { type: Boolean, default: true }
+});
+*/
 
 const findById = async (commandId) => {
-  return Command.findById(commandId);
+  const params = {
+    TableName: TABLE_NAME, //TABLE_NAME
+    Key: {
+      id: { S: commandId},
+    }
+  };
+  console.log('calling dynamodb using id ' + commandId);
+  const data = await dbclient.send(new GetItemCommand(params));
+  console.log('dynamody response data %j ', data.Item);
+  return data.Item;
 }
 
-async function search(query) {
-
-  return Command.find({
-    $or: [
-      { "full_description": { $regex: query, $options: 'i' } },
-      { "title": { $regex: query, $options: 'i' } },
-      { "command": { $regex: query, $options: 'i' } }]
-  });
-
-}
-
-async function updateCommand(context) {
-
-  let command = context.commandFound;
-
-  command = configureCommandToUpdate(command, context.attribute, context.increment, context.value);
-
-  //console.debug('updating command ' + command);
-
-  return command.save();
-}
-
-function configureCommandToUpdate(command, attribute, increment, value) {
-  // console.debug('attribute to update ' + attribute);
-  // console.debug('increment ' + increment);
-  // console.debug('value ' + value);
-
-  if (increment == true) {
-
-    console.debug('incremmenting attribute ' + command[attribute]);
-    command[attribute] = command[attribute] + 1;
-
-  } else {
-    command[attribute] = value;
-  }
-  return command;
-}
-
-async function findByTag(tagValue) {
-  return Command.find({ "tags": { $regex: tagValue, $options: 'i' } });
-}
-
-async function createCommand(command) {
-  //console.debug('creating command');
-
-  if (command.tags) {
-    processingTags(command.tags);
-  }
-
-  return Command.create(command);
-}
-
-processingTags = (paramTags) => {
-  Tag.find()
-    .exec()
-    .then(tags => {
-      if (tags) {
-        //console.debug(' tags ' + tags.length);
-        let tagsInformed = paramTags.split(" ");
-        tags.map(t1 => {
-          if (tagsInformed.length > 0) {
-            //console.debug('tag found value ' + t1.value);
-            const tagIndex = tagsInformed.indexOf(t1.value.toUpperCase());
-            //console.debug('index found ' + tagIndex);
-            if (tagIndex !== -1) {
-              //console.debug('removing tag: ' + t1);
-              tagsInformed.splice(tagIndex, 1);
-            }
-          }
-        });
-        if (tagsInformed.length > 0) {
-          //console.debug('tagInformed length ' + tagsInformed.length);
-          tagsInformed.map(t2 => {
-            //            console.debug('tag being created: ' + t2);
-            new Tag({ value: t2 }).save();
-          });
-        }
-      }
-    })
-    .catch(error => {
-      console.log('Error trying to create a tag [' + error + '].');
-    });
-}
-
-const deleteCommand = async (commandId) => {
-  return Command.findOneAndDelete({ "_id": { $eq: commandId } });
-}
-
-module.exports = { updateCommand, findById, findByTag, search, createCommand, deleteCommand };
+module.exports = { findById };
